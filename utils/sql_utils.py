@@ -24,8 +24,17 @@ def get_commerce_filters():
 
 
 def get_product_data(column, year, ccaas, family):
-    if (len(ccaas) == 0) and (family == 'F&H') and (year == 'Todos'):
+    conditions = filter_product_data(year, ccaas, family)
+    if conditions is not None:
+        data = df1[conditions].groupby('Producto')[column].sum()
+    else:
         data = df1.groupby('Producto')[column].sum()
+    return data
+
+
+def filter_product_data(year, ccaas, family):
+    if (len(ccaas) == 0) and (family == 'F&H') and (year == 'Todos'):
+        return None
     else:
         if (len(ccaas) > 0) and (family == 'F&H') and (year == 'Todos'):  # 1: CCAA
             conditions = df1['CCAA'].isin(ccaas)
@@ -46,17 +55,19 @@ def get_product_data(column, year, ccaas, family):
             products = df3[df3['familia'].str.contains(family, na=False, case=False)]['product'].unique()
             conditions = (df1['CCAA'].isin(ccaas)) & (df1['Producto'].isin(products)) & (df1['Año'] == year)
 
-        data = df1[conditions].groupby('Producto')[column].sum()
+    return conditions
+
+
+def get_commerce_data(flow, countries, indicator):
+    conditions = filter_commerce_data(flow, countries, indicator)
+    data = df4[conditions].groupby('PRODUCT')['Value'].sum()
 
     return data
 
 
-def get_commerce_data(flow, countries, indicator):
+def filter_commerce_data(flow, countries, indicator):
     if len(countries) == 0:
         conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator)
     else:
         conditions = (df4['FLOW'] == flow) & (df4['REPORTER'].isin(countries)) & (df4['INDICATORS'] == indicator)
-
-    data = df4[conditions].groupby('PRODUCT')['Value'].sum()
-
-    return data
+    return conditions

@@ -57,7 +57,7 @@ app.layout = html.Div(
             className='header',
             children=[
                 # html.I(className='fa fa-carrot fa-lg'),
-                html.H1('🥑 Agro Analysis Dashboard')
+                html.H1('🥑 Agro Analysis Dashboard'),
             ]),
         # graphs
         html.Div(
@@ -139,26 +139,6 @@ app.layout = html.Div(
                                 'commerce-graph',
                                 config={'displayModeBar': False}
                             ),
-                        ]),
-                    dcc.Tab(
-                        label='Otra cosita',
-                        children=[
-                            html.H2('Sessions by Event Category'),
-                            html.H4('Filters'),
-                            html.Div(
-                                children=[
-                                    html.Label('Event Category: '),
-                                    dcc.Checklist(
-                                        id='event-category-select',
-                                        options=[{'label': i, 'value': i} for i in ['All', 'Ignore General Audience']],
-                                        value=[],
-                                        style={'display': 'inline-block'}
-                                    ),
-                                ]),
-                            dcc.Graph(
-                                'sessions-by-event-category-graph',
-                                config={'displayModeBar': False}
-                            )
                         ]),
                 ])
             ]),
