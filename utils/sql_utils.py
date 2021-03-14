@@ -1,5 +1,11 @@
 import pandas as pd
+import numpy as np
+from shapely.geometry import Point
 
+
+# Fuentes de datos externas
+# http://centrodedescargas.cnig.es/CentroDescargas/catalogo.do?Serie=CAANE
+# https://www.kaggle.com/paultimothymooney/latitude-and-longitude-for-every-country-and-state
 
 # def read_datasets():
 df1 = pd.read_csv('data/Dataset1.txt', sep='|')
@@ -78,4 +84,48 @@ def filter_commerce_data(flow, year, countries, indicator):
     else:  # 4: año y paises
         conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator) & (df4['REPORTER'].isin(countries)) & \
                      (df4['Y'] == year)
+    return conditions
+
+
+def get_map_data(column, ccaa):
+    conditions = filter_map_data(ccaa)
+    if conditions:
+        data = df1[conditions]
+    else:
+        data = df1
+
+    locations = data[['LATITUD_ETRS89', 'LONGITUD_ETRS89']]
+    geocodes = [(location[0], location[1]) for location in locations.values if
+                location[0] is not np.nan and location[1] is not np.nan]
+    geometry = [Point(geocode) for geocode in geocodes if geocode is not None]
+    return geometry
+
+
+def filter_map_data(ccaas):
+    if len(ccaas) == 0:
+        return None
+    else:
+        conditions = df1['CCAA'].isin(ccaas)
+    return conditions
+
+
+def get_eu_map_data(column, countries):
+    conditions = filter_eu_map_data(countries)
+    if conditions:
+        data = df5[conditions]
+    else:
+        data = df5
+
+    locations = data[['latitude', 'longitude']]
+    geocodes = [(location[0], location[1]) for location in locations.values if
+                location[0] is not np.nan and location[1] is not np.nan]
+    geometry = [Point(geocode) for geocode in geocodes if geocode is not None]
+    return geometry
+
+
+def filter_eu_map_data(countries):
+    if len(countries) == 0:
+        return None
+    else:
+        conditions = df5['countriesAndTerritories'].isin(countries)
     return conditions
