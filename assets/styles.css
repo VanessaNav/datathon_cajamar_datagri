@@ -1,0 +1,68 @@
+body {
+    font-family: 'Gloria Hallelujah', cursive;
+    background-color: RosyBrown;
+    color: white
+}
+h2, h3, h4, h5, h6 {
+    font-family: 'Lilita One', cursive;
+    color: RosyBrown;
+}
+.dash-container{
+    padding: 20px;
+}
+
+/* Header */
+.header{
+    margin: 20px 0 10px;
+    display: inline-block;
+}
+.header h1 {
+    font-family: 'Lilita One', cursive;
+    color: white;
+}
+.header i{
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 30px;
+    margin-top: -15px;
+    vertical-align: middle;
+}
+
+/* Content */
+.content{
+    color: RosyBrown;
+}
+.content .tab{
+    border-radius: 10px 10px 0 0;
+}
+.content .tab--selected{
+    border-top-color: RosyBrown !important;
+    color: RosyBrown !important;
+}
+.content .tab-content{
+    padding: 0 10px 10px;
+    background-color: white;
+    border-left: 1px solid #d6d6d6;
+    border-right: 1px solid #d6d6d6;
+    border-bottom: 1px solid #d6d6d6;
+}
+.content .filters{
+    margin-top: 10px;
+    padding: 10px 10px 0 10px;
+    background-color: SeaShell;
+}
+.content .filters label{
+    margin-right: 10px;
+}
+.content .filters .dash-dropdown{
+    color: RosyBrown !important;
+    padding-bottom: 5px;
+}
+
+/* Footer */
+.footer{
+    color: SeaShell;
+}
+.footer a{
+    color: Lavender;
+}
