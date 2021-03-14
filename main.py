@@ -65,7 +65,7 @@ app.layout = html.Div(
             children=[
                 dcc.Tabs([
                     dcc.Tab(
-                        label='Productos 🥕',
+                        label='Oferta de Productos 🥕',
                         children=[
                             html.Div(
                                 className='filters',
@@ -102,8 +102,61 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                 ]),
+                            html.H4('Volatilidad de los precios 📈',
+                                    style={'paddingLeft': '50px', 'paddingTop': '25px'}),
                             dcc.Graph(
-                                'products-graph',
+                                'prices-graph',
+                                config={'displayModeBar': False}
+                            ),
+                            dcc.Graph(
+                                'offer-graph',
+                                config={'displayModeBar': False}
+                            ),
+                        ]),
+                    dcc.Tab(
+                        label='Demanda de Productos 👨‍👩‍👧‍👦',
+                        children=[
+                            html.Div(
+                                className='filters',
+                                children=[
+                                    html.H4('Filtros'),
+                                    html.Div(
+                                        children=[
+                                            html.Label('Año: '),
+                                            dcc.Dropdown(
+                                                id='year-select2',
+                                                options=[{'label': i, 'value': i} for i in years_filter],
+                                                value='Todos',
+                                                style={'paddingLeft': '10px', 'width': '240px'}
+                                            ),
+                                        ]),
+                                    html.Div(
+                                        children=[
+                                            html.Label('CCAA: '),
+                                            dcc.Checklist(
+                                                id='ccaa-select2',
+                                                options=[{'label': i, 'value': i} for i in ccaas_filter],
+                                                value=[],
+                                                style={'paddingLeft': '10px'}
+                                            ),
+                                        ]),
+                                    html.Div(
+                                        children=[
+                                            html.Label('Familia de productos: '),
+                                            dcc.RadioItems(
+                                                id='family-select2',
+                                                options=[{'label': i, 'value': i} for i in families_filter],
+                                                value='F&H',
+                                                style={'paddingLeft': '10px'}
+                                            ),
+                                        ]),
+                                ]),
+                            dcc.Graph(
+                                'demand-time-graph',
+                                config={'displayModeBar': False}
+                            ),
+                            dcc.Graph(
+                                'demand-graph',
                                 config={'displayModeBar': False}
                             ),
                         ]),
@@ -114,6 +167,16 @@ app.layout = html.Div(
                                 className='filters',
                                 children=[
                                     html.H4('Filtros'),
+                                    html.Div(
+                                        children=[
+                                            html.Label('Año: '),
+                                            dcc.Dropdown(
+                                                id='year-select3',
+                                                options=[{'label': i, 'value': i} for i in years_filter],
+                                                value='Todos',
+                                                style={'paddingLeft': '10px', 'width': '240px'}
+                                            ),
+                                        ]),
                                     html.Div(
                                         children=[
                                             html.Label('País: '),
@@ -135,6 +198,10 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                 ]),
+                            dcc.Graph(
+                                'commerce-time-graph',
+                                config={'displayModeBar': False}
+                            ),
                             dcc.Graph(
                                 'commerce-graph',
                                 config={'displayModeBar': False}
@@ -164,30 +231,64 @@ app.layout = html.Div(
 
 
 @app.callback(
-    Output('products-graph', 'figure'),
+    [Output('prices-graph', 'figure'), Output('offer-graph', 'figure')],
     [Input('year-select', 'value'), Input('ccaa-select', 'value'), Input('family-select', 'value')]
 )
-def update_product_graphs(year, ccaas, family):
+def update_offer_graphs(year, ccaas, family):
     y_label1 = 'Volumen (miles de kg)'
     y_label2 = 'Valor (miles de €)'
     y_label3 = 'Precio medio kg'
-    x_label = 'Producto'
-    data1 = sqlu.get_product_data(y_label1, year, ccaas, family)
-    data2 = sqlu.get_product_data(y_label2, year, ccaas, family)
-    data3 = sqlu.get_product_data(y_label3, year, ccaas, family)
-    return gu.make_bar_chart([data1, data2, data3], x_label, [y_label1, y_label2, y_label3])
+    x_label123 = 'Producto'
+    x_label4 = 'Fecha'
+    title = 'Evolución del precio medio por kg'
+    data1 = sqlu.get_product_data(y_label1, x_label123, year, ccaas, family)
+    data2 = sqlu.get_product_data(y_label2, x_label123, year, ccaas, family)
+    data3 = sqlu.get_product_data(y_label3, x_label123, year, ccaas, family)
+    data4 = sqlu.get_product_data(y_label3, x_label4, year, ccaas, family)
+    return [
+        gu.make_line_chart([data4], [x_label4], [y_label3], title, True),
+        gu.make_bar_chart([data1, data2, data3], x_label123, [y_label1, y_label2, y_label3]),
+    ]
 
 
 @app.callback(
-    Output('commerce-graph', 'figure'),
-    [Input('country-select', 'value'), Input('indicators-select', 'value')]
+    [Output('demand-time-graph', 'figure'), Output('demand-graph', 'figure')],
+    [Input('year-select2', 'value'), Input('ccaa-select2', 'value'), Input('family-select2', 'value')]
 )
-def update_commerce_graphs(countries, indicator):
-    title1 = 'Importaciones'
-    title2 = 'Exportaciones'
-    data1 = sqlu.get_commerce_data('IMPORT', countries, indicator)
-    data2 = sqlu.get_commerce_data('EXPORT', countries, indicator)
-    return gu.make_scatter_chart([data1, data2], [title1, title2])
+def update_product_graphs2(year, ccaas, family):
+    y_label1 = 'Consumo per capita'
+    y_label2 = 'Gasto per capita'
+    x_label12 = 'Producto'
+    x_label3 = 'Fecha'
+    title = 'Evolución del gasto y del consumo per capita'
+    data1 = sqlu.get_product_data(y_label1, x_label12, year, ccaas, family)
+    data2 = sqlu.get_product_data(y_label2, x_label12, year, ccaas, family)
+    data3 = sqlu.get_product_data(y_label1, x_label3, year, ccaas, family)
+    data4 = sqlu.get_product_data(y_label2, x_label3, year, ccaas, family)
+    return [
+        gu.make_line_chart([data3, data4], [x_label3, x_label3], [y_label1, y_label2], title),
+        gu.make_bar_chart([data1, data2], x_label12, [y_label1, y_label2]),
+    ]
+
+
+@app.callback(
+    [Output('commerce-time-graph', 'figure'), Output('commerce-graph', 'figure')],
+    [Input('year-select3', 'value'), Input('country-select', 'value'), Input('indicators-select', 'value')]
+)
+def update_commerce_graphs(year, countries, indicator):
+    label1 = 'Importaciones'
+    label2 = 'Exportaciones'
+    x_label = 'Fecha'
+    title1 = 'Evolución del comercio exterior'
+    title2 = 'Comercio exterior por producto'
+    data1 = sqlu.get_commerce_data('DATE', 'IMPORT', year, countries, indicator)
+    data2 = sqlu.get_commerce_data('DATE', 'EXPORT', year, countries, indicator)
+    data3 = sqlu.get_commerce_data('PRODUCT', 'IMPORT', year, countries, indicator)
+    data4 = sqlu.get_commerce_data('PRODUCT', 'EXPORT', year, countries, indicator)
+    return [
+        gu.make_line_chart([data1, data2], [x_label, x_label], [label1, label2], title1),
+        gu.make_scatter_chart([data3, data4], [label1, label2], title2, True)
+    ]
 
 # ===== END - PLOT GRAPH =====
 

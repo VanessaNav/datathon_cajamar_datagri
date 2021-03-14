@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
 colors = ['#2B4162', 'RosyBrown', '#0B6E4F']
-line_colors = ['Blue', 'Brown', 'Green']
+line_colors = ['Black', 'Brown', 'Green']
 
 
 def make_bar_chart(data, x_label, y_labels):
@@ -23,7 +23,29 @@ def make_bar_chart(data, x_label, y_labels):
     return fig
 
 
-def make_scatter_chart(data, titles):
+def make_line_chart(data, x_labels, y_labels, title, show_ylabel=False):
+    fig = make_subplots(rows=1, cols=1, shared_xaxes=True)
+
+    for d in range(1, len(data) + 1):
+        fig.add_trace(
+            go.Scatter(x=data[d - 1].index, y=data[d - 1].values, mode='lines+markers', name=y_labels[d - 1], line={
+                'color': colors[d - 1],
+                'width': 5,
+            }, marker={
+                'color': line_colors[d - 1],
+            }),
+            row=1, col=1
+        )
+        fig.update_xaxes(title=x_labels[d - 1], row=1, col=1)
+        if show_ylabel:
+            fig.update_yaxes(title=y_labels[d - 1], row=1, col=1)
+
+    fig.update_layout(title=title)
+
+    return fig
+
+
+def make_scatter_chart(data, titles, title, slice_indexes=False):
     fig = make_subplots(rows=1, cols=1, shared_xaxes=True)
 
     for d in range(1, len(data) + 1):
@@ -38,11 +60,11 @@ def make_scatter_chart(data, titles):
             }),
             row=1, col=1
         )
+        if slice_indexes:
+            x_ticks = data[d - 1].index.str.slice(stop=30)
+            fig.update_xaxes(tickmode='array', tickvals=data[d - 1].index, ticktext=x_ticks, row=1, col=1)
 
-        x_ticks = data[d - 1].index.str.slice(stop=30)
-        fig.update_xaxes(tickmode='array', tickvals=data[d - 1].index, ticktext=x_ticks, row=1, col=1)
-
-    fig.update_layout(height=600)
+    fig.update_layout(height=600, title=title)
     return fig
 
 

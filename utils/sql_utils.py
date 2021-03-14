@@ -23,12 +23,12 @@ def get_commerce_filters():
     return [countries_filter, indicators_filter]
 
 
-def get_product_data(column, year, ccaas, family):
+def get_product_data(column, group_col, year, ccaas, family):
     conditions = filter_product_data(year, ccaas, family)
     if conditions is not None:
-        data = df1[conditions].groupby('Producto')[column].sum()
+        data = df1[conditions].groupby(group_col)[column].sum()
     else:
-        data = df1.groupby('Producto')[column].sum()
+        data = df1.groupby(group_col)[column].sum()
     return data
 
 
@@ -58,16 +58,24 @@ def filter_product_data(year, ccaas, family):
     return conditions
 
 
-def get_commerce_data(flow, countries, indicator):
-    conditions = filter_commerce_data(flow, countries, indicator)
-    data = df4[conditions].groupby('PRODUCT')['Value'].sum()
+def get_commerce_data(column, flow, year, countries, indicator):
+    conditions = filter_commerce_data(flow, year, countries, indicator)
+    if column == 'DATE':
+        data = df4[conditions].groupby(column)['Value'].mean()
+    else:
+        data = df4[conditions].groupby(column)['Value'].sum()
 
     return data
 
 
-def filter_commerce_data(flow, countries, indicator):
-    if len(countries) == 0:
+def filter_commerce_data(flow, year, countries, indicator):
+    if (len(countries) == 0) & (year == 'Todos'):  # 0: sin año ni paises
         conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator)
-    else:
-        conditions = (df4['FLOW'] == flow) & (df4['REPORTER'].isin(countries)) & (df4['INDICATORS'] == indicator)
+    elif (len(countries) > 0) & (year == 'Todos'):  # 1: paises
+        conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator) & (df4['REPORTER'].isin(countries))
+    elif (len(countries) == 0) & (year != 'Todos'):  # 2: año
+        conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator) & (df4['Y'] == year)
+    else:  # 4: año y paises
+        conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator) & (df4['REPORTER'].isin(countries)) & \
+                     (df4['Y'] == year)
     return conditions
