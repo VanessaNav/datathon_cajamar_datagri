@@ -58,6 +58,26 @@ h2, h3, h4, h5, h6 {
     color: RosyBrown !important;
     padding-bottom: 5px;
 }
+.content .logo{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    height: 60px;
+}
+.content .logo2{
+    position: fixed;
+    bottom: 20px;
+    right: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    height: 60px;
+}
 
 /* Footer */
 .footer{

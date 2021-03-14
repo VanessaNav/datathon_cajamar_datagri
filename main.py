@@ -7,7 +7,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
-from utils import graphs_utils as gu, sql_utils as sqlu
+from utils import graphs_utils as gu, data_utils as du
 
 # ===== START LOGGER =====
 logger = logging.getLogger(__name__)
@@ -46,10 +46,8 @@ app = dash.Dash(
 server = app.server
 
 # Filtros
-[years_filter, ccaas_filter, families_filter] = sqlu.get_product_filters()
-[countries_filter, indicators_filter] = sqlu.get_commerce_filters()
-
-app.title = 'Sister Hack'
+[years_filter, ccaas_filter, families_filter] = du.get_product_filters()
+[countries_filter, indicators_filter] = du.get_commerce_filters()
 app.layout = html.Div(
     className='dash-container',
     children=[
@@ -63,6 +61,8 @@ app.layout = html.Div(
         html.Div(
             className='content',
             children=[
+                html.Img(className='logo', src='assets/datagri.png'),
+                html.Img(className='logo2', src='assets/sisterhack.png'),
                 dcc.Tabs([
                     dcc.Tab(
                         label='Oferta de Productos 🥕',
@@ -233,6 +233,8 @@ app.layout = html.Div(
             ])
     ])
 
+app.title = 'Sister Hack'
+
 
 @app.callback(
     [Output('prices-graph', 'figure'), Output('offer-graph', 'figure')],
@@ -245,10 +247,10 @@ def update_offer_graphs(year, ccaas, family):
     x_label123 = 'Producto'
     x_label4 = 'Fecha'
     title = 'Volatilidad de los precios 📈: Evolución del precio medio por kg'
-    data1 = sqlu.get_product_data(y_label1, x_label123, year, ccaas, family)
-    data2 = sqlu.get_product_data(y_label2, x_label123, year, ccaas, family)
-    data3 = sqlu.get_product_data(y_label3, x_label123, year, ccaas, family)
-    data4 = sqlu.get_product_data(y_label3, x_label4, year, ccaas, family)
+    data1 = du.get_product_data(y_label1, x_label123, year, ccaas, family)
+    data2 = du.get_product_data(y_label2, x_label123, year, ccaas, family)
+    data3 = du.get_product_data(y_label3, x_label123, year, ccaas, family)
+    data4 = du.get_product_data(y_label3, x_label4, year, ccaas, family)
     return [
         gu.make_line_chart([data4], [x_label4], [y_label3], title, True),
         gu.make_bar_chart([data1, data2, data3], x_label123, [y_label1, y_label2, y_label3]),
@@ -265,10 +267,10 @@ def update_product_graphs2(year, ccaas, family):
     x_label12 = 'Producto'
     x_label3 = 'Fecha'
     title = 'Evolución del gasto y del consumo per capita'
-    data1 = sqlu.get_product_data(y_label1, x_label12, year, ccaas, family)
-    data2 = sqlu.get_product_data(y_label2, x_label12, year, ccaas, family)
-    data3 = sqlu.get_product_data(y_label1, x_label3, year, ccaas, family)
-    data4 = sqlu.get_product_data(y_label2, x_label3, year, ccaas, family)
+    data1 = du.get_product_data(y_label1, x_label12, year, ccaas, family)
+    data2 = du.get_product_data(y_label2, x_label12, year, ccaas, family)
+    data3 = du.get_product_data(y_label1, x_label3, year, ccaas, family)
+    data4 = du.get_product_data(y_label2, x_label3, year, ccaas, family)
     return [
         gu.make_line_chart([data3, data4], [x_label3, x_label3], [y_label1, y_label2], title),
         gu.make_bar_chart([data1, data2], x_label12, [y_label1, y_label2]),
@@ -285,10 +287,10 @@ def update_commerce_graphs(year, countries, indicator):
     x_label = 'Fecha'
     title1 = 'Evolución del comercio exterior'
     title2 = 'Comercio exterior por producto'
-    data1 = sqlu.get_commerce_data('DATE', 'IMPORT', year, countries, indicator)
-    data2 = sqlu.get_commerce_data('DATE', 'EXPORT', year, countries, indicator)
-    data3 = sqlu.get_commerce_data('PRODUCT', 'IMPORT', year, countries, indicator)
-    data4 = sqlu.get_commerce_data('PRODUCT', 'EXPORT', year, countries, indicator)
+    data1 = du.get_commerce_data('DATE', 'IMPORT', year, countries, indicator)
+    data2 = du.get_commerce_data('DATE', 'EXPORT', year, countries, indicator)
+    data3 = du.get_commerce_data('PRODUCT', 'IMPORT', year, countries, indicator)
+    data4 = du.get_commerce_data('PRODUCT', 'EXPORT', year, countries, indicator)
     return [
         gu.make_line_chart([data1, data2], [x_label, x_label], [label1, label2], title1),
         gu.make_scatter_chart([data3, data4], [label1, label2], title2, True)
@@ -298,4 +300,4 @@ def update_commerce_graphs(year, countries, indicator):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True, dev_tools_hot_reload=True)
+    app.run_server(debug=False, dev_tools_hot_reload=True)
