@@ -102,12 +102,12 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                 ]),
-                            html.H4('Volatilidad de los precios 📈',
-                                    style={'paddingLeft': '50px', 'paddingTop': '25px'}),
                             dcc.Graph(
                                 'prices-graph',
                                 config={'displayModeBar': False}
                             ),
+                            html.Hr(style={'border': '3px dotted rosybrown'}),
+                            html.H4('Por Producto', style={'padding-top': '25px', 'textAlign': 'center'}),
                             dcc.Graph(
                                 'offer-graph',
                                 config={'displayModeBar': False}
@@ -155,6 +155,8 @@ app.layout = html.Div(
                                 'demand-time-graph',
                                 config={'displayModeBar': False}
                             ),
+                            html.Hr(style={'border': '3px dotted rosybrown'}),
+                            html.H4('Por Producto', style={'padding-top': '25px', 'textAlign': 'center'}),
                             dcc.Graph(
                                 'demand-graph',
                                 config={'displayModeBar': False}
@@ -202,6 +204,8 @@ app.layout = html.Div(
                                 'commerce-time-graph',
                                 config={'displayModeBar': False}
                             ),
+                            html.Hr(style={'border': '3px dotted rosybrown'}),
+                            html.H4('Por Producto', style={'padding-top': '25px', 'textAlign': 'center'}),
                             dcc.Graph(
                                 'commerce-graph',
                                 config={'displayModeBar': False}
@@ -240,7 +244,7 @@ def update_offer_graphs(year, ccaas, family):
     y_label3 = 'Precio medio kg'
     x_label123 = 'Producto'
     x_label4 = 'Fecha'
-    title = 'Evolución del precio medio por kg'
+    title = 'Volatilidad de los precios 📈: Evolución del precio medio por kg'
     data1 = sqlu.get_product_data(y_label1, x_label123, year, ccaas, family)
     data2 = sqlu.get_product_data(y_label2, x_label123, year, ccaas, family)
     data3 = sqlu.get_product_data(y_label3, x_label123, year, ccaas, family)
