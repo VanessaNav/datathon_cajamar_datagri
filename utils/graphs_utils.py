@@ -2,7 +2,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-colors = ['LightSkyBlue', 'RosyBrown', 'LightGreen']
+colors = ['#2B4162', 'RosyBrown', '#0B6E4F']
 line_colors = ['Blue', 'Brown', 'Green']
 
 
