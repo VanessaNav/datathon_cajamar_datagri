@@ -107,7 +107,7 @@ app.layout = html.Div(
                                 config={'displayModeBar': False}
                             ),
                             html.Hr(style={'border': '3px dotted rosybrown'}),
-                            html.H4('Por Producto', style={'padding-top': '25px', 'textAlign': 'center'}),
+                            html.H4('🧄 Por Producto 🥝', style={'padding-top': '25px', 'textAlign': 'center'}),
                             dcc.Graph(
                                 'offer-graph',
                                 config={'displayModeBar': False}
@@ -156,7 +156,7 @@ app.layout = html.Div(
                                 config={'displayModeBar': False}
                             ),
                             html.Hr(style={'border': '3px dotted rosybrown'}),
-                            html.H4('Por Producto', style={'padding-top': '25px', 'textAlign': 'center'}),
+                            html.H4('🍆 Por Producto 🍒', style={'padding-top': '25px', 'textAlign': 'center'}),
                             dcc.Graph(
                                 'demand-graph',
                                 config={'displayModeBar': False}
@@ -205,7 +205,7 @@ app.layout = html.Div(
                                 config={'displayModeBar': False}
                             ),
                             html.Hr(style={'border': '3px dotted rosybrown'}),
-                            html.H4('Por Producto', style={'padding-top': '25px', 'textAlign': 'center'}),
+                            html.H4('🍅 Por Producto 🍈', style={'padding-top': '25px', 'textAlign': 'center'}),
                             dcc.Graph(
                                 'commerce-graph',
                                 config={'displayModeBar': False}
