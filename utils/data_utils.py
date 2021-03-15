@@ -32,9 +32,15 @@ def get_commerce_filters():
 def get_product_data(column, group_col, year, ccaas, family):
     conditions = filter_product_data(year, ccaas, family)
     if conditions is not None:
-        data = df1[conditions].groupby(group_col)[column].mean()
+        if group_col == 'Fecha':
+            data = pd.Series.pct_change(df1[conditions].groupby(group_col)[column].mean())
+        else:
+            data = df1[conditions].groupby(group_col)[column].mean()
     else:
-        data = df1.groupby(group_col)[column].mean()
+        if group_col == 'Fecha':
+            data = pd.Series.pct_change(df1.groupby(group_col)[column].mean())
+        else:
+            data = df1.groupby(group_col)[column].mean()
     return data
 
 
@@ -67,7 +73,7 @@ def filter_product_data(year, ccaas, family):
 def get_commerce_data(column, flow, year, countries, indicator):
     conditions = filter_commerce_data(flow, year, countries, indicator)
     if column == 'DATE':
-        data = df4[conditions].groupby(column)['Value'].mean()
+        data = pd.Series.pct_change(df4[conditions].groupby(column)['Value'].mean())
     else:
         data = df4[conditions].groupby(column)['Value'].sum()
 
