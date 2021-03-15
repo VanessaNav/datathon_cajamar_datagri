@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from shapely.geometry import Point
+from shapely.geometry import Point, mapping, shape
 
 
 # Fuentes de datos externas
@@ -87,8 +87,8 @@ def filter_commerce_data(flow, year, countries, indicator):
     return conditions
 
 
-def get_map_data(column, ccaa):
-    conditions = filter_map_data(ccaa)
+def get_map_data(year, ccaas, family):
+    conditions = filter_product_data(year, ccaas, family)
     if conditions:
         data = df1[conditions]
     else:
@@ -97,35 +97,16 @@ def get_map_data(column, ccaa):
     locations = data[['LATITUD_ETRS89', 'LONGITUD_ETRS89']]
     geocodes = [(location[0], location[1]) for location in locations.values if
                 location[0] is not np.nan and location[1] is not np.nan]
-    geometry = [Point(geocode) for geocode in geocodes if geocode is not None]
-    return geometry
+    geometry = [mapping(Point(geocode)) for geocode in geocodes if geocode is not None and Point(geocode).is_valid]
+    return [data, geometry]
 
 
-def filter_map_data(ccaas):
-    if len(ccaas) == 0:
-        return None
-    else:
-        conditions = df1['CCAA'].isin(ccaas)
-    return conditions
-
-
-def get_eu_map_data(column, countries):
-    conditions = filter_eu_map_data(countries)
-    if conditions:
-        data = df5[conditions]
-    else:
-        data = df5
+def get_eu_map_data(flow, year, countries, indicator):
+    conditions = filter_commerce_data(flow, year, countries, indicator)
+    data = df4[conditions]
 
     locations = data[['latitude', 'longitude']]
     geocodes = [(location[0], location[1]) for location in locations.values if
                 location[0] is not np.nan and location[1] is not np.nan]
-    geometry = [Point(geocode) for geocode in geocodes if geocode is not None]
-    return geometry
-
-
-def filter_eu_map_data(countries):
-    if len(countries) == 0:
-        return None
-    else:
-        conditions = df5['countriesAndTerritories'].isin(countries)
-    return conditions
+    geometry = [mapping(Point(geocode)) for geocode in geocodes if geocode is not None and Point(geocode).is_valid]
+    return [data, geometry]

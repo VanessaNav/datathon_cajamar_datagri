@@ -68,46 +68,9 @@ def make_scatter_chart(data, titles, title, slice_indexes=False):
     return fig
 
 
-def make_pie_chart(data, x_labels, y_labels):
-    pies_data = []
-    for d in range(1, len(data) + 1):
-        data_pie = {
-            "values": data[d - 1].values,
-            "labels": data[d - 1].index,
-            "texttemplate": "%{value:,s}",
-            "hovertemplate": "%{label}: %{value:,s} <br>(%{percent})",
-            "domain": {"column": d - 1},
-            "name": x_labels[d - 1],
-            "hole": .4,
-            "type": "pie"
-        }
-        pies_data.append(data_pie)
-
-    layout = go.Layout({
-        "grid": {"rows": 1, "columns": len(pies_data)},
-        "paper_bgcolor": 'rgba(0,0,0,0)',
-    })
-        # "annotations": [
-        #     {
-        #         "font": {
-        #             "size": 16
-        #         },
-        #         "showarrow": False,
-        #         "text": x_labels[d-1],
-        #         "x": 0.22,
-        #         "y": 0.5
-        #     },
-        #     {
-        #         "font": {
-        #             "size": 16
-        #         },
-        #         "showarrow": False,
-        #         "text": x_label2,
-        #         "x": 0.8,
-        #         "y": 0.5
-        #     }
-        # ]
-    # })
-    fig = go.Figure(data=pies_data, layout=layout)
-
+def make_map_chart(data, geometry, y_label, locations, title):
+    fig = px.choropleth(
+        data, geojson=geometry, color=y_label, locations=locations)
+    # fig.update_geos(fitbounds="geojson", visible=False)
+    fig.update_layout(title=title)
     return fig

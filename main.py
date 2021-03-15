@@ -62,7 +62,7 @@ app.layout = html.Div(
             className='content',
             children=[
                 html.Img(className='logo', src='assets/datagri.png'),
-                html.Img(className='logo2', src='assets/sisterhack.png'),
+                html.Img(className='logo2', src='assets/Sister-Hack_small.png'),
                 dcc.Tabs([
                     dcc.Tab(
                         label='Oferta de Productos 🥕',
@@ -106,7 +106,11 @@ app.layout = html.Div(
                                 'prices-graph',
                                 config={'displayModeBar': False}
                             ),
-                            html.Hr(style={'border': '3px dotted rosybrown'}),
+                            dcc.Graph(
+                                'spain-map-graph',
+                                config={'displayModeBar': False}
+                            ),
+                            html.Hr(style={'border-top': '3px dotted rosybrown'}),
                             html.H4('🧄 Por Producto 🥝', style={'padding-top': '25px', 'textAlign': 'center'}),
                             dcc.Graph(
                                 'offer-graph',
@@ -155,7 +159,7 @@ app.layout = html.Div(
                                 'demand-time-graph',
                                 config={'displayModeBar': False}
                             ),
-                            html.Hr(style={'border': '3px dotted rosybrown'}),
+                            html.Hr(style={'border-top': '3px dotted rosybrown'}),
                             html.H4('🍆 Por Producto 🍒', style={'padding-top': '25px', 'textAlign': 'center'}),
                             dcc.Graph(
                                 'demand-graph',
@@ -204,7 +208,11 @@ app.layout = html.Div(
                                 'commerce-time-graph',
                                 config={'displayModeBar': False}
                             ),
-                            html.Hr(style={'border': '3px dotted rosybrown'}),
+                            dcc.Graph(
+                                'eu-map-graph',
+                                config={'displayModeBar': False}
+                            ),
+                            html.Hr(style={'border-top': '3px dotted rosybrown'}),
                             html.H4('🍅 Por Producto 🍈', style={'padding-top': '25px', 'textAlign': 'center'}),
                             dcc.Graph(
                                 'commerce-graph',
@@ -237,7 +245,7 @@ app.title = 'Sister Hack'
 
 
 @app.callback(
-    [Output('prices-graph', 'figure'), Output('offer-graph', 'figure')],
+    [Output('prices-graph', 'figure'), Output('spain-map-graph', 'figure'), Output('offer-graph', 'figure')],
     [Input('year-select', 'value'), Input('ccaa-select', 'value'), Input('family-select', 'value')]
 )
 def update_offer_graphs(year, ccaas, family):
@@ -251,8 +259,10 @@ def update_offer_graphs(year, ccaas, family):
     data2 = du.get_product_data(y_label2, x_label123, year, ccaas, family)
     data3 = du.get_product_data(y_label3, x_label123, year, ccaas, family)
     data4 = du.get_product_data(y_label3, x_label4, year, ccaas, family)
+    [data5, geometry] = du.get_map_data(year, ccaas, family)
     return [
         gu.make_line_chart([data4], [x_label4], [y_label3], title, True),
+        gu.make_map_chart(data5, geometry, y_label3, 'CCAA', title),
         gu.make_bar_chart([data1, data2, data3], x_label123, [y_label1, y_label2, y_label3]),
     ]
 
@@ -278,7 +288,7 @@ def update_product_graphs2(year, ccaas, family):
 
 
 @app.callback(
-    [Output('commerce-time-graph', 'figure'), Output('commerce-graph', 'figure')],
+    [Output('commerce-time-graph', 'figure'), Output('eu-map-graph', 'figure'), Output('commerce-graph', 'figure')],
     [Input('year-select3', 'value'), Input('country-select', 'value'), Input('indicators-select', 'value')]
 )
 def update_commerce_graphs(year, countries, indicator):
@@ -291,8 +301,10 @@ def update_commerce_graphs(year, countries, indicator):
     data2 = du.get_commerce_data('DATE', 'EXPORT', year, countries, indicator)
     data3 = du.get_commerce_data('PRODUCT', 'IMPORT', year, countries, indicator)
     data4 = du.get_commerce_data('PRODUCT', 'EXPORT', year, countries, indicator)
+    [data5, geometry] = du.get_eu_map_data('EXPORT', year, countries, indicator)
     return [
         gu.make_line_chart([data1, data2], [x_label, x_label], [label1, label2], title1),
+        gu.make_map_chart(data5, geometry, 'Value', 'country', title1),
         gu.make_scatter_chart([data3, data4], [label1, label2], title2, True)
     ]
 
@@ -300,4 +312,4 @@ def update_commerce_graphs(year, countries, indicator):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False, dev_tools_hot_reload=True)
+    app.run_server(debug=True, dev_tools_hot_reload=True)

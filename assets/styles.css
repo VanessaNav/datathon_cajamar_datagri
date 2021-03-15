@@ -65,18 +65,18 @@ h2, h3, h4, h5, h6 {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10000;
+    z-index: 1000;
     height: 60px;
 }
 .content .logo2{
     position: fixed;
     bottom: 20px;
-    right: 140px;
+    right: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10000;
-    height: 60px;
+    z-index: 1000;
+    height: 80px;
 }
 
 /* Footer */
