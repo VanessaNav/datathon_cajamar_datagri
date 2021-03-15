@@ -8,7 +8,7 @@ h2, h3, h4, h5, h6 {
     color: RosyBrown;
 }
 .dash-container{
-    padding: 20px;
+    padding: 0 20px;
 }
 
 /* Header */
@@ -45,6 +45,10 @@ h2, h3, h4, h5, h6 {
     border-left: 1px solid #d6d6d6;
     border-right: 1px solid #d6d6d6;
     border-bottom: 1px solid #d6d6d6;
+    overflow: hidden;
+    overflow-y: hidden;
+    overflow-y: auto;
+    height: calc(100vh - 200px);
 }
 .content .filters{
     margin-top: 10px;
@@ -60,7 +64,7 @@ h2, h3, h4, h5, h6 {
 }
 .content .logo{
     position: fixed;
-    bottom: 20px;
+    top: 25px;
     right: 20px;
     display: flex;
     justify-content: center;
@@ -70,7 +74,7 @@ h2, h3, h4, h5, h6 {
 }
 .content .logo2{
     position: fixed;
-    bottom: 20px;
+    top: 5px;
     right: 100px;
     display: flex;
     justify-content: center;
