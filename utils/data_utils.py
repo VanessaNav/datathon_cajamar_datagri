@@ -66,7 +66,10 @@ def filter_product_data(year, ccaas, family):
 
 def get_commerce_data(column, flow, year, countries, indicator):
     conditions = filter_commerce_data(flow, year, countries, indicator)
-    data = df4[conditions].groupby(column)['Value'].mean()
+    if column == 'DATE':
+        data = df4[conditions].groupby(column)['Value'].mean()
+    else:
+        data = df4[conditions].groupby(column)['Value'].sum()
 
     return data
 
