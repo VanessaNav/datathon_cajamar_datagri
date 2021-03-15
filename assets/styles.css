@@ -58,6 +58,9 @@ h2, h3, h4, h5, h6 {
 .content .filters label{
     margin-right: 10px;
 }
+.content .filters label input{
+    margin-right: 5px;
+}
 .content .filters .dash-dropdown{
     color: RosyBrown !important;
     padding-bottom: 5px;
