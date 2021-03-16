@@ -29,15 +29,15 @@ def get_commerce_filters():
     return [countries_filter, indicators_filter]
 
 
-def get_product_data(column, group_col, year, ccaas, family):
+def get_product_data(column, group_col, year, ccaas, family, measure):
     conditions = filter_product_data(year, ccaas, family)
     if conditions is not None:
-        if group_col == 'Fecha':
+        if group_col == 'Fecha' and measure == 'TASA DE VARIACIÓN':
             data = pd.Series.pct_change(df1[conditions].groupby(group_col)[column].mean())
         else:
             data = df1[conditions].groupby(group_col)[column].mean()
     else:
-        if group_col == 'Fecha':
+        if group_col == 'Fecha' and measure == 'TASA DE VARIACIÓN':
             data = pd.Series.pct_change(df1.groupby(group_col)[column].mean())
         else:
             data = df1.groupby(group_col)[column].mean()
@@ -70,10 +70,13 @@ def filter_product_data(year, ccaas, family):
     return conditions
 
 
-def get_commerce_data(group_col, column, flow, year, countries, indicator):
+def get_commerce_data(group_col, column, flow, year, countries, indicator, measure):
     conditions = filter_commerce_data(flow, year, countries, indicator)
     if group_col == 'DATE':
-        data = pd.Series.pct_change(df4[conditions].groupby(group_col)[column].mean())
+        if measure == 'TASA DE VARIACIÓN':
+            data = pd.Series.pct_change(df4[conditions].groupby(group_col)[column].mean())
+        else:
+            data = df4[conditions].groupby(group_col)[column].mean()
     else:
         data = df4[conditions].groupby(group_col)[column].sum()
 

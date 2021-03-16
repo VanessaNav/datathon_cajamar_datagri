@@ -65,6 +65,25 @@ h2, h3, h4, h5, h6 {
     color: RosyBrown !important;
     padding-bottom: 5px;
 }
+.content .measure-filter{
+    background-color: RosyBrown;
+    color: white;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 25px;
+    text-align: right;
+    float: right;
+    position: relative;
+    z-index: 1000;
+    display: inline;
+}
+.content .measure-filter label{
+    display: inline;
+    padding-left: 10px;
+}
+.content .measure-filter label input{
+    margin-right: 5px;
+}
 .content .logo{
     position: fixed;
     top: 15px;

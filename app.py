@@ -48,6 +48,8 @@ server = app.server
 # Filtros
 [years_filter, ccaas_filter, families_filter] = du.get_product_filters()
 [countries_filter, indicators_filter] = du.get_commerce_filters()
+measures_filter = ['TASA DE VARIACIÓN', 'MEDIA']
+
 app.layout = html.Div(
     className='dash-container',
     children=[
@@ -102,6 +104,17 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                 ]),
+                            html.Div(
+                                className='measure-filter',
+                                children=[
+                                    html.Label('Medida: '),
+                                    dcc.RadioItems(
+                                        id='measure-select',
+                                        options=[{'label': i, 'value': i} for i in measures_filter],
+                                        value=measures_filter[0],
+                                        style={'paddingLeft': '10px'}
+                                    ),
+                                ]),
                             dcc.Graph(
                                 'prices-graph',
                                 config={'displayModeBar': False}
@@ -155,6 +168,17 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                 ]),
+                            html.Div(
+                                className='measure-filter',
+                                children=[
+                                    html.Label('Medida: '),
+                                    dcc.RadioItems(
+                                        id='measure-select2',
+                                        options=[{'label': i, 'value': i} for i in measures_filter],
+                                        value=measures_filter[0],
+                                        style={'paddingLeft': '10px'}
+                                    ),
+                                ]),
                             dcc.Graph(
                                 'demand-time-graph',
                                 config={'displayModeBar': False}
@@ -203,6 +227,17 @@ app.layout = html.Div(
                                                 style={'paddingLeft': '10px'}
                                             ),
                                         ]),
+                                ]),
+                            html.Div(
+                                className='measure-filter',
+                                children=[
+                                    html.Label('Medida: '),
+                                    dcc.RadioItems(
+                                        id='measure-select3',
+                                        options=[{'label': i, 'value': i} for i in measures_filter],
+                                        value=measures_filter[0],
+                                        style={'paddingLeft': '10px'}
+                                    ),
                                 ]),
                             dcc.Graph(
                                 'commerce-time-graph',
@@ -254,20 +289,20 @@ app.title = 'Sister Hack'
 @app.callback(
     [Output('prices-graph', 'figure'), Output('offer-graph', 'figure')],
     # [Output('prices-graph', 'figure'), Output('spain-map-graph', 'figure'), Output('offer-graph', 'figure')],
-    [Input('year-select', 'value'), Input('ccaa-select', 'value'), Input('family-select', 'value')]
+    [Input('year-select', 'value'), Input('ccaa-select', 'value'), Input('family-select', 'value'), Input('measure-select', 'value')]
 )
-def update_offer_graphs(year, ccaas, family):
+def update_offer_graphs(year, ccaas, family, measure):
     y_label1 = 'Volumen (miles de kg)'
     y_label2 = 'Valor (miles de €)'
     y_label3 = 'Precio medio kg'
-    name = 'Precio medio kg (TASA DE VARIACIÓN)'
+    name = 'Precio medio kg (' + measure + ')'
     x_label123 = 'Producto'
     x_label4 = 'Fecha'
     title = 'Volatilidad de los precios 📈: Evolución del precio medio por kg'
-    data1 = du.get_product_data(y_label1, x_label123, year, ccaas, family)
-    data2 = du.get_product_data(y_label2, x_label123, year, ccaas, family)
-    data3 = du.get_product_data(y_label3, x_label123, year, ccaas, family)
-    data4 = du.get_product_data(y_label3, x_label4, year, ccaas, family)
+    data1 = du.get_product_data(y_label1, x_label123, year, ccaas, family, measure)
+    data2 = du.get_product_data(y_label2, x_label123, year, ccaas, family, measure)
+    data3 = du.get_product_data(y_label3, x_label123, year, ccaas, family, measure)
+    data4 = du.get_product_data(y_label3, x_label4, year, ccaas, family, measure)
     # [data5, geometry] = du.get_map_data(year, ccaas, family)
     return [
         gu.make_line_chart([data4], [x_label4], [y_label3], [name], title),
@@ -278,21 +313,20 @@ def update_offer_graphs(year, ccaas, family):
 
 @app.callback(
     [Output('demand-time-graph', 'figure'), Output('demand-graph', 'figure')],
-    [Input('year-select2', 'value'), Input('ccaa-select2', 'value'), Input('family-select2', 'value')]
+    [Input('year-select2', 'value'), Input('ccaa-select2', 'value'), Input('family-select2', 'value'), Input('measure-select2', 'value')]
 )
-def update_demand_graphs(year, ccaas, family):
+def update_demand_graphs(year, ccaas, family, measure):
     y_label1 = 'Consumo per capita'
     y_label2 = 'Gasto per capita'
-    name = 'TASAS DE VARIACIÓN'
     x_label12 = 'Producto'
     x_label3 = 'Fecha'
     title = 'Evolución del gasto y del consumo per capita'
-    data1 = du.get_product_data(y_label1, x_label12, year, ccaas, family)
-    data2 = du.get_product_data(y_label2, x_label12, year, ccaas, family)
-    data3 = du.get_product_data(y_label1, x_label3, year, ccaas, family)
-    data4 = du.get_product_data(y_label2, x_label3, year, ccaas, family)
+    data1 = du.get_product_data(y_label1, x_label12, year, ccaas, family, measure)
+    data2 = du.get_product_data(y_label2, x_label12, year, ccaas, family, measure)
+    data3 = du.get_product_data(y_label1, x_label3, year, ccaas, family, measure)
+    data4 = du.get_product_data(y_label2, x_label3, year, ccaas, family, measure)
     return [
-        gu.make_line_chart([data3, data4], [x_label3, x_label3], [y_label1, y_label2], [name, name], title),
+        gu.make_line_chart([data3, data4], [x_label3, x_label3], [y_label1, y_label2], [measure, measure], title),
         gu.make_bar_chart([data1, data2], x_label12, [y_label1, y_label2]),
     ]
 
@@ -300,24 +334,24 @@ def update_demand_graphs(year, ccaas, family):
 @app.callback(
     [Output('commerce-time-graph', 'figure'), Output('commerce-graph', 'figure')],
     # [Output('commerce-time-graph', 'figure'), Output('eu-map-graph', 'figure'), Output('commerce-graph', 'figure')],
-    [Input('year-select3', 'value'), Input('country-select', 'value'), Input('indicators-select', 'value')]
+    [Input('year-select3', 'value'), Input('country-select', 'value'), Input('indicators-select', 'value'), Input('measure-select3', 'value')]
 )
-def update_commerce_graphs(year, countries, indicator):
+def update_commerce_graphs(year, countries, indicator, measure):
     y_label1 = 'Importaciones'
     y_label2 = 'Exportaciones'
     x_label = 'Fecha'
     name = 'Value'
     title1 = 'Evolución del comercio exterior'
     title2 = 'Comercio exterior por producto'
-    data1 = du.get_commerce_data('DATE', name, 'IMPORT', year, countries, indicator)
-    data2 = du.get_commerce_data('DATE', name, 'EXPORT', year, countries, indicator)
-    data3 = du.get_commerce_data('PRODUCT', name, 'IMPORT', year, countries, indicator)
-    data4 = du.get_commerce_data('PRODUCT', name, 'EXPORT', year, countries, indicator)
+    data1 = du.get_commerce_data('DATE', name, 'IMPORT', year, countries, indicator, measure)
+    data2 = du.get_commerce_data('DATE', name, 'EXPORT', year, countries, indicator, measure)
+    data3 = du.get_commerce_data('PRODUCT', name, 'IMPORT', year, countries, indicator, measure)
+    data4 = du.get_commerce_data('PRODUCT', name, 'EXPORT', year, countries, indicator, measure)
     # [data5, geometry] = du.get_eu_map_data('EXPORT', year, countries, indicator)
     return [
         gu.make_line_chart([data1, data2], [x_label, x_label], [y_label1, y_label2], [name, name], title1),
         # gu.make_map_chart(data5, geometry, 'Value', 'country', title1),
-        gu.make_scatter_chart([data3, data4], [y_label1, y_label1], [name, name], title2, True)
+        gu.make_scatter_chart([data3, data4], [y_label1, y_label2], [name, name], title2, True)
     ]
 
 # ===== END - PLOT GRAPH =====
