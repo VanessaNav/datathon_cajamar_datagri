@@ -1,6 +1,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+import numpy as np
 
 colors = ['#2B4162', 'RosyBrown', '#0B6E4F']
 line_colors = ['Black', 'Brown', 'Green']
@@ -25,15 +26,19 @@ def make_bar_chart(data, x_label, y_labels):
 
 def make_line_chart(data, x_labels, y_labels, names, title):
     fig = make_subplots(rows=1, cols=1, shared_xaxes=True)
+    text_positions = ['top center', 'bottom center']
 
     for d in range(1, len(data) + 1):
+        texts = np.around(data[d - 1].values, 2)
+        if d % 2 != 0:
+            text_position = text_positions[0]
+        else:
+            text_position = text_positions[1]
         fig.add_trace(
-            go.Scatter(x=data[d - 1].index, y=data[d - 1].values, mode='lines+markers', name=y_labels[d - 1], line={
-                'color': colors[d - 1],
-                'width': 5,
-            }, marker={
-                'color': line_colors[d - 1],
-            }),
+            go.Scatter(x=data[d - 1].index, y=data[d - 1].values, mode='lines+markers+text', name=y_labels[d - 1],
+                       text=texts, textposition=text_position,
+                       line={'color': colors[d - 1], 'width': 5},
+                       marker={'color': line_colors[d - 1]}),
             row=1, col=1
         )
         fig.update_xaxes(title=x_labels[d - 1], row=1, col=1)
