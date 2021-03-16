@@ -131,7 +131,7 @@ app.layout = html.Div(
                             ),
                         ]),
                     dcc.Tab(
-                        label='Demanda de Productos 👨‍👩‍👧‍👦',
+                        label='Demanda de Productos 🍇',
                         children=[
                             html.Div(
                                 className='filters',
