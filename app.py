@@ -1,4 +1,4 @@
-# ========== (c) JP Hwang 2020-02-28  ==========
+# ========== Vanessa Navarro 2021-03-17  ==========
 
 import logging
 import pandas as pd
@@ -225,19 +225,25 @@ app.layout = html.Div(
         html.Div(
             className='footer',
             children=[
-                html.P([
-                    html.Small("Desarrollado por "),
-                    html.A(html.Small("👩🏻 Vanessa Navarro"), href="https://www.linkedin.com/in/vanessa-nav/",
-                           title="Vanessa Navarro"),
-                    html.Small(" y "),
-                    html.A(html.Small("👩🏼 María Navarro"),
-                           href="https://www.linkedin.com/in/mar%C3%ADa-navarro-coronado-22723a206/",
-                           title="María Navarro"),
-                    html.Small(" para "),
-                    html.A(html.Small("Cajamar UniversityHack 2021"),
-                           href="https://www.cajamardatalab.com/datathon-cajamar-universityhack-2021/retos/visualizacion/",
-                           title="Reto Cajamar Agro Analysis"),
-                ]),
+                html.P(
+                    children=[
+                        html.Small("Desarrollado por "),
+                        html.A(html.Small("👩🏻 Vanessa Navarro"), href="https://www.linkedin.com/in/vanessa-nav/",
+                               title="Vanessa Navarro"),
+                        html.Small(" y "),
+                        html.A(html.Small("👩🏼 María Navarro"),
+                               href="https://www.linkedin.com/in/mar%C3%ADa-navarro-coronado-22723a206/",
+                               title="María Navarro"),
+                        html.Small(" para "),
+                        html.A(html.Small("Cajamar UniversityHack 2021"),
+                               href="https://www.cajamardatalab.com/datathon-cajamar-universityhack-2021/retos/visualizacion/",
+                               title="Reto Cajamar Agro Analysis"),
+                        html.A(
+                            html.I(className='fab fa-github fa-lg mt-2'),
+                            className='float-right',
+                            href="https://github.com/VanessaNav/datathon_cajamar_datagri",
+                            title="SisterHack GitHub"),
+                    ]),
             ])
     ])
 
