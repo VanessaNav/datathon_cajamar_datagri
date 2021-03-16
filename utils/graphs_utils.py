@@ -23,7 +23,7 @@ def make_bar_chart(data, x_label, y_labels):
     return fig
 
 
-def make_line_chart(data, x_labels, y_labels, title, show_ylabel=False):
+def make_line_chart(data, x_labels, y_labels, names, title):
     fig = make_subplots(rows=1, cols=1, shared_xaxes=True)
 
     for d in range(1, len(data) + 1):
@@ -37,21 +37,20 @@ def make_line_chart(data, x_labels, y_labels, title, show_ylabel=False):
             row=1, col=1
         )
         fig.update_xaxes(title=x_labels[d - 1], row=1, col=1)
-        if show_ylabel:
-            fig.update_yaxes(title=y_labels[d - 1], row=1, col=1)
+        fig.update_yaxes(title=names[d - 1], row=1, col=1)
 
     fig.update_layout(title=title)
 
     return fig
 
 
-def make_scatter_chart(data, titles, title, slice_indexes=False):
+def make_scatter_chart(data, y_labels, names, title, slice_indexes=False):
     fig = make_subplots(rows=1, cols=1, shared_xaxes=True)
 
     for d in range(1, len(data) + 1):
         sizes = data[d - 1].values * 100 / max(data[d - 1].values)
         fig.add_trace(
-            go.Scatter(x=data[d - 1].index, y=data[d - 1].values, mode='markers', name=titles[d - 1], marker={
+            go.Scatter(x=data[d - 1].index, y=data[d - 1].values, mode='markers', name=y_labels[d - 1], marker={
                 'size': sizes,
                 'color': colors[d - 1],
                 'opacity': 0.8,
@@ -60,6 +59,7 @@ def make_scatter_chart(data, titles, title, slice_indexes=False):
             }),
             row=1, col=1
         )
+        fig.update_yaxes(title=names[d - 1], row=1, col=1)
         if slice_indexes:
             x_ticks = data[d - 1].index.str.slice(stop=30)
             fig.update_xaxes(tickmode='array', tickvals=data[d - 1].index, ticktext=x_ticks, row=1, col=1)

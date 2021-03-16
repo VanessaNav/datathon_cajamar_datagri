@@ -253,6 +253,7 @@ def update_offer_graphs(year, ccaas, family):
     y_label1 = 'Volumen (miles de kg)'
     y_label2 = 'Valor (miles de €)'
     y_label3 = 'Precio medio kg'
+    name = 'Precio medio kg (TASA DE VARIACIÓN)'
     x_label123 = 'Producto'
     x_label4 = 'Fecha'
     title = 'Volatilidad de los precios 📈: Evolución del precio medio por kg'
@@ -262,7 +263,7 @@ def update_offer_graphs(year, ccaas, family):
     data4 = du.get_product_data(y_label3, x_label4, year, ccaas, family)
     # [data5, geometry] = du.get_map_data(year, ccaas, family)
     return [
-        gu.make_line_chart([data4], [x_label4], [y_label3], title, True),
+        gu.make_line_chart([data4], [x_label4], [y_label3], [name], title),
         # gu.make_map_chart(data5, geometry, y_label3, 'CCAA', title),
         gu.make_bar_chart([data1, data2, data3], x_label123, [y_label1, y_label2, y_label3]),
     ]
@@ -275,6 +276,7 @@ def update_offer_graphs(year, ccaas, family):
 def update_demand_graphs(year, ccaas, family):
     y_label1 = 'Consumo per capita'
     y_label2 = 'Gasto per capita'
+    name = 'TASAS DE VARIACIÓN'
     x_label12 = 'Producto'
     x_label3 = 'Fecha'
     title = 'Evolución del gasto y del consumo per capita'
@@ -283,7 +285,7 @@ def update_demand_graphs(year, ccaas, family):
     data3 = du.get_product_data(y_label1, x_label3, year, ccaas, family)
     data4 = du.get_product_data(y_label2, x_label3, year, ccaas, family)
     return [
-        gu.make_line_chart([data3, data4], [x_label3, x_label3], [y_label1, y_label2], title),
+        gu.make_line_chart([data3, data4], [x_label3, x_label3], [y_label1, y_label2], [name, name], title),
         gu.make_bar_chart([data1, data2], x_label12, [y_label1, y_label2]),
     ]
 
@@ -294,20 +296,21 @@ def update_demand_graphs(year, ccaas, family):
     [Input('year-select3', 'value'), Input('country-select', 'value'), Input('indicators-select', 'value')]
 )
 def update_commerce_graphs(year, countries, indicator):
-    label1 = 'Importaciones'
-    label2 = 'Exportaciones'
+    y_label1 = 'Importaciones'
+    y_label2 = 'Exportaciones'
     x_label = 'Fecha'
+    name = 'Value'
     title1 = 'Evolución del comercio exterior'
     title2 = 'Comercio exterior por producto'
-    data1 = du.get_commerce_data('DATE', 'IMPORT', year, countries, indicator)
-    data2 = du.get_commerce_data('DATE', 'EXPORT', year, countries, indicator)
-    data3 = du.get_commerce_data('PRODUCT', 'IMPORT', year, countries, indicator)
-    data4 = du.get_commerce_data('PRODUCT', 'EXPORT', year, countries, indicator)
+    data1 = du.get_commerce_data('DATE', name, 'IMPORT', year, countries, indicator)
+    data2 = du.get_commerce_data('DATE', name, 'EXPORT', year, countries, indicator)
+    data3 = du.get_commerce_data('PRODUCT', name, 'IMPORT', year, countries, indicator)
+    data4 = du.get_commerce_data('PRODUCT', name, 'EXPORT', year, countries, indicator)
     # [data5, geometry] = du.get_eu_map_data('EXPORT', year, countries, indicator)
     return [
-        gu.make_line_chart([data1, data2], [x_label, x_label], [label1, label2], title1),
+        gu.make_line_chart([data1, data2], [x_label, x_label], [y_label1, y_label2], [name, name], title1),
         # gu.make_map_chart(data5, geometry, 'Value', 'country', title1),
-        gu.make_scatter_chart([data3, data4], [label1, label2], title2, True)
+        gu.make_scatter_chart([data3, data4], [y_label1, y_label1], [name, name], title2, True)
     ]
 
 # ===== END - PLOT GRAPH =====

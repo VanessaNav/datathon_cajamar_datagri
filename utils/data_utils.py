@@ -70,12 +70,12 @@ def filter_product_data(year, ccaas, family):
     return conditions
 
 
-def get_commerce_data(column, flow, year, countries, indicator):
+def get_commerce_data(group_col, column, flow, year, countries, indicator):
     conditions = filter_commerce_data(flow, year, countries, indicator)
-    if column == 'DATE':
-        data = pd.Series.pct_change(df4[conditions].groupby(column)['Value'].mean())
+    if group_col == 'DATE':
+        data = pd.Series.pct_change(df4[conditions].groupby(group_col)[column].mean())
     else:
-        data = df4[conditions].groupby(column)['Value'].sum()
+        data = df4[conditions].groupby(group_col)[column].sum()
 
     return data
 
