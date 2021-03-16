@@ -241,6 +241,7 @@ app.layout = html.Div(
                         html.A(
                             html.I(className='fab fa-github fa-lg mt-2'),
                             className='float-right',
+                            target='blank',
                             href="https://github.com/VanessaNav/datathon_cajamar_datagri",
                             title="SisterHack GitHub"),
                     ]),
