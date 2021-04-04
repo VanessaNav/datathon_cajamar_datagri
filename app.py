@@ -47,9 +47,13 @@ app = dash.Dash(
             "content": "Dashboard desarrollado por el equipo Sister Hack para el reto Agro Analysis de la competición Cajamar UniversityHack 2021."
         },
         {
-            "name": "viewport",
-            "content": "width=device-width, initial-scale=1.0"
-        }
+            "name": "image",
+            "content": "assets/Sister-Hack_small.png"
+        },
+        # {
+        #     "name": "viewport",
+        #     "content": "width=device-width, initial-scale=1.0"
+        # }
     ]
 )
 
