@@ -40,6 +40,16 @@ app = dash.Dash(
             "href": "https://fonts.googleapis.com/css2?family=Lilita+One&display=swap",
             "rel": "stylesheet",
         }
+    ],
+    meta_tags=[
+        {
+            "name": "description",
+            "content": "Dashboard desarrollado por el equipo SisterHack para el reto Agro Analysis de la competición Cajamar UniversityHack 2021."
+        },
+        {
+            "name": "viewport",
+            "content": "width=device-width, initial-scale=1.0"
+        }
     ]
 )
 
