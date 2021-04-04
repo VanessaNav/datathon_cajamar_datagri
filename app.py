@@ -44,7 +44,7 @@ app = dash.Dash(
     meta_tags=[
         {
             "name": "description",
-            "content": "Dashboard desarrollado por el equipo SisterHack para el reto Agro Analysis de la competición Cajamar UniversityHack 2021."
+            "content": "Dashboard desarrollado por el equipo Sister Hack para el reto Agro Analysis de la competición Cajamar UniversityHack 2021."
         },
         {
             "name": "viewport",
