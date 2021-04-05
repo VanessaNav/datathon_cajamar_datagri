@@ -104,6 +104,18 @@ h2, h3, h4, h5, h6 {
     z-index: 1000;
     height: 60px;
 }
+.offer-graphs{
+    clear: both;
+}
+.offer-graphs #spain-map-iframe{
+    display: inline-block;
+    vertical-align: middle;
+}
+.offer-graphs #prices-graph{
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 40px;
+}
 
 /* Footer */
 .footer{

@@ -129,16 +129,22 @@ app.layout = html.Div(
                                         style={'paddingLeft': '10px', 'display': 'inline-block'}
                                     ),
                                 ]),
-                            dcc.Graph(
-                                'prices-graph',
-                                # config={'displayModeBar': False}
-                            ),
-                            # dcc.Graph(
-                            #     'spain-map-graph',
-                            #     config={'displayModeBar': False}
-                            # ),
-                            html.Hr(style={'border-top': '3px dotted rosybrown'}),
-                            html.H4('🧄 Por Producto 🥝', style={'padding-top': '25px', 'textAlign': 'center'}),
+                            html.Div(
+                                className='offer-graphs',
+                                children=[
+                                    html.Iframe(
+                                        id='spain-map-iframe',
+                                        width='50%',
+                                        height='300',
+                                        srcDoc=open('map_tests/spain1.html', 'r').read()
+                                    ),
+                                    dcc.Graph(
+                                        'prices-graph',
+                                        style={'width': '50%'}
+                                    ),
+                                ]),
+                            html.Hr(style={'borderTop': '3px dotted rosybrown'}),
+                            html.H4('🧄 Por Producto 🥝', style={'paddingTop': '25px', 'textAlign': 'center'}),
                             dcc.Graph(
                                 'offer-graph',
                                 # config={'displayModeBar': False}
