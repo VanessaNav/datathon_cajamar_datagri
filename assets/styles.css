@@ -73,15 +73,15 @@ body .content .tab:hover{
     overflow: hidden;
 }
 .content .filters{
-    border-radius:10px;
-    margin-top: 10px;
+    border-radius: 0 10px 0 0;
     padding: 10px 10px 0 10px;
     background-color: SeaShell;
     width:220px;
     overflow: hidden;
     overflow-y: auto;
-    margin-left:10px;
-    margin-bottom:10px;
+    margin-top: 5px;
+    margin-left: 0;
+    margin-bottom: 0;
 }
 .content .filters > div > label{
     font-weight:bold;
@@ -107,7 +107,7 @@ body .content .tab:hover{
 .checklist-filter div{
     overflow: hidden;
     overflow-y: auto;
-    height:calc(100vh - 380px)
+    height:calc(100vh - 365px)
 }
 .content .measure-filter-container{
     width:50%;
@@ -155,7 +155,7 @@ body .content .tab:hover{
 /* LOGOS */
 .content .logo{
     position: fixed;
-    top: 15px;
+    top: 10px;
     right: 20px;
     display: flex;
     justify-content: center;
@@ -165,7 +165,7 @@ body .content .tab:hover{
 }
 .content .logo2{
     position: fixed;
-    top: 15px;
+    top: 10px;
     right: 120px;
     display: flex;
     justify-content: center;
