@@ -62,7 +62,7 @@ server = app.server
 # Filtros
 [years_filter, ccaas_filter, families_filter] = du.get_product_filters()
 [countries_filter, indicators_filter] = du.get_commerce_filters()
-measures_filter = ['TASA DE VARIACIÓN', 'MEDIA']
+measures_filter = ['Tasa de variación', 'Media']
 
 app.layout = html.Div(
     className='dash-container',
@@ -120,6 +120,9 @@ app.layout = html.Div(
                                 className='main-tab-content',
                                 children=[
                                     html.Div(
+                                        className="measure-filter-container",
+                                        children=[
+                                    html.Div(
                                         className='measure-filter',
                                         children=[
                                             html.Label('Medida: '),
@@ -127,9 +130,10 @@ app.layout = html.Div(
                                                 id='measure-select',
                                                 options=[{'label': i, 'value': i} for i in measures_filter],
                                                 value=measures_filter[0],
-                                                style={'paddingLeft': '10px', 'display': 'inline-block'}
+                                                style={'display': 'inline-block'}
                                             ),
                                         ]),
+                                    ]),
                                     html.Div(
                                         className='offer-graphs',
                                         children=[
