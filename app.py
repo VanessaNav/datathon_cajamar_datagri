@@ -122,25 +122,25 @@ app.layout = html.Div(
                                     html.Div(
                                         className="measure-filter-container",
                                         children=[
-                                    html.Div(
-                                        className='measure-filter',
-                                        children=[
-                                            html.Label('Medida: '),
-                                            dcc.RadioItems(
-                                                id='measure-select',
-                                                options=[{'label': i, 'value': i} for i in measures_filter],
-                                                value=measures_filter[0],
-                                                style={'display': 'inline-block'}
-                                            ),
+                                            html.Div(
+                                                className='measure-filter',
+                                                children=[
+                                                    html.Label('Medida: '),
+                                                    dcc.RadioItems(
+                                                        id='measure-select',
+                                                        options=[{'label': i, 'value': i} for i in measures_filter],
+                                                        value=measures_filter[0],
+                                                        style={'display': 'inline-block'}
+                                                    ),
+                                                ]),
                                         ]),
-                                    ]),
                                     html.Div(
                                         className='offer-graphs',
                                         children=[
                                             html.Iframe(
                                                 id='spain-map-iframe',
                                                 width='50%',
-                                                height='300',
+                                                height='420',
                                                 srcDoc=open('map_tests/spain1.html', 'r').read()
                                             ),
                                             dcc.Graph(
@@ -152,7 +152,6 @@ app.layout = html.Div(
                                     html.H4('🧄 Por Producto 🥝', style={'paddingTop': '25px', 'textAlign': 'center'}),
                                     dcc.Graph(
                                         'offer-graph',
-                                        # config={'displayModeBar': False}
                                     ),
                                 ]),
                         ]),
@@ -162,7 +161,7 @@ app.layout = html.Div(
                             html.Div(
                                 className='filters',
                                 children=[
-                                    html.H4('Filtros'),
+                                    html.H6('Filtros'),
                                     html.Div(
                                         children=[
                                             html.Label('Año: '),
@@ -173,6 +172,7 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                     html.Div(
+                                        className='ccaa-filter',
                                         children=[
                                             html.Label('CCAA: '),
                                             dcc.Checklist(
@@ -192,26 +192,32 @@ app.layout = html.Div(
                                         ]),
                                 ]),
                             html.Div(
-                                className='measure-filter',
+                                className='main-tab-content',
                                 children=[
-                                    html.Label('Medida: '),
-                                    dcc.RadioItems(
-                                        id='measure-select2',
-                                        options=[{'label': i, 'value': i} for i in measures_filter],
-                                        value=measures_filter[0],
-                                        style={'paddingLeft': '10px', 'display': 'inline-block'}
+                                    html.Div(
+                                        className='measure-filter-container',
+                                        children=[
+                                            html.Div(
+                                                className='measure-filter',
+                                                children=[
+                                                    html.Label('Medida: '),
+                                                    dcc.RadioItems(
+                                                        id='measure-select2',
+                                                        options=[{'label': i, 'value': i} for i in measures_filter],
+                                                        value=measures_filter[0],
+                                                        style={'display': 'inline-block'}
+                                                    ),
+                                                ]),
+                                        ]),
+                                    dcc.Graph(
+                                        'demand-time-graph',
+                                    ),
+                                    html.Hr(style={'border-top': '3px dotted rosybrown'}),
+                                    html.H4('🍆 Por Producto 🍒', style={'padding-top': '25px', 'textAlign': 'center'}),
+                                    dcc.Graph(
+                                        'demand-graph',
                                     ),
                                 ]),
-                            dcc.Graph(
-                                'demand-time-graph',
-                                # config={'displayModeBar': False}
-                            ),
-                            html.Hr(style={'border-top': '3px dotted rosybrown'}),
-                            html.H4('🍆 Por Producto 🍒', style={'padding-top': '25px', 'textAlign': 'center'}),
-                            dcc.Graph(
-                                'demand-graph',
-                                # config={'displayModeBar': False}
-                            ),
                         ]),
                     dcc.Tab(
                         label='Comercio Exterior (UE) 🌍',
@@ -219,7 +225,7 @@ app.layout = html.Div(
                             html.Div(
                                 className='filters',
                                 children=[
-                                    html.H4('Filtros'),
+                                    html.H6('Filtros'),
                                     html.Div(
                                         children=[
                                             html.Label('Año: '),
@@ -230,6 +236,7 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                     html.Div(
+                                        className="ccaa-filter",
                                         children=[
                                             html.Label('País: '),
                                             dcc.Checklist(
@@ -249,30 +256,35 @@ app.layout = html.Div(
                                         ]),
                                 ]),
                             html.Div(
-                                className='measure-filter',
+                                className='main-tab-content',
                                 children=[
-                                    html.Label('Medida: '),
-                                    dcc.RadioItems(
-                                        id='measure-select3',
-                                        options=[{'label': i, 'value': i} for i in measures_filter],
-                                        value=measures_filter[0],
-                                        style={'paddingLeft': '10px', 'display': 'inline-block'}
+                                    html.Div(
+                                        className='measure-filter-container',
+                                        children=[
+                                            html.Div(
+                                                className='measure-filter',
+                                                children=[
+                                                    html.Label('Medida: '),
+                                                    dcc.RadioItems(
+                                                        id='measure-select3',
+                                                        options=[{'label': i, 'value': i} for i in measures_filter],
+                                                        value=measures_filter[0],
+                                                        style={'display': 'inline-block'}
+                                                    ),
+                                                ]),
+                                        ]),
+                                    dcc.Graph(
+                                        'commerce-time-graph',
+                                    ),
+                                    # dcc.Graph(
+                                    #     'eu-map-graph',
+                                    # ),
+                                    html.Hr(style={'border-top': '3px dotted rosybrown'}),
+                                    html.H4('🍅 Por Producto 🍈', style={'padding-top': '25px', 'textAlign': 'center'}),
+                                    dcc.Graph(
+                                        'commerce-graph',
                                     ),
                                 ]),
-                            dcc.Graph(
-                                'commerce-time-graph',
-                                # config={'displayModeBar': False}
-                            ),
-                            # dcc.Graph(
-                            #     'eu-map-graph',
-                            #     config={'displayModeBar': False}
-                            # ),
-                            html.Hr(style={'border-top': '3px dotted rosybrown'}),
-                            html.H4('🍅 Por Producto 🍈', style={'padding-top': '25px', 'textAlign': 'center'}),
-                            dcc.Graph(
-                                'commerce-graph',
-                                # config={'displayModeBar': False}
-                            ),
                         ]),
                 ])
             ]),
@@ -294,7 +306,7 @@ app.layout = html.Div(
                                href="https://www.cajamardatalab.com/datathon-cajamar-universityhack-2021/retos/visualizacion/",
                                title="Reto Cajamar Agro Analysis"),
                         html.A(
-                            html.I(className='fab fa-github fa-lg mt-2'),
+                            html.I(className='fab fa-github fa-lg mt-1'),
                             className='float-right',
                             target='blank',
                             href="https://github.com/VanessaNav/datathon_cajamar_datagri",
