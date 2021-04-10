@@ -141,7 +141,7 @@ body .content .tab:hover{
 .offer-graphs{
     clear: both;
 }
-.offer-graphs #spain-map-iframe{
+.spain-map-iframe{
     display: inline-block;
     vertical-align: middle;
     border-radius: 10px;
@@ -149,7 +149,12 @@ body .content .tab:hover{
 .offer-graphs #prices-graph{
     display: inline-block;
     vertical-align: middle;
-    padding-left: 5px;
+}
+.description{
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 10px;
 }
 
 /* LOGOS */

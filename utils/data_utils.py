@@ -14,12 +14,14 @@ df4 = pd.read_csv('data/Dataset4.txt', sep='|')
 df5 = pd.read_csv('data/Dataset5.txt', sep='|')
 # return [df1, df2, df3, df4, df5]
 spain_coordinates = [40.416775, -3.703790]
+eu_coordinates = [40.416775, -3.703790]
 
 def get_product_filters():
+    products_filter = df1['Producto'].unique().tolist()
     years_filter = ['Todos'] + df1['Año'].unique().tolist()
     ccaas_filter = df1['CCAA'].unique()
     families_filter = ['F&H', 'Frutas', 'Hortalizas']
-    return [years_filter, ccaas_filter, families_filter]
+    return [products_filter, years_filter, ccaas_filter, families_filter]
 
 
 def get_commerce_filters():
@@ -28,8 +30,21 @@ def get_commerce_filters():
     return [countries_filter, indicators_filter]
 
 
-def get_product_data(column, group_col, year, ccaas, family, measure):
-    conditions = filter_product_data(year, ccaas, family)
+def get_products_data(column, group_col, year, products):
+    if len(products) == 0 and (year == 'Todos'):
+        filtered_data = df1
+    elif len(products) != 0 and (year == 'Todos'):
+        filtered_data = df1[df1['Producto'].isin(products)]
+    elif len(products) == 0 and year != 'Todos':
+        filtered_data = df1[df1['Año'] == year]
+    else:
+        filtered_data = df1[(df1['Producto'].isin(products)) & (df1['Año'] == year)]
+    data = filtered_data.groupby(group_col)[column].mean()
+    return data
+
+
+def get_generic_product_data(column, group_col, year, ccaas, family, measure):
+    conditions = filter_generic_product_data(year, ccaas, family)
     if conditions is not None:
         if group_col == 'Fecha' and measure == 'Tasa de variación':
             data = pd.Series.pct_change(df1[conditions].groupby(group_col)[column].mean())
@@ -43,7 +58,7 @@ def get_product_data(column, group_col, year, ccaas, family, measure):
     return data
 
 
-def filter_product_data(year, ccaas, family):
+def filter_generic_product_data(year, ccaas, family):
     if (len(ccaas) == 0) and (family == 'F&H') and (year == 'Todos'):
         return None
     else:
@@ -96,11 +111,34 @@ def filter_commerce_data(flow, year, countries, indicator):
 
 
 def generate_spain_map(column, map_name, year, ccaas, family):
-    conditions = filter_product_data(year, ccaas, family)
+    conditions = filter_generic_product_data(year, ccaas, family)
     if conditions is not None:
         data = df1[conditions]
     else:
         data = df1
+    # file name - file is located in the working directory
+    communities_geo = r'data/spain-communities.geojson'  # geojson file
+    # create a plain world map
+    communities_map = folium.Map(location=spain_coordinates, zoom_start=5, tiles='cartodbpositron')
+    # generate choropleth map
+    communities_map.choropleth(
+        geo_data=communities_geo,
+        data=data,
+        columns=['CCAA', column],
+        key_on='feature.properties.name',
+        fill_color="BuPu",
+        fill_opacity=0.7,
+        line_opacity=0.5,
+        legend_name=column,
+        smooth_factor=0)
+    communities_map.save('maps/' + map_name + '.html')
+
+
+def generate_spain_products_map(column, map_name, year, products):
+    if len(products) == 0:
+        data = df1
+    else:
+        data = df1[df1['Producto'].isin(products)]
     # file name - file is located in the working directory
     communities_geo = r'data/spain-communities.geojson'  # geojson file
     # create a plain world map

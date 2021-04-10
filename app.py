@@ -60,9 +60,13 @@ app = dash.Dash(
 server = app.server
 
 # Filtros
-[years_filter, ccaas_filter, families_filter] = du.get_product_filters()
+[products_filter, years_filter, ccaas_filter, families_filter] = du.get_product_filters()
 [countries_filter, indicators_filter] = du.get_commerce_filters()
 measures_filter = ['Media', 'Tasa de variación']
+volume_description = 'En 2020 los productos con mayor volumen de kg recolectados fueron la patata, la naraja y el tomate, con valores de 14.2, 11.2 y 8.5 miles de kg (aprox), respectivamente. Con respecto a 2019, el volumen de patatas recolectadas ha aumentado un 20%.'
+value_description = 'Los productos que mayor valor aportaron a la agricultura de España (en relación a la recolección de 2020) fueron el tomate y la patata, con unos valores de 14.9 y 13.9 miles de € (aprox), respectivamente. Con respecto al año anterior, el valor la recolección total del tomate ha aumentado un 55%.'
+consumed_description = 'El consumo de kg de patatas y naranjas de los españoles en 2020 ha aumentado un 23% y un 51%, respectivamente.'
+expense_description = 'El gasto de patatas y naranjas de las familias en 2020 ha aumentado un 27% y un 74%, respectivamente.'
 
 app.layout = html.Div(
     className='dash-container',
@@ -80,6 +84,169 @@ app.layout = html.Div(
                 html.Img(className='logo', src='assets/datagri.png'),
                 html.Img(className='logo2', src='assets/Sister-Hack_small.png'),
                 dcc.Tabs([
+                    dcc.Tab(
+                        label='Productos 🥝',
+                        children=[
+                            html.Div(
+                                className='filters',
+                                children=[
+                                    html.H6('Filtros'),
+                                    html.Div(
+                                        className='filter',
+                                        children=[
+                                            html.Label('Año: '),
+                                            dcc.Dropdown(
+                                                id='year-select4',
+                                                options=[{'label': i, 'value': i} for i in years_filter],
+                                                value='Todos',
+                                            ),
+                                        ]),
+                                    html.Div(
+                                        className='checklist-filter',
+                                        children=[
+                                            html.Label('Productos: '),
+                                            dcc.Checklist(
+                                                id='product-select',
+                                                options=[{'label': i, 'value': i} for i in products_filter],
+                                                value=[],
+                                            ),
+                                        ]),
+                                ]),
+                            html.Div(
+                                className='main-tab-content',
+                                children=[
+                                    dcc.Tabs([
+                                        dcc.Tab(
+                                            label='Volumen',
+                                            children=[
+                                                html.Div(
+                                                    className='main-tab-content',
+                                                    children=[
+                                                        html.Div(
+                                                            className='product-graphs',
+                                                            children=[
+                                                                html.H6('Volumen por CCAA'),
+                                                                html.Iframe(
+                                                                    className='spain-map-iframe',
+                                                                    id='products-volume-spain-map-iframe',
+                                                                    width='50%',
+                                                                    height='420',
+                                                                    srcDoc=open('maps/spain-products-volume.html',
+                                                                                'r').read()
+                                                                ),
+                                                                html.Div(
+                                                                    className='description',
+                                                                    children=[
+                                                                        html.P(
+                                                                            volume_description
+                                                                        )],
+                                                                    style={'width': '50%'}
+                                                                ),
+                                                                dcc.Graph(
+                                                                    'products-volume-graph',
+                                                                ),
+                                                            ]),
+                                                    ]),
+                                            ]),
+                                        dcc.Tab(
+                                            label='Valor',
+                                            children=[
+                                                html.Div(
+                                                    className='main-tab-content',
+                                                    children=[
+                                                        html.Div(
+                                                            className='product-graphs',
+                                                            children=[
+                                                                html.H6('Valor por CCAA'),
+                                                                html.Iframe(
+                                                                    className='spain-map-iframe',
+                                                                    id='products-value-spain-map-iframe',
+                                                                    width='50%',
+                                                                    height='420',
+                                                                    srcDoc=open('maps/spain-products-value.html',
+                                                                                'r').read()
+                                                                ),
+                                                                html.Div(
+                                                                    className='description',
+                                                                    children=[
+                                                                        html.P(
+                                                                            value_description
+                                                                        )],
+                                                                    style={'width': '50%'}
+                                                                ),
+                                                                dcc.Graph(
+                                                                    'products-value-graph',
+                                                                ),
+                                                            ]),
+                                                    ]),
+                                            ]),
+                                        dcc.Tab(
+                                            label='Consumo per capita',
+                                            children=[
+                                                html.Div(
+                                                    className='main-tab-content',
+                                                    children=[
+                                                        html.Div(
+                                                            className='product-graphs',
+                                                            children=[
+                                                                html.H6('Consumo per capita por CCAA'),
+                                                                html.Iframe(
+                                                                    className='spain-map-iframe',
+                                                                    id='products-consumed-spain-map-iframe',
+                                                                    width='50%',
+                                                                    height='420',
+                                                                    srcDoc=open('maps/spain-products-consumed.html',
+                                                                                'r').read()
+                                                                ),
+                                                                html.Div(
+                                                                    className='description',
+                                                                    children=[
+                                                                        html.P(
+                                                                            consumed_description
+                                                                        )],
+                                                                    style={'width': '50%'}
+                                                                ),
+                                                                dcc.Graph(
+                                                                    'products-consumed-graph',
+                                                                ),
+                                                            ]),
+                                                    ]),
+                                            ]),
+                                        dcc.Tab(
+                                            label='Gasto per capita',
+                                            children=[
+                                                html.Div(
+                                                    className='main-tab-content',
+                                                    children=[
+                                                        html.Div(
+                                                            className='product-graphs',
+                                                            children=[
+                                                                html.H6('Gasto per capita por CCAA'),
+                                                                html.Iframe(
+                                                                    className='spain-map-iframe',
+                                                                    id='products-expense-spain-map-iframe',
+                                                                    width='50%',
+                                                                    height='420',
+                                                                    srcDoc=open('maps/spain-products-expense.html',
+                                                                                'r').read()
+                                                                ),
+                                                                html.Div(
+                                                                    className='description',
+                                                                    children=[
+                                                                        html.P(
+                                                                            expense_description
+                                                                        )],
+                                                                    style={'width': '50%'}
+                                                                ),
+                                                                dcc.Graph(
+                                                                    'products-expense-graph',
+                                                                ),
+                                                            ]),
+                                                    ]),
+                                            ]),
+                                    ]),
+                                ]),
+                        ]),
                     dcc.Tab(
                         label='Oferta de Productos 🥕',
                         children=[
@@ -139,8 +306,10 @@ app.layout = html.Div(
                                     html.Div(
                                         className='offer-graphs',
                                         children=[
+                                            html.H6('Variables por CCAA'),
                                             html.Iframe(
-                                                id='spain-map-iframe',
+                                                className='spain-map-iframe',
+                                                id='offer-spain-map-iframe',
                                                 width='50%',
                                                 height='420',
                                                 srcDoc=open('maps/spain-offer.html', 'r').read()
@@ -150,11 +319,6 @@ app.layout = html.Div(
                                                 style={'width': '50%'}
                                             ),
                                         ]),
-                                    html.Hr(style={'borderTop': '3px dotted rosybrown'}),
-                                    html.H4('🧄 Por Producto 🥝', style={'paddingTop': '25px', 'textAlign': 'center'}),
-                                    dcc.Graph(
-                                        'offer-graph',
-                                    ),
                                 ]),
                         ]),
                     dcc.Tab(
@@ -215,11 +379,6 @@ app.layout = html.Div(
                                         ]),
                                     dcc.Graph(
                                         'demand-time-graph',
-                                    ),
-                                    html.Hr(style={'border-top': '3px dotted rosybrown'}),
-                                    html.H4('🍆 Por Producto 🍒', style={'padding-top': '25px', 'textAlign': 'center'}),
-                                    dcc.Graph(
-                                        'demand-graph',
                                     ),
                                 ]),
                         ]),
@@ -325,47 +484,63 @@ app.title = 'Sister Hack'
 
 
 @app.callback(
-    [Output('prices-graph', 'figure'), Output('offer-graph', 'figure')],
-    [Input('year-select', 'value'), Input('ccaa-select', 'value'), Input('family-select', 'value'),
-     Input('measure-select', 'value')]
+    [Output('products-volume-graph', 'figure'), Output('products-value-graph', 'figure'),
+     Output('products-consumed-graph', 'figure'), Output('products-expense-graph', 'figure')],
+    [Input('year-select4', 'value'), Input('product-select', 'value')]
 )
-def update_offer_graphs(year, ccaas, family, measure):
+def update_product_graphs(year, products):
+    x_label = 'Producto'
     y_label1 = 'Volumen (miles de kg)'
     y_label2 = 'Valor (miles de €)'
-    y_label3 = 'Precio medio kg'
-    name = 'Precio medio kg (' + measure + ')'
-    x_label123 = 'Producto'
-    x_label4 = 'Fecha'
-    title = 'Volatilidad de los precios 📈: Evolución del precio medio por kg'
-    data1 = du.get_product_data(y_label1, x_label123, year, ccaas, family, measure)
-    data2 = du.get_product_data(y_label2, x_label123, year, ccaas, family, measure)
-    data3 = du.get_product_data(y_label3, x_label123, year, ccaas, family, measure)
-    data4 = du.get_product_data(y_label3, x_label4, year, ccaas, family, measure)
-    du.generate_spain_map(y_label3, 'spain-offer', year, ccaas, family)
+    y_label3 = 'Consumo per capita'
+    y_label4 = 'Gasto per capita'
+    data1 = du.get_products_data(y_label1, x_label, year, products)
+    du.generate_spain_products_map(y_label1, 'spain-products-volume', year, products)
+    data2 = du.get_products_data(y_label2, x_label, year, products)
+    du.generate_spain_products_map(y_label2, 'spain-products-value', year, products)
+    data3 = du.get_products_data(y_label3, x_label, year, products)
+    du.generate_spain_products_map(y_label3, 'spain-products-consumed', year, products)
+    data4 = du.get_products_data(y_label4, x_label, year, products)
+    du.generate_spain_products_map(y_label4, 'spain-products-expense', year, products)
     return [
-        gu.make_line_chart([data4], [x_label4], [y_label3], [name], title),
-        gu.make_bar_chart([data1, data2, data3], x_label123, [y_label1, y_label2, y_label3]),
+        gu.make_bar_chart([data1], x_label, [y_label1]),
+        gu.make_bar_chart([data2], x_label, [y_label2]),
+        gu.make_bar_chart([data3], x_label, [y_label3]),
+        gu.make_bar_chart([data4], x_label, [y_label4]),
     ]
 
 
 @app.callback(
-    [Output('demand-time-graph', 'figure'), Output('demand-graph', 'figure')],
+    [Output('prices-graph', 'figure')],
+    [Input('year-select', 'value'), Input('ccaa-select', 'value'), Input('family-select', 'value'),
+     Input('measure-select', 'value')]
+)
+def update_offer_graphs(year, ccaas, family, measure):
+    y_label3 = 'Precio medio kg'
+    name = 'Precio medio kg (' + measure + ')'
+    x_label4 = 'Fecha'
+    title = 'Volatilidad de los precios 📈: Evolución del precio medio por kg'
+    data4 = du.get_generic_product_data(y_label3, x_label4, year, ccaas, family, measure)
+    du.generate_spain_map(y_label3, 'spain-offer', year, ccaas, family)
+    return [
+        gu.make_line_chart([data4], [x_label4], [y_label3], [name], title),
+    ]
+
+
+@app.callback(
+    [Output('demand-time-graph', 'figure')],
     [Input('year-select2', 'value'), Input('ccaa-select2', 'value'), Input('family-select2', 'value'),
      Input('measure-select2', 'value')]
 )
 def update_demand_graphs(year, ccaas, family, measure):
     y_label1 = 'Consumo per capita'
     y_label2 = 'Gasto per capita'
-    x_label12 = 'Producto'
     x_label3 = 'Fecha'
     title = 'Evolución del gasto y del consumo per capita'
-    data1 = du.get_product_data(y_label1, x_label12, year, ccaas, family, measure)
-    data2 = du.get_product_data(y_label2, x_label12, year, ccaas, family, measure)
-    data3 = du.get_product_data(y_label1, x_label3, year, ccaas, family, measure)
-    data4 = du.get_product_data(y_label2, x_label3, year, ccaas, family, measure)
+    data3 = du.get_generic_product_data(y_label1, x_label3, year, ccaas, family, measure)
+    data4 = du.get_generic_product_data(y_label2, x_label3, year, ccaas, family, measure)
     return [
-        gu.make_line_chart([data3, data4], [x_label3, x_label3], [y_label1, y_label2], [measure, measure], title),
-        gu.make_bar_chart([data1, data2], x_label12, [y_label1, y_label2]),
+        gu.make_line_chart([data3, data4], [x_label3, x_label3], [y_label1, y_label2], [measure, measure], title)
     ]
 
 
