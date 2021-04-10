@@ -62,7 +62,7 @@ server = app.server
 # Filtros
 [years_filter, ccaas_filter, families_filter] = du.get_product_filters()
 [countries_filter, indicators_filter] = du.get_commerce_filters()
-measures_filter = ['Tasa de variación', 'Media']
+measures_filter = ['Media', 'Tasa de variación']
 
 app.layout = html.Div(
     className='dash-container',
@@ -143,7 +143,7 @@ app.layout = html.Div(
                                                 id='spain-map-iframe',
                                                 width='50%',
                                                 height='420',
-                                                srcDoc=open('map_tests/spain1.html', 'r').read()
+                                                srcDoc=open('maps/spain-offer.html', 'r').read()
                                             ),
                                             dcc.Graph(
                                                 'prices-graph',
@@ -326,7 +326,6 @@ app.title = 'Sister Hack'
 
 @app.callback(
     [Output('prices-graph', 'figure'), Output('offer-graph', 'figure')],
-    # [Output('prices-graph', 'figure'), Output('spain-map-graph', 'figure'), Output('offer-graph', 'figure')],
     [Input('year-select', 'value'), Input('ccaa-select', 'value'), Input('family-select', 'value'),
      Input('measure-select', 'value')]
 )
@@ -342,10 +341,9 @@ def update_offer_graphs(year, ccaas, family, measure):
     data2 = du.get_product_data(y_label2, x_label123, year, ccaas, family, measure)
     data3 = du.get_product_data(y_label3, x_label123, year, ccaas, family, measure)
     data4 = du.get_product_data(y_label3, x_label4, year, ccaas, family, measure)
-    # [data5, geometry] = du.get_map_data(year, ccaas, family)
+    du.generate_spain_map(y_label3, 'spain-offer', year, ccaas, family)
     return [
         gu.make_line_chart([data4], [x_label4], [y_label3], [name], title),
-        # gu.make_map_chart(data5, geometry, y_label3, 'CCAA', title),
         gu.make_bar_chart([data1, data2, data3], x_label123, [y_label1, y_label2, y_label3]),
     ]
 
@@ -373,7 +371,6 @@ def update_demand_graphs(year, ccaas, family, measure):
 
 @app.callback(
     [Output('commerce-time-graph', 'figure'), Output('commerce-graph', 'figure')],
-    # [Output('commerce-time-graph', 'figure'), Output('eu-map-graph', 'figure'), Output('commerce-graph', 'figure')],
     [Input('year-select3', 'value'), Input('country-select', 'value'), Input('indicators-select', 'value'),
      Input('measure-select3', 'value')]
 )
@@ -388,10 +385,8 @@ def update_commerce_graphs(year, countries, indicator, measure):
     data2 = du.get_commerce_data('DATE', name, 'EXPORT', year, countries, indicator, measure)
     data3 = du.get_commerce_data('PRODUCT', name, 'IMPORT', year, countries, indicator, measure)
     data4 = du.get_commerce_data('PRODUCT', name, 'EXPORT', year, countries, indicator, measure)
-    # [data5, geometry] = du.get_eu_map_data('EXPORT', year, countries, indicator)
     return [
         gu.make_line_chart([data1, data2], [x_label, x_label], [y_label1, y_label2], [name, name], title1),
-        # gu.make_map_chart(data5, geometry, 'Value', 'country', title1),
         gu.make_scatter_chart([data3, data4], [y_label1, y_label2], [name, name], title2, True)
     ]
 

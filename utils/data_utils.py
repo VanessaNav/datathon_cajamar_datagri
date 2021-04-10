@@ -1,6 +1,5 @@
 import pandas as pd
-import numpy as np
-from shapely.geometry import Point, mapping, shape
+import folium
 
 
 # Fuentes de datos externas
@@ -14,7 +13,7 @@ df3 = pd.read_csv('data/Dataset3.txt', sep='|')
 df4 = pd.read_csv('data/Dataset4.txt', sep='|')
 df5 = pd.read_csv('data/Dataset5.txt', sep='|')
 # return [df1, df2, df3, df4, df5]
-
+spain_coordinates = [40.416775, -3.703790]
 
 def get_product_filters():
     years_filter = ['Todos'] + df1['Año'].unique().tolist()
@@ -96,26 +95,25 @@ def filter_commerce_data(flow, year, countries, indicator):
     return conditions
 
 
-def get_map_data(year, ccaas, family):
+def generate_spain_map(column, map_name, year, ccaas, family):
     conditions = filter_product_data(year, ccaas, family)
-    if conditions:
+    if conditions is not None:
         data = df1[conditions]
     else:
         data = df1
-
-    locations = data[['LATITUD_ETRS89', 'LONGITUD_ETRS89']]
-    geocodes = [(location[0], location[1]) for location in locations.values if
-                location[0] is not np.nan and location[1] is not np.nan]
-    geometry = [mapping(Point(geocode)) for geocode in geocodes if geocode is not None and Point(geocode).is_valid]
-    return [data, geometry]
-
-
-def get_eu_map_data(flow, year, countries, indicator):
-    conditions = filter_commerce_data(flow, year, countries, indicator)
-    data = df4[conditions]
-
-    locations = data[['latitude', 'longitude']]
-    geocodes = [(location[0], location[1]) for location in locations.values if
-                location[0] is not np.nan and location[1] is not np.nan]
-    geometry = [mapping(Point(geocode)) for geocode in geocodes if geocode is not None and Point(geocode).is_valid]
-    return [data, geometry]
+    # file name - file is located in the working directory
+    communities_geo = r'data/spain-communities.geojson'  # geojson file
+    # create a plain world map
+    communities_map = folium.Map(location=spain_coordinates, zoom_start=5, tiles='cartodbpositron')
+    # generate choropleth map
+    communities_map.choropleth(
+        geo_data=communities_geo,
+        data=data,
+        columns=['CCAA', column],
+        key_on='feature.properties.name',
+        fill_color="BuPu",
+        fill_opacity=0.7,
+        line_opacity=0.5,
+        legend_name=column,
+        smooth_factor=0)
+    communities_map.save('maps/' + map_name + '.html')
