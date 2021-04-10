@@ -88,6 +88,7 @@ app.layout = html.Div(
                                 children=[
                                     html.H6('Filtros'),
                                     html.Div(
+                                        className='filter',
                                         children=[
                                             html.Label('Año: '),
                                             dcc.Dropdown(
@@ -97,22 +98,23 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                     html.Div(
-                                        className='ccaa-filter',
-                                        children=[
-                                            html.Label('CCAA: '),
-                                            dcc.Checklist(
-                                                id='ccaa-select',
-                                                options=[{'label': i, 'value': i} for i in ccaas_filter],
-                                                value=[],
-                                            ),
-                                        ]),
-                                    html.Div(
+                                        className='filter',
                                         children=[
                                             html.Label('Familia de productos: '),
                                             dcc.RadioItems(
                                                 id='family-select',
                                                 options=[{'label': i, 'value': i} for i in families_filter],
                                                 value='F&H',
+                                            ),
+                                        ]),
+                                    html.Div(
+                                        className='checklist-filter',
+                                        children=[
+                                            html.Label('CCAA: '),
+                                            dcc.Checklist(
+                                                id='ccaa-select',
+                                                options=[{'label': i, 'value': i} for i in ccaas_filter],
+                                                value=[],
                                             ),
                                         ]),
                                 ]),
@@ -163,6 +165,7 @@ app.layout = html.Div(
                                 children=[
                                     html.H6('Filtros'),
                                     html.Div(
+                                        className='filter',
                                         children=[
                                             html.Label('Año: '),
                                             dcc.Dropdown(
@@ -172,22 +175,23 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                     html.Div(
-                                        className='ccaa-filter',
-                                        children=[
-                                            html.Label('CCAA: '),
-                                            dcc.Checklist(
-                                                id='ccaa-select2',
-                                                options=[{'label': i, 'value': i} for i in ccaas_filter],
-                                                value=[],
-                                            ),
-                                        ]),
-                                    html.Div(
+                                        className='filter',
                                         children=[
                                             html.Label('Familia de productos: '),
                                             dcc.RadioItems(
                                                 id='family-select2',
                                                 options=[{'label': i, 'value': i} for i in families_filter],
                                                 value='F&H',
+                                            ),
+                                        ]),
+                                    html.Div(
+                                        className='checklist-filter',
+                                        children=[
+                                            html.Label('CCAA: '),
+                                            dcc.Checklist(
+                                                id='ccaa-select2',
+                                                options=[{'label': i, 'value': i} for i in ccaas_filter],
+                                                value=[],
                                             ),
                                         ]),
                                 ]),
@@ -227,6 +231,7 @@ app.layout = html.Div(
                                 children=[
                                     html.H6('Filtros'),
                                     html.Div(
+                                        className='filter',
                                         children=[
                                             html.Label('Año: '),
                                             dcc.Dropdown(
@@ -236,22 +241,23 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                     html.Div(
-                                        className="ccaa-filter",
-                                        children=[
-                                            html.Label('País: '),
-                                            dcc.Checklist(
-                                                id='country-select',
-                                                options=[{'label': i, 'value': i} for i in countries_filter],
-                                                value=[],
-                                            ),
-                                        ]),
-                                    html.Div(
+                                        className='filter',
                                         children=[
                                             html.Label('Indicador: '),
                                             dcc.RadioItems(
                                                 id='indicators-select',
                                                 options=[{'label': i, 'value': i} for i in indicators_filter],
                                                 value=indicators_filter[0],
+                                            ),
+                                        ]),
+                                    html.Div(
+                                        className="checklist-filter",
+                                        children=[
+                                            html.Label('País: '),
+                                            dcc.Checklist(
+                                                id='country-select',
+                                                options=[{'label': i, 'value': i} for i in countries_filter],
+                                                value=[],
                                             ),
                                         ]),
                                 ]),

@@ -101,10 +101,13 @@ body .content .tab:hover{
     color: RosyBrown !important;
     padding-bottom: 5px;
 }
-.ccaa-filter div{
+.filter {
+    margin-bottom: 5px;
+}
+.checklist-filter div{
     overflow: hidden;
     overflow-y: auto;
-    height:250px;
+    height:calc(100vh - 380px)
 }
 .content .measure-filter-container{
     width:50%;
