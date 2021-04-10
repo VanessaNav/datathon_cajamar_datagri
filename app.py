@@ -33,7 +33,7 @@ app = dash.Dash(
             'crossorigin': 'anonymous'
         },
         {
-            "href": "https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap",
+            "href": "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap",
             "rel": "stylesheet",
         },
         {
@@ -86,7 +86,7 @@ app.layout = html.Div(
                             html.Div(
                                 className='filters',
                                 children=[
-                                    html.H4('Filtros'),
+                                    html.H6('Filtros'),
                                     html.Div(
                                         children=[
                                             html.Label('Año: '),
@@ -94,17 +94,16 @@ app.layout = html.Div(
                                                 id='year-select',
                                                 options=[{'label': i, 'value': i} for i in years_filter],
                                                 value='Todos',
-                                                style={'paddingLeft': '10px', 'width': '240px'}
                                             ),
                                         ]),
                                     html.Div(
+                                        className='ccaa-filter',
                                         children=[
                                             html.Label('CCAA: '),
                                             dcc.Checklist(
                                                 id='ccaa-select',
                                                 options=[{'label': i, 'value': i} for i in ccaas_filter],
                                                 value=[],
-                                                style={'paddingLeft': '10px'}
                                             ),
                                         ]),
                                     html.Div(
@@ -114,41 +113,44 @@ app.layout = html.Div(
                                                 id='family-select',
                                                 options=[{'label': i, 'value': i} for i in families_filter],
                                                 value='F&H',
-                                                style={'paddingLeft': '10px'}
                                             ),
                                         ]),
                                 ]),
                             html.Div(
-                                className='measure-filter',
+                                className='main-tab-content',
                                 children=[
-                                    html.Label('Medida: '),
-                                    dcc.RadioItems(
-                                        id='measure-select',
-                                        options=[{'label': i, 'value': i} for i in measures_filter],
-                                        value=measures_filter[0],
-                                        style={'paddingLeft': '10px', 'display': 'inline-block'}
-                                    ),
-                                ]),
-                            html.Div(
-                                className='offer-graphs',
-                                children=[
-                                    html.Iframe(
-                                        id='spain-map-iframe',
-                                        width='50%',
-                                        height='300',
-                                        srcDoc=open('map_tests/spain1.html', 'r').read()
-                                    ),
+                                    html.Div(
+                                        className='measure-filter',
+                                        children=[
+                                            html.Label('Medida: '),
+                                            dcc.RadioItems(
+                                                id='measure-select',
+                                                options=[{'label': i, 'value': i} for i in measures_filter],
+                                                value=measures_filter[0],
+                                                style={'paddingLeft': '10px', 'display': 'inline-block'}
+                                            ),
+                                        ]),
+                                    html.Div(
+                                        className='offer-graphs',
+                                        children=[
+                                            html.Iframe(
+                                                id='spain-map-iframe',
+                                                width='50%',
+                                                height='300',
+                                                srcDoc=open('map_tests/spain1.html', 'r').read()
+                                            ),
+                                            dcc.Graph(
+                                                'prices-graph',
+                                                style={'width': '50%'}
+                                            ),
+                                        ]),
+                                    html.Hr(style={'borderTop': '3px dotted rosybrown'}),
+                                    html.H4('🧄 Por Producto 🥝', style={'paddingTop': '25px', 'textAlign': 'center'}),
                                     dcc.Graph(
-                                        'prices-graph',
-                                        style={'width': '50%'}
+                                        'offer-graph',
+                                        # config={'displayModeBar': False}
                                     ),
                                 ]),
-                            html.Hr(style={'borderTop': '3px dotted rosybrown'}),
-                            html.H4('🧄 Por Producto 🥝', style={'paddingTop': '25px', 'textAlign': 'center'}),
-                            dcc.Graph(
-                                'offer-graph',
-                                # config={'displayModeBar': False}
-                            ),
                         ]),
                     dcc.Tab(
                         label='Demanda de Productos 🍇',
@@ -164,7 +166,6 @@ app.layout = html.Div(
                                                 id='year-select2',
                                                 options=[{'label': i, 'value': i} for i in years_filter],
                                                 value='Todos',
-                                                style={'paddingLeft': '10px', 'width': '240px'}
                                             ),
                                         ]),
                                     html.Div(
@@ -174,7 +175,6 @@ app.layout = html.Div(
                                                 id='ccaa-select2',
                                                 options=[{'label': i, 'value': i} for i in ccaas_filter],
                                                 value=[],
-                                                style={'paddingLeft': '10px'}
                                             ),
                                         ]),
                                     html.Div(
@@ -184,7 +184,6 @@ app.layout = html.Div(
                                                 id='family-select2',
                                                 options=[{'label': i, 'value': i} for i in families_filter],
                                                 value='F&H',
-                                                style={'paddingLeft': '10px'}
                                             ),
                                         ]),
                                 ]),
@@ -224,7 +223,6 @@ app.layout = html.Div(
                                                 id='year-select3',
                                                 options=[{'label': i, 'value': i} for i in years_filter],
                                                 value='Todos',
-                                                style={'paddingLeft': '10px', 'width': '240px'}
                                             ),
                                         ]),
                                     html.Div(
@@ -234,7 +232,6 @@ app.layout = html.Div(
                                                 id='country-select',
                                                 options=[{'label': i, 'value': i} for i in countries_filter],
                                                 value=[],
-                                                style={'paddingLeft': '10px'}
                                             ),
                                         ]),
                                     html.Div(
@@ -244,7 +241,6 @@ app.layout = html.Div(
                                                 id='indicators-select',
                                                 options=[{'label': i, 'value': i} for i in indicators_filter],
                                                 value=indicators_filter[0],
-                                                style={'paddingLeft': '10px'}
                                             ),
                                         ]),
                                 ]),
@@ -309,7 +305,8 @@ app.title = 'Sister Hack'
 @app.callback(
     [Output('prices-graph', 'figure'), Output('offer-graph', 'figure')],
     # [Output('prices-graph', 'figure'), Output('spain-map-graph', 'figure'), Output('offer-graph', 'figure')],
-    [Input('year-select', 'value'), Input('ccaa-select', 'value'), Input('family-select', 'value'), Input('measure-select', 'value')]
+    [Input('year-select', 'value'), Input('ccaa-select', 'value'), Input('family-select', 'value'),
+     Input('measure-select', 'value')]
 )
 def update_offer_graphs(year, ccaas, family, measure):
     y_label1 = 'Volumen (miles de kg)'
@@ -333,7 +330,8 @@ def update_offer_graphs(year, ccaas, family, measure):
 
 @app.callback(
     [Output('demand-time-graph', 'figure'), Output('demand-graph', 'figure')],
-    [Input('year-select2', 'value'), Input('ccaa-select2', 'value'), Input('family-select2', 'value'), Input('measure-select2', 'value')]
+    [Input('year-select2', 'value'), Input('ccaa-select2', 'value'), Input('family-select2', 'value'),
+     Input('measure-select2', 'value')]
 )
 def update_demand_graphs(year, ccaas, family, measure):
     y_label1 = 'Consumo per capita'
@@ -354,7 +352,8 @@ def update_demand_graphs(year, ccaas, family, measure):
 @app.callback(
     [Output('commerce-time-graph', 'figure'), Output('commerce-graph', 'figure')],
     # [Output('commerce-time-graph', 'figure'), Output('eu-map-graph', 'figure'), Output('commerce-graph', 'figure')],
-    [Input('year-select3', 'value'), Input('country-select', 'value'), Input('indicators-select', 'value'), Input('measure-select3', 'value')]
+    [Input('year-select3', 'value'), Input('country-select', 'value'), Input('indicators-select', 'value'),
+     Input('measure-select3', 'value')]
 )
 def update_commerce_graphs(year, countries, indicator, measure):
     y_label1 = 'Importaciones'
@@ -373,6 +372,7 @@ def update_commerce_graphs(year, countries, indicator, measure):
         # gu.make_map_chart(data5, geometry, 'Value', 'country', title1),
         gu.make_scatter_chart([data3, data4], [y_label1, y_label2], [name, name], title2, True)
     ]
+
 
 # ===== END - PLOT GRAPH =====
 

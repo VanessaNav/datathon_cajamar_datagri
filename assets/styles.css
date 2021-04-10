@@ -1,11 +1,11 @@
 body {
-    font-family: 'Gloria Hallelujah', cursive;
+    font-family: 'open sans', cursive;
     background-color: RosyBrown;
-    color: white
+    color: white;
 }
-h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
     font-family: 'Lilita One', cursive;
-    color: RosyBrown;
+    text-transform: uppercase
 }
 .dash-container{
     padding: 0 20px;
@@ -13,12 +13,12 @@ h2, h3, h4, h5, h6 {
 
 /* Header */
 .header{
-    margin: 20px 0 10px;
+    margin: 10px 0 5px;
     display: inline-block;
 }
 .header h1 {
-    font-family: 'Lilita One', cursive;
     color: white;
+    font-size:1.8rem;
 }
 .header i{
     display: inline-block;
@@ -29,11 +29,24 @@ h2, h3, h4, h5, h6 {
 }
 
 /* Content */
+h1, h2, h3, h4, h5, h6 {
+    color: RosyBrown;
+}
 .content{
     color: RosyBrown;
 }
-.content .tab{
+.content .tab-container{
+    width: 890px;
+}
+body .content .tab{
     border-radius: 10px 10px 0 0;
+    padding: 8px 10px;
+    font-family: 'Lilita One', cursive;
+    font-weight:normal;
+    transition:.3s;
+}
+body .content .tab:hover{
+    background:white;
 }
 .content .tab--selected{
     border-top-color: RosyBrown !important;
@@ -48,22 +61,39 @@ h2, h3, h4, h5, h6 {
     overflow: hidden;
     overflow-y: hidden;
     overflow-y: auto;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 128px);
+    display:flex;
 }
 .content .filters{
     margin-top: 10px;
     padding: 10px 10px 0 10px;
     background-color: SeaShell;
+    width:220px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.content .filters > div > label{
+    font-weight:bold;
 }
 .content .filters label{
-    margin-right: 10px;
+    display:block;
+    margin:0;
+    font-size:14px;
 }
 .content .filters label input{
     margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -4px;
 }
 .content .filters .dash-dropdown{
     color: RosyBrown !important;
     padding-bottom: 5px;
+}
+.ccaa-filter div{
+    overflow: hidden;
+    overflow-y: auto;
+    height:250px;
 }
 .content .measure-filter{
     background-color: RosyBrown;
@@ -84,6 +114,7 @@ h2, h3, h4, h5, h6 {
 .content .measure-filter label input{
     margin-right: 5px;
 }
+
 .content .logo{
     position: fixed;
     top: 15px;
@@ -92,17 +123,17 @@ h2, h3, h4, h5, h6 {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    height: 60px;
+    height: 40px;
 }
 .content .logo2{
     position: fixed;
     top: 15px;
-    right: 150px;
+    right: 110px;
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    height: 60px;
+    height: 40px;
 }
 .offer-graphs{
     clear: both;
@@ -120,6 +151,9 @@ h2, h3, h4, h5, h6 {
 /* Footer */
 .footer{
     color: SeaShell;
+}
+.footer p{
+    margin:0;
 }
 .footer a{
     color: Lavender;
