@@ -3,8 +3,8 @@ import folium
 
 
 # Fuentes de datos externas
-# http://centrodedescargas.cnig.es/CentroDescargas/catalogo.do?Serie=CAANE
-# https://www.kaggle.com/paultimothymooney/latitude-and-longitude-for-every-country-and-state
+# https://github.com/codeforamerica/click_that_hood/blob/master/public/data/spain-communities.geojson
+# https://github.com/codeforamerica/click_that_hood/blob/master/public/data/europe.geojson
 
 # def read_datasets():
 df1 = pd.read_csv('data/Dataset1.txt', sep='|')
@@ -14,7 +14,8 @@ df4 = pd.read_csv('data/Dataset4.txt', sep='|')
 df5 = pd.read_csv('data/Dataset5.txt', sep='|')
 # return [df1, df2, df3, df4, df5]
 spain_coordinates = [40.416775, -3.703790]
-eu_coordinates = [40.416775, -3.703790]
+eu_coordinates = [48.499998, 23.3833318]
+
 
 def get_product_filters():
     products_filter = df1['Producto'].unique().tolist()
@@ -31,16 +32,24 @@ def get_commerce_filters():
 
 
 def get_products_data(column, group_col, year, products):
-    if len(products) == 0 and (year == 'Todos'):
-        filtered_data = df1
-    elif len(products) != 0 and (year == 'Todos'):
-        filtered_data = df1[df1['Producto'].isin(products)]
-    elif len(products) == 0 and year != 'Todos':
-        filtered_data = df1[df1['Año'] == year]
+    conditions = filter_products_data(year, products)
+    if conditions is not None:
+        data = df1[conditions].groupby(group_col)[column].mean()
     else:
-        filtered_data = df1[(df1['Producto'].isin(products)) & (df1['Año'] == year)]
-    data = filtered_data.groupby(group_col)[column].mean()
+        data = df1.groupby(group_col)[column].mean()
     return data
+
+
+def filter_products_data(year, products):
+    if len(products) == 0 and (year == 'Todos'):
+        return None
+    elif len(products) != 0 and (year == 'Todos'):
+        conditions = df1['Producto'].isin(products)
+    elif len(products) == 0 and year != 'Todos':
+        conditions = df1['Año'] == year
+    else:
+        conditions = (df1['Producto'].isin(products)) & (df1['Año'] == year)
+    return conditions
 
 
 def get_generic_product_data(column, group_col, year, ccaas, family, measure):
