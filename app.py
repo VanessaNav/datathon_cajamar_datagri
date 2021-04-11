@@ -129,8 +129,8 @@ app.layout = html.Div(
                                                                 html.Iframe(
                                                                     className='spain-map-iframe',
                                                                     id='products-volume-spain-map-iframe',
-                                                                    width='50%',
-                                                                    height='420',
+                                                                    width='33%',
+                                                                    height='300',
                                                                     srcDoc=open('maps/spain-products-volume.html',
                                                                                 'r').read()
                                                                 ),
@@ -140,7 +140,7 @@ app.layout = html.Div(
                                                                         html.P(
                                                                             volume_description
                                                                         )],
-                                                                    style={'width': '50%'}
+                                                                    style={'width': '67%'}
                                                                 ),
                                                                 dcc.Graph(
                                                                     'products-volume-graph',
@@ -161,8 +161,8 @@ app.layout = html.Div(
                                                                 html.Iframe(
                                                                     className='spain-map-iframe',
                                                                     id='products-value-spain-map-iframe',
-                                                                    width='50%',
-                                                                    height='420',
+                                                                    width='33%',
+                                                                    height='300',
                                                                     srcDoc=open('maps/spain-products-value.html',
                                                                                 'r').read()
                                                                 ),
@@ -172,7 +172,7 @@ app.layout = html.Div(
                                                                         html.P(
                                                                             value_description
                                                                         )],
-                                                                    style={'width': '50%'}
+                                                                    style={'width': '67%'}
                                                                 ),
                                                                 dcc.Graph(
                                                                     'products-value-graph',
@@ -193,8 +193,8 @@ app.layout = html.Div(
                                                                 html.Iframe(
                                                                     className='spain-map-iframe',
                                                                     id='products-consumed-spain-map-iframe',
-                                                                    width='50%',
-                                                                    height='420',
+                                                                    width='33%',
+                                                                    height='300',
                                                                     srcDoc=open('maps/spain-products-consumed.html',
                                                                                 'r').read()
                                                                 ),
@@ -204,7 +204,7 @@ app.layout = html.Div(
                                                                         html.P(
                                                                             consumed_description
                                                                         )],
-                                                                    style={'width': '50%'}
+                                                                    style={'width': '67%'}
                                                                 ),
                                                                 dcc.Graph(
                                                                     'products-consumed-graph',
@@ -225,8 +225,8 @@ app.layout = html.Div(
                                                                 html.Iframe(
                                                                     className='spain-map-iframe',
                                                                     id='products-expense-spain-map-iframe',
-                                                                    width='50%',
-                                                                    height='420',
+                                                                    width='33%',
+                                                                    height='300',
                                                                     srcDoc=open('maps/spain-products-expense.html',
                                                                                 'r').read()
                                                                 ),
@@ -236,7 +236,7 @@ app.layout = html.Div(
                                                                         html.P(
                                                                             expense_description
                                                                         )],
-                                                                    style={'width': '50%'}
+                                                                    style={'width': '67%'}
                                                                 ),
                                                                 dcc.Graph(
                                                                     'products-expense-graph',
@@ -311,12 +311,11 @@ app.layout = html.Div(
                                                 className='spain-map-iframe',
                                                 id='offer-spain-map-iframe',
                                                 width='50%',
-                                                height='420',
+                                                height='400',
                                                 srcDoc=open('maps/spain-offer.html', 'r').read()
                                             ),
                                             dcc.Graph(
                                                 'prices-graph',
-                                                style={'width': '50%'}
                                             ),
                                         ]),
                                 ]),
@@ -385,7 +384,7 @@ app.layout = html.Div(
                                                 className='spain-map-iframe',
                                                 id='demand-spain-map-iframe',
                                                 width='50%',
-                                                height='420',
+                                                height='400',
                                                 srcDoc=open('maps/spain-demand.html', 'r').read()
                                             ),
                                             dcc.Graph(

@@ -11,7 +11,9 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0 20px;
 }
 
+
 /* ------------- Header ------------- */
+
 .header{
     margin: 10px 0 5px;
     display: inline-block;
@@ -28,7 +30,9 @@ h1, h2, h3, h4, h5, h6 {
     vertical-align: middle;
 }
 
+
 /* ------------- Content ------------- */
+
 h1, h2, h3, h4, h5, h6 {
     color: RosyBrown;
 }
@@ -44,12 +48,19 @@ h1, h2, h3, h4, h5, h6 {
 .content .tab-container{
     width: 890px;
 }
+
+
+/* ------------- Tabs ------------- */
+
 body .content .tab{
     border-radius: 10px 10px 0 0;
     padding: 8px 10px;
     font-family: 'Lilita One', cursive;
     font-weight:normal;
     transition:.3s;
+    text-transform:uppercase;
+    font-size:16px;
+    width:auto;
 }
 body .content .tab:hover{
     background:white;
@@ -72,6 +83,44 @@ body .content .tab:hover{
     border-radius: 0 10px 10px;
     overflow: hidden;
 }
+
+
+/* ------------- SUb tabs  ------------- */
+
+.main-tab-content > .tab-parent > .tab-container{
+    width:100%;
+    border-bottom:1px solid rosybrown;
+    height:41px
+}
+.main-tab-content > .tab-parent > .tab-container + .tab-content{
+    border:none;
+}
+.main-tab-content > .tab-parent > .tab-container .tab{
+    border:none;
+    background:#fff;
+    height:40px;
+    transition:.3s;
+    text-transform:none;
+    border-bottom:1px solid transparent;
+}
+.main-tab-content > .tab-parent > .tab-container .tab span{
+    transition:.3s;
+}
+.main-tab-content > .tab-parent > .tab-container .tab--selected{
+    margin-top:1px;
+    position:relative;
+    border-bottom:2px solid #666;
+}
+.main-tab-content > .tab-parent > .tab-container .tab--selected span{
+    color:#666;
+}
+.main-tab-content > .tab-parent > .tab-container .tab:hover span{
+    color:#666;
+}
+
+
+/* ------------- Filters ------------- */
+
 .content .filters{
     border-radius: 0 10px 0 0;
     padding: 10px 10px 0 10px;
@@ -82,6 +131,9 @@ body .content .tab:hover{
     margin-top: 5px;
     margin-left: 0;
     margin-bottom: 0;
+}
+.content .filters > h6{
+    font-size:14px
 }
 .content .filters > div > label{
     font-weight:bold;
@@ -141,14 +193,23 @@ body .content .tab:hover{
 .offer-graphs{
     clear: both;
 }
+.demand-graphs{
+    clear: both;
+}
 .spain-map-iframe{
     display: inline-block;
     vertical-align: middle;
     border-radius: 10px;
 }
-.offer-graphs #prices-graph{
+#prices-graph{
     display: inline-block;
     vertical-align: middle;
+    width: 50%;
+}
+#demand-time-graph{
+    display: inline-block;
+    vertical-align: middle;
+    width: 50%;
 }
 .description{
     width: 50%;
@@ -179,7 +240,9 @@ body .content .tab:hover{
     height: 50px;
 }
 
+
 /* ------------- Footer ------------- */
+
 .footer{
     color: SeaShell;
 }
