@@ -196,10 +196,6 @@ body .content .tab:hover{
 .demand-graphs{
     clear: both;
 }
-.commerce-graphs{
-    clear: both;
-    text-align: center
-}
 .spain-map-iframe{
     display: inline-block;
     vertical-align: middle;

@@ -68,7 +68,7 @@ value_description = 'Los productos que mayor valor aportaron a la agricultura de
 consumed_description = 'El consumo de kg de patatas y naranjas de los españoles en 2020 ha aumentado un 23% y un 51%, respectivamente.'
 expense_description = 'El gasto de patatas y naranjas de las familias en 2020 ha aumentado un 27% y un 74%, respectivamente.'
 offer_description = 'El precio medio del total de frutas y hortalizas en abril de 2020 ha aumentado un 13% con respecto a abril del 2019.'
-demand_description = 'El consumo per capita del total de frutas y hortalizas en abril de 20202 ha aumentado un 46% con respecto abril del 2019.'
+demand_description = 'El consumo per capita del total de frutas y hortalizas en abril de 2020 ha aumentado un 46% con respecto abril del 2019.'
 imports_description = 'Las importaciones a España en mayo de 2020 han disminuido un 7% con respecto a mayo de 2019.'
 exports_description = 'Las exportaciones de España en mayo de 2020 han disminuido un 12% con respecto a mayo de 2019.'
 product_imports_description = 'En el año 2020 los productos más importados en España son el pimiento y el tomate.'
@@ -411,44 +411,79 @@ app.layout = html.Div(
                                                     html.Label('Medida: '),
                                                     dcc.RadioItems(
                                                         id='measure-select3',
-                                                        options=[{'label': i, 'value': i} for i in measures_filter],
+                                                        options=[{'label': i, 'value': i} for i in
+                                                                 measures_filter],
                                                         value=measures_filter[0],
                                                         style={'display': 'inline-block'}
                                                     ),
                                                 ]),
                                         ]),
-                                    html.Div(
-                                        className="commerce-graphs",
-                                        children=[
-                                            html.P(imports_description),
-                                            html.P(exports_description),
-                                            dcc.Graph(
-                                                'commerce-time-graph',
-                                            ),
-                                            html.H6('Importaciones/Exportaciones por país (UE)',
-                                                    style={'padding-top': '25px', 'textAlign': 'center'}),
-                                            html.Iframe(
-                                                className='eu-map-iframe',
-                                                id='imports-eu-map-iframe',
-                                                width='47%',
-                                                height='350',
-                                                srcDoc=open('maps/eu-imports.html', 'r').read()
-                                            ),
-                                            html.Iframe(
-                                                className='eu-map-iframe',
-                                                id='exports-eu-map-iframe',
-                                                width='47%',
-                                                height='350',
-                                                srcDoc=open('maps/eu-exports.html', 'r').read()
-                                            ),
-                                            html.H6('🍅 Por Producto 🍈',
-                                                    style={'padding-top': '25px', 'textAlign': 'center'}),
-                                            html.P(product_imports_description),
-                                            html.P(product_exports_description),
-                                            dcc.Graph(
-                                                'commerce-graph',
-                                            ),
-                                        ]),
+                                    dcc.Tabs([
+                                        dcc.Tab(
+                                            label='Evolución en el tiempo',
+                                            children=[
+                                                html.Div(
+                                                    className='main-tab-content',
+                                                    children=[
+                                                        html.Div(
+                                                            className="commerce-graphs",
+                                                            children=[
+                                                                html.P(imports_description),
+                                                                html.P(exports_description),
+                                                                dcc.Graph(
+                                                                    'commerce-time-graph',
+                                                                ),
+                                                            ]),
+                                                    ]),
+                                            ]),
+                                        dcc.Tab(
+                                            label='Por país',
+                                            children=[
+                                                html.Div(
+                                                    className='main-tab-content',
+                                                    children=[
+                                                        html.Div(
+                                                            className="commerce-graphs",
+                                                            children=[
+                                                                html.H6('Importaciones/Exportaciones por país (UE)'),
+                                                                html.Iframe(
+                                                                    className='eu-map-iframe',
+                                                                    id='imports-eu-map-iframe',
+                                                                    width='47%',
+                                                                    height='350',
+                                                                    srcDoc=open('maps/eu-imports.html', 'r').read()
+                                                                ),
+                                                                html.Iframe(
+                                                                    className='eu-map-iframe',
+                                                                    id='exports-eu-map-iframe',
+                                                                    width='47%',
+                                                                    height='350',
+                                                                    srcDoc=open('maps/eu-exports.html', 'r').read()
+                                                                ),
+                                                            ]),
+                                                    ]),
+                                            ]),
+                                        dcc.Tab(
+                                            label='Por producto',
+                                            children=[
+                                                html.Div(
+                                                    className='main-tab-content',
+                                                    children=[
+                                                        html.Div(
+                                                            className="commerce-graphs",
+                                                            children=[
+                                                                html.H6('🍅 Por Producto 🍈',
+                                                                        style={'padding-top': '25px',
+                                                                               'textAlign': 'center'}),
+                                                                html.P(product_imports_description),
+                                                                html.P(product_exports_description),
+                                                                dcc.Graph(
+                                                                    'commerce-graph',
+                                                                ),
+                                                            ]),
+                                                    ]),
+                                            ]),
+                                    ]),
                                 ]),
                         ]),
                 ])
