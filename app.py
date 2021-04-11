@@ -306,7 +306,7 @@ app.layout = html.Div(
                                     html.Div(
                                         className='offer-graphs',
                                         children=[
-                                            html.H6('Variables por CCAA'),
+                                            html.H6('Precio medio por CCAA'),
                                             html.Iframe(
                                                 className='spain-map-iframe',
                                                 id='offer-spain-map-iframe',
@@ -377,9 +377,21 @@ app.layout = html.Div(
                                                     ),
                                                 ]),
                                         ]),
-                                    dcc.Graph(
-                                        'demand-time-graph',
-                                    ),
+                                    html.Div(
+                                        className='demand-graphs',
+                                        children=[
+                                            html.H6('Consumo per capita por CCAA'),
+                                            html.Iframe(
+                                                className='spain-map-iframe',
+                                                id='demand-spain-map-iframe',
+                                                width='50%',
+                                                height='420',
+                                                srcDoc=open('maps/spain-demand.html', 'r').read()
+                                            ),
+                                            dcc.Graph(
+                                                'demand-time-graph',
+                                            ),
+                                        ]),
                                 ]),
                         ]),
                     dcc.Tab(
@@ -539,6 +551,7 @@ def update_demand_graphs(year, ccaas, family, measure):
     title = 'Evolución del gasto y del consumo per capita'
     data3 = du.get_generic_product_data(y_label1, x_label3, year, ccaas, family, measure)
     data4 = du.get_generic_product_data(y_label2, x_label3, year, ccaas, family, measure)
+    du.generate_spain_map(y_label1, 'spain-demand', year, ccaas, family)
     return [
         gu.make_line_chart([data3, data4], [x_label3, x_label3], [y_label1, y_label2], [measure, measure], title)
     ]
