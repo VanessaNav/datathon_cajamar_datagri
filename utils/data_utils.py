@@ -6,15 +6,19 @@ import folium
 # https://github.com/codeforamerica/click_that_hood/blob/master/public/data/spain-communities.geojson
 # https://github.com/codeforamerica/click_that_hood/blob/master/public/data/europe.geojson
 
-# def read_datasets():
+# Read datasets
 df1 = pd.read_csv('data/Dataset1.txt', sep='|')
 df2 = pd.read_csv('data/Dataset2.txt', sep='|')
 df3 = pd.read_csv('data/Dataset3.txt', sep='|')
 df4 = pd.read_csv('data/Dataset4.txt', sep='|')
 df5 = pd.read_csv('data/Dataset5.txt', sep='|')
-# return [df1, df2, df3, df4, df5]
+
+# Prepare maps
 spain_coordinates = [40.416775, -3.703790]
 eu_coordinates = [48.499998, 23.3833318]
+# file name - file is located in the working directory
+communities_geo = r'data/spain-communities.geojson'  # geojson file
+eu_geo = r'data/europe-filtered.geojson'  # geojson file
 
 
 def get_product_filters():
@@ -125,12 +129,10 @@ def generate_spain_map(column, map_name, year, ccaas, family):
         data = df1[conditions]
     else:
         data = df1
-    # file name - file is located in the working directory
-    communities_geo = r'data/spain-communities.geojson'  # geojson file
     # create a plain world map
     communities_map = folium.Map(location=spain_coordinates, zoom_start=5, tiles='cartodbpositron')
     # generate choropleth map
-    communities_map.choropleth(
+    folium.Choropleth(
         geo_data=communities_geo,
         data=data,
         columns=['CCAA', column],
@@ -139,28 +141,5 @@ def generate_spain_map(column, map_name, year, ccaas, family):
         fill_opacity=0.7,
         line_opacity=0.5,
         legend_name=column,
-        smooth_factor=0)
-    communities_map.save('maps/' + map_name + '.html')
-
-
-def generate_spain_products_map(column, map_name, year, products):
-    if len(products) == 0:
-        data = df1
-    else:
-        data = df1[df1['Producto'].isin(products)]
-    # file name - file is located in the working directory
-    communities_geo = r'data/spain-communities.geojson'  # geojson file
-    # create a plain world map
-    communities_map = folium.Map(location=spain_coordinates, zoom_start=5, tiles='cartodbpositron')
-    # generate choropleth map
-    communities_map.choropleth(
-        geo_data=communities_geo,
-        data=data,
-        columns=['CCAA', column],
-        key_on='feature.properties.name',
-        fill_color="BuPu",
-        fill_opacity=0.7,
-        line_opacity=0.5,
-        legend_name=column,
-        smooth_factor=0)
+        smooth_factor=0).add_to(communities_map)
     communities_map.save('maps/' + map_name + '.html')
