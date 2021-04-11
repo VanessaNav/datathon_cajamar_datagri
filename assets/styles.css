@@ -69,7 +69,7 @@ body .content .tab:hover{
     border-top-color: RosyBrown !important;
     color: RosyBrown !important;
 }
-.content .tab-content{
+.content > .tab-parent > .tab-content{
     padding: 0;
     background-color: white;
     border-left: 1px solid #d6d6d6;
@@ -78,10 +78,14 @@ body .content .tab:hover{
     overflow: hidden;
     overflow-y: hidden;
     overflow-y: auto;
-    height: calc(100vh - 128px);
+    /*height: calc(100vh - 128px);*/
     display:flex;
     border-radius: 0 10px 10px;
     overflow: hidden;
+}
+.content .tab-content .tab-content{
+    display:block;
+    position:relative;
 }
 
 
@@ -159,12 +163,25 @@ body .content .tab:hover{
 .checklist-filter div{
     overflow: hidden;
     overflow-y: auto;
-    height:calc(100vh - 365px)
+    max-height:calc(100vh - 365px);
+    /*height:calc(100vh - 365px)*/
+}
+.checklist-filter-products div{
+    overflow: hidden;
+    overflow-y: auto;
+    max-height:calc(100vh - 365px);
+    /*height:calc(100vh - 365px)*/
 }
 .content .measure-filter-container{
     width:50%;
     float: right;
     text-align:right
+}
+.tab-content .tab-content .measure-filter-container{
+    width:auto;
+    position:absolute;
+    right:10px;
+    top:-35px;
 }
 .content .measure-filter{
     background-color: RosyBrown;
@@ -196,26 +213,24 @@ body .content .tab:hover{
 .demand-graphs{
     clear: both;
 }
-.spain-map-iframe{
+.map-graph{
     display: inline-block;
     vertical-align: middle;
-    border-radius: 10px;
-}
-.eu-map-iframe{
-    display: inline-block;
-    vertical-align: middle;
-    border-radius: 10px;
+    width: 35%;
     margin-left: 10px;
+}
+.map-graph iframe{
+    border-radius: 10px;
 }
 #prices-graph{
     display: inline-block;
     vertical-align: middle;
-    width: 50%;
+    width: 60%;
 }
 #demand-time-graph{
     display: inline-block;
     vertical-align: middle;
-    width: 50%;
+    width: 60%;
 }
 /*.description{
     width: 50%;
@@ -226,7 +241,7 @@ body .content .tab:hover{
 
 /* LOGOS */
 .content .logo{
-    position: fixed;
+    position: absolute;
     top: 10px;
     right: 20px;
     display: flex;
@@ -236,7 +251,7 @@ body .content .tab:hover{
     height: 50px;
 }
 .content .logo2{
-    position: fixed;
+    position: absolute;
     top: 10px;
     right: 120px;
     display: flex;

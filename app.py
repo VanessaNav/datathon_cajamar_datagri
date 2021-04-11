@@ -108,7 +108,7 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                     html.Div(
-                                        className='checklist-filter',
+                                        className='checklist-filter-products',
                                         children=[
                                             html.Label('Productos: '),
                                             dcc.Checklist(
@@ -273,14 +273,18 @@ app.layout = html.Div(
                                         className='offer-graphs',
                                         children=[
                                             html.P(offer_description),
-                                            html.H6('Precio medio del kg por CCAA'),
-                                            html.Iframe(
-                                                className='spain-map-iframe',
-                                                id='offer-spain-map-iframe',
-                                                width='50%',
-                                                height='350',
-                                                srcDoc=open('maps/spain-offer.html', 'r').read()
-                                            ),
+                                            html.Div(
+                                                className='map-graph',
+                                                children=[
+                                                    html.H6('Precio medio del kg por CCAA'),
+                                                    html.Iframe(
+                                                        className='spain-map-iframe',
+                                                        id='offer-spain-map-iframe',
+                                                        width='100%',
+                                                        height='350',
+                                                        srcDoc=open('maps/spain-offer.html', 'r').read()
+                                                    ),
+                                                ]),
                                             dcc.Graph(
                                                 'prices-graph',
                                             ),
@@ -347,14 +351,18 @@ app.layout = html.Div(
                                         className='demand-graphs',
                                         children=[
                                             html.P(demand_description),
-                                            html.H6('% Penetración por CCAA'),
-                                            html.Iframe(
-                                                className='spain-map-iframe',
-                                                id='demand-spain-map-iframe',
-                                                width='50%',
-                                                height='350',
-                                                srcDoc=open('maps/spain-demand.html', 'r').read()
-                                            ),
+                                            html.Div(
+                                                className='map-graph',
+                                                children=[
+                                                    html.H6('% Penetración por CCAA'),
+                                                    html.Iframe(
+                                                        className='spain-map-iframe',
+                                                        id='demand-spain-map-iframe',
+                                                        width='100%',
+                                                        height='350',
+                                                        srcDoc=open('maps/spain-demand.html', 'r').read()
+                                                    ),
+                                                ]),
                                             dcc.Graph(
                                                 'demand-time-graph',
                                             ),
@@ -402,26 +410,26 @@ app.layout = html.Div(
                             html.Div(
                                 className='main-tab-content',
                                 children=[
-                                    html.Div(
-                                        className='measure-filter-container',
-                                        children=[
-                                            html.Div(
-                                                className='measure-filter',
-                                                children=[
-                                                    html.Label('Medida: '),
-                                                    dcc.RadioItems(
-                                                        id='measure-select3',
-                                                        options=[{'label': i, 'value': i} for i in
-                                                                 measures_filter],
-                                                        value=measures_filter[0],
-                                                        style={'display': 'inline-block'}
-                                                    ),
-                                                ]),
-                                        ]),
                                     dcc.Tabs([
                                         dcc.Tab(
                                             label='Evolución en el tiempo',
                                             children=[
+                                                html.Div(
+                                                    className='measure-filter-container',
+                                                    children=[
+                                                        html.Div(
+                                                            className='measure-filter',
+                                                            children=[
+                                                                html.Label('Medida: '),
+                                                                dcc.RadioItems(
+                                                                    id='measure-select3',
+                                                                    options=[{'label': i, 'value': i} for i in
+                                                                             measures_filter],
+                                                                    value=measures_filter[0],
+                                                                    style={'display': 'inline-block'}
+                                                                ),
+                                                            ]),
+                                                    ]),
                                                 html.Div(
                                                     className='main-tab-content',
                                                     children=[
@@ -445,21 +453,32 @@ app.layout = html.Div(
                                                         html.Div(
                                                             className="commerce-graphs",
                                                             children=[
-                                                                html.H6('Importaciones/Exportaciones por país (UE)'),
-                                                                html.Iframe(
-                                                                    className='eu-map-iframe',
-                                                                    id='imports-eu-map-iframe',
-                                                                    width='47%',
-                                                                    height='350',
-                                                                    srcDoc=open('maps/eu-imports.html', 'r').read()
-                                                                ),
-                                                                html.Iframe(
-                                                                    className='eu-map-iframe',
-                                                                    id='exports-eu-map-iframe',
-                                                                    width='47%',
-                                                                    height='350',
-                                                                    srcDoc=open('maps/eu-exports.html', 'r').read()
-                                                                ),
+                                                                html.Div(
+                                                                    className='map-graph',
+                                                                    children=[
+                                                                        html.H6('Importaciones por país (UE)'),
+                                                                        html.Iframe(
+                                                                            className='eu-map-iframe',
+                                                                            id='imports-eu-map-iframe',
+                                                                            width='100%',
+                                                                            height='350',
+                                                                            srcDoc=open('maps/eu-imports.html',
+                                                                                        'r').read()
+                                                                        ),
+                                                                    ]),
+                                                                html.Div(
+                                                                    className='map-graph',
+                                                                    children=[
+                                                                        html.H6('Exportaciones por país (UE)'),
+                                                                        html.Iframe(
+                                                                            className='eu-map-iframe',
+                                                                            id='exports-eu-map-iframe',
+                                                                            width='100%',
+                                                                            height='350',
+                                                                            srcDoc=open('maps/eu-exports.html',
+                                                                                        'r').read()
+                                                                        ),
+                                                                    ]),
                                                             ]),
                                                     ]),
                                             ]),
@@ -467,14 +486,27 @@ app.layout = html.Div(
                                             label='Por producto',
                                             children=[
                                                 html.Div(
+                                                    className='measure-filter-container',
+                                                    children=[
+                                                        html.Div(
+                                                            className='measure-filter',
+                                                            children=[
+                                                                html.Label('Medida: '),
+                                                                dcc.RadioItems(
+                                                                    id='measure-select4',
+                                                                    options=[{'label': i, 'value': i} for i in
+                                                                             measures_filter],
+                                                                    value=measures_filter[0],
+                                                                    style={'display': 'inline-block'}
+                                                                ),
+                                                            ]),
+                                                    ]),
+                                                html.Div(
                                                     className='main-tab-content',
                                                     children=[
                                                         html.Div(
                                                             className="commerce-graphs",
                                                             children=[
-                                                                html.H6('🍅 Por Producto 🍈',
-                                                                        style={'padding-top': '25px',
-                                                                               'textAlign': 'center'}),
                                                                 html.P(product_imports_description),
                                                                 html.P(product_exports_description),
                                                                 dcc.Graph(
@@ -587,19 +619,19 @@ def update_demand_graphs(year, ccaas, family, measure):
 @app.callback(
     [Output('commerce-time-graph', 'figure'), Output('commerce-graph', 'figure')],
     [Input('year-select3', 'value'), Input('country-select', 'value'), Input('indicators-select', 'value'),
-     Input('measure-select3', 'value')]
+     Input('measure-select3', 'value'), Input('measure-select4', 'value')]
 )
-def update_commerce_graphs(year, countries, indicator, measure):
+def update_commerce_graphs(year, countries, indicator, measure1, measure2):
     y_label1 = 'Importaciones'
     y_label2 = 'Exportaciones'
     x_label = 'Fecha'
     name = 'Value'
     title1 = 'Evolución del comercio exterior de España con la UE: Importaciones y Exportaciones por valor monetario (precio del total de kg) o por cantidad (volumen de producto en 100kg)'
     title2 = 'Comercio exterior por producto: Importaciones y Exportaciones de España con el resto de la UE'
-    data1 = du.get_commerce_data('DATE', name, 'IMPORT', year, countries, indicator, measure)
-    data2 = du.get_commerce_data('DATE', name, 'EXPORT', year, countries, indicator, measure)
-    data3 = du.get_commerce_data('PRODUCT', name, 'IMPORT', year, countries, indicator, measure)
-    data4 = du.get_commerce_data('PRODUCT', name, 'EXPORT', year, countries, indicator, measure)
+    data1 = du.get_commerce_data('DATE', name, 'IMPORT', year, countries, indicator, measure1)
+    data2 = du.get_commerce_data('DATE', name, 'EXPORT', year, countries, indicator, measure1)
+    data3 = du.get_commerce_data('PRODUCT', name, 'IMPORT', year, countries, indicator, measure2)
+    data4 = du.get_commerce_data('PRODUCT', name, 'EXPORT', year, countries, indicator, measure2)
     du.generate_eu_map(name, 'eu-imports', 'IMPORT', year, indicator)
     du.generate_eu_map(name, 'eu-exports', 'EXPORT', year, indicator)
     return [
