@@ -271,7 +271,7 @@ app.layout = html.Div(
                                                 className='spain-map-iframe',
                                                 id='offer-spain-map-iframe',
                                                 width='50%',
-                                                height='400',
+                                                height='350',
                                                 srcDoc=open('maps/spain-offer.html', 'r').read()
                                             ),
                                             dcc.Graph(
@@ -339,12 +339,12 @@ app.layout = html.Div(
                                     html.Div(
                                         className='demand-graphs',
                                         children=[
-                                            html.H6('Gasto per capita por CCAA'),
+                                            html.H6('% Penetración por CCAA'),
                                             html.Iframe(
                                                 className='spain-map-iframe',
                                                 id='demand-spain-map-iframe',
                                                 width='50%',
-                                                height='400',
+                                                height='350',
                                                 srcDoc=open('maps/spain-demand.html', 'r').read()
                                             ),
                                             dcc.Graph(
@@ -409,17 +409,35 @@ app.layout = html.Div(
                                                     ),
                                                 ]),
                                         ]),
-                                    dcc.Graph(
-                                        'commerce-time-graph',
-                                    ),
-                                    # dcc.Graph(
-                                    #     'eu-map-graph',
-                                    # ),
-                                    html.Hr(style={'border-top': '3px dotted rosybrown'}),
-                                    html.H6('🍅 Por Producto 🍈', style={'padding-top': '25px', 'textAlign': 'center'}),
-                                    dcc.Graph(
-                                        'commerce-graph',
-                                    ),
+                                    html.Div(
+                                        className="commerce-graphs",
+                                        children=[
+                                            dcc.Graph(
+                                                'commerce-time-graph',
+                                            ),
+                                            html.H6('Importaciones/Exportaciones por país (UE)',
+                                                    style={'padding-top': '25px', 'textAlign': 'center'}),
+                                            html.Iframe(
+                                                className='eu-map-iframe',
+                                                id='imports-eu-map-iframe',
+                                                width='47%',
+                                                height='350',
+                                                srcDoc=open('maps/eu-imports.html', 'r').read()
+                                            ),
+                                            html.Iframe(
+                                                className='eu-map-iframe',
+                                                id='exports-eu-map-iframe',
+                                                width='47%',
+                                                height='350',
+                                                srcDoc=open('maps/eu-exports.html', 'r').read()
+                                            ),
+                                            # html.Hr(style={'border-top': '3px dotted rosybrown'}),
+                                            html.H6('🍅 Por Producto 🍈',
+                                                    style={'padding-top': '25px', 'textAlign': 'center'}),
+                                            dcc.Graph(
+                                                'commerce-graph',
+                                            ),
+                                        ]),
                                 ]),
                         ]),
                 ])
@@ -483,14 +501,17 @@ def update_product_graphs(year, products):
      Input('measure-select', 'value')]
 )
 def update_offer_graphs(year, ccaas, family, measure):
-    y_label3 = 'Precio medio kg'
-    name = 'Precio medio kg (' + measure + ')'
-    x_label4 = 'Fecha'
+    y_label1 = 'Precio medio kg'
+    y_label2 = 'Volumen (miles de kg)'
+    name1 = 'Precio medio kg (' + measure + ')'
+    name2 = 'Volumen (miles de kg) (' + measure + ')'
+    x_label = 'Fecha'
     title = 'Volatilidad de los precios 📈: Evolución del precio medio por kg'
-    data4 = du.get_generic_product_data(y_label3, x_label4, year, ccaas, family, measure)
-    du.generate_spain_map(y_label3, 'spain-offer', year, ccaas, family)
+    data1 = du.get_generic_product_data(y_label1, x_label, year, ccaas, family, measure)
+    data2 = du.get_generic_product_data(y_label2, x_label, year, ccaas, family, measure)
+    du.generate_spain_map(y_label1, 'spain-offer', year, ccaas, family)
     return [
-        gu.make_line_chart([data4], [x_label4], [y_label3], [name], title),
+        gu.make_line_chart([data1], [x_label], [y_label1], [name1], title, True),
     ]
 
 
@@ -502,13 +523,14 @@ def update_offer_graphs(year, ccaas, family, measure):
 def update_demand_graphs(year, ccaas, family, measure):
     y_label1 = 'Consumo per capita'
     y_label2 = 'Gasto per capita'
-    x_label3 = 'Fecha'
+    y_label3 = 'Penetración (%)'
+    x_label = 'Fecha'
     title = 'Evolución del gasto y del consumo per capita'
-    data3 = du.get_generic_product_data(y_label1, x_label3, year, ccaas, family, measure)
-    data4 = du.get_generic_product_data(y_label2, x_label3, year, ccaas, family, measure)
-    du.generate_spain_map(y_label2, 'spain-demand', year, ccaas, family)
+    data3 = du.get_generic_product_data(y_label1, x_label, year, ccaas, family, measure)
+    data4 = du.get_generic_product_data(y_label2, x_label, year, ccaas, family, measure)
+    du.generate_spain_map(y_label3, 'spain-demand', year, ccaas, family)
     return [
-        gu.make_line_chart([data3, data4], [x_label3, x_label3], [y_label1, y_label2], [measure, measure], title)
+        gu.make_line_chart([data3, data4], [x_label, x_label], [y_label1, y_label2], [measure, measure], title, True)
     ]
 
 
@@ -528,8 +550,10 @@ def update_commerce_graphs(year, countries, indicator, measure):
     data2 = du.get_commerce_data('DATE', name, 'EXPORT', year, countries, indicator, measure)
     data3 = du.get_commerce_data('PRODUCT', name, 'IMPORT', year, countries, indicator, measure)
     data4 = du.get_commerce_data('PRODUCT', name, 'EXPORT', year, countries, indicator, measure)
+    du.generate_eu_map(name, 'eu-imports', 'IMPORT', year, indicator)
+    du.generate_eu_map(name, 'eu-exports', 'EXPORT', year, indicator)
     return [
-        gu.make_line_chart([data1, data2], [x_label, x_label], [y_label1, y_label2], [name, name], title1),
+        gu.make_line_chart([data1, data2], [x_label, x_label], [y_label1, y_label2], [name, name], title1, True),
         gu.make_scatter_chart([data3, data4], [y_label1, y_label2], [name, name], title2, True)
     ]
 

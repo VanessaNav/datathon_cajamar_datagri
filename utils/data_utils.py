@@ -1,7 +1,6 @@
 import pandas as pd
 import folium
 
-
 # Fuentes de datos externas
 # https://github.com/codeforamerica/click_that_hood/blob/master/public/data/spain-communities.geojson
 # https://github.com/codeforamerica/click_that_hood/blob/master/public/data/europe.geojson
@@ -123,6 +122,14 @@ def filter_commerce_data(flow, year, countries, indicator):
     return conditions
 
 
+def filter_eu_products_data(flow, year, indicator):
+    if year == 'Todos':
+        conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator)
+    else:
+        conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator) & (df4['Y'] == year)
+    return conditions
+
+
 def generate_spain_map(column, map_name, year, ccaas, family):
     conditions = filter_generic_product_data(year, ccaas, family)
     if conditions is not None:
@@ -143,3 +150,22 @@ def generate_spain_map(column, map_name, year, ccaas, family):
         legend_name=column,
         smooth_factor=0).add_to(communities_map)
     communities_map.save('maps/' + map_name + '.html')
+
+
+def generate_eu_map(column, map_name, flow, year, indicator):
+    conditions = filter_eu_products_data(flow, year, indicator)
+    data = df4[conditions].dropna(subset=[column])
+    # create a plain world map
+    eu_map = folium.Map(location=eu_coordinates, zoom_start=3, tiles='cartodbpositron')
+    # generate choropleth map
+    folium.Choropleth(
+        geo_data=eu_geo,
+        data=data,
+        columns=['REPORTER', column],
+        key_on='feature.properties.name',
+        fill_color="BuPu",
+        fill_opacity=0.7,
+        line_opacity=0.5,
+        legend_name=indicator,
+        smooth_factor=0).add_to(eu_map)
+    eu_map.save('maps/' + map_name + '.html')

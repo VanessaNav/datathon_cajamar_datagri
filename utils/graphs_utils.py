@@ -24,7 +24,7 @@ def make_bar_chart(data, x_label, y_labels):
     return fig
 
 
-def make_line_chart(data, x_labels, y_labels, names, title):
+def make_line_chart(data, x_labels, y_labels, names, title, add_vlines=False):
     fig = make_subplots(rows=1, cols=1, shared_xaxes=True)
     text_positions = ['top center', 'bottom center']
 
@@ -45,6 +45,10 @@ def make_line_chart(data, x_labels, y_labels, names, title):
         fig.update_yaxes(title=names[d - 1], row=1, col=1)
 
     fig.update_layout(title=title)
+    if add_vlines:
+        years = [i[:4] for i in data[0].index]
+        for year in set(years):
+            fig.add_vline(x=year, line_width=2, line_dash="dash", line_color='#666')
 
     return fig
 
