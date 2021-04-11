@@ -85,7 +85,7 @@ body .content .tab:hover{
 }
 
 
-/* ------------- SUb tabs  ------------- */
+/* ------------- Sub tabs  ------------- */
 
 .main-tab-content > .tab-parent > .tab-container{
     width:100%;
@@ -96,7 +96,7 @@ body .content .tab:hover{
     border:none;
 }
 .main-tab-content > .tab-parent > .tab-container .tab{
-    border:none;
+    border:none !important;
     background:#fff;
     height:40px;
     transition:.3s;
@@ -109,7 +109,7 @@ body .content .tab:hover{
 .main-tab-content > .tab-parent > .tab-container .tab--selected{
     margin-top:1px;
     position:relative;
-    border-bottom:2px solid #666;
+    border-bottom:2px solid #666 !important;
 }
 .main-tab-content > .tab-parent > .tab-container .tab--selected span{
     color:#666;
@@ -211,12 +211,12 @@ body .content .tab:hover{
     vertical-align: middle;
     width: 50%;
 }
-.description{
+/*.description{
     width: 50%;
     display: inline-block;
     vertical-align: top;
     padding-left: 10px;
-}
+}*/
 
 /* LOGOS */
 .content .logo{
