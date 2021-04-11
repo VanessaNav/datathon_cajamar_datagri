@@ -7,8 +7,8 @@ colors = ['#2B4162', 'RosyBrown', '#0B6E4F']
 line_colors = ['Black', 'Brown', 'Green']
 
 
-def make_bar_chart(data, x_label, y_labels):
-    fig = make_subplots(rows=1, cols=len(data), shared_xaxes=True, subplot_titles=y_labels)
+def make_bar_chart(data, x_label, y_labels, titles):
+    fig = make_subplots(rows=1, cols=len(data), shared_xaxes=True, subplot_titles=titles)
 
     for d in range(1, len(data) + 1):
         fig.add_trace(
@@ -74,12 +74,4 @@ def make_scatter_chart(data, y_labels, names, title, slice_indexes=False):
             fig.update_xaxes(tickmode='array', tickvals=data[d - 1].index, ticktext=x_ticks, row=1, col=1)
 
     fig.update_layout(height=600, title=title)
-    return fig
-
-
-def make_map_chart(data, geometry, y_label, locations, title):
-    fig = px.choropleth(
-        data, geojson=geometry, color=y_label, locations=locations)
-    # fig.update_geos(fitbounds="geojson", visible=False)
-    fig.update_layout(title=title)
     return fig

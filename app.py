@@ -67,6 +67,12 @@ volume_description = 'En 2020 los productos con mayor volumen de kg recolectados
 value_description = 'Los productos que mayor valor aportaron a la agricultura de España (en relación a la recolección de 2020) fueron el tomate y la patata, con unos valores de 14.9 y 13.9 miles de € (aprox), respectivamente. Con respecto al año anterior, el valor la recolección total del tomate ha aumentado un 55%.'
 consumed_description = 'El consumo de kg de patatas y naranjas de los españoles en 2020 ha aumentado un 23% y un 51%, respectivamente.'
 expense_description = 'El gasto de patatas y naranjas de las familias en 2020 ha aumentado un 27% y un 74%, respectivamente.'
+offer_description = 'El precio medio del total de frutas y hortalizas en abril de 2020 ha aumentado un 13% con respecto a abril del 2019.'
+demand_description = 'El consumo per capita del total de frutas y hortalizas en abril de 20202 ha aumentado un 46% con respecto abril del 2019.'
+imports_description = 'Las importaciones a España en mayo de 2020 han disminuido un 7% con respecto a mayo de 2019.'
+exports_description = 'Las exportaciones de España en mayo de 2020 han disminuido un 12% con respecto a mayo de 2019.'
+product_imports_description = 'En el año 2020 los productos más importados en España son el pimiento y el tomate.'
+product_exports_description = 'En el año 2020 los productos más exportados de España son la patata y la manzana.'
 
 app.layout = html.Div(
     className='dash-container',
@@ -266,7 +272,8 @@ app.layout = html.Div(
                                     html.Div(
                                         className='offer-graphs',
                                         children=[
-                                            html.H6('Precio medio por CCAA'),
+                                            html.P(offer_description),
+                                            html.H6('Precio medio del kg por CCAA'),
                                             html.Iframe(
                                                 className='spain-map-iframe',
                                                 id='offer-spain-map-iframe',
@@ -339,6 +346,7 @@ app.layout = html.Div(
                                     html.Div(
                                         className='demand-graphs',
                                         children=[
+                                            html.P(demand_description),
                                             html.H6('% Penetración por CCAA'),
                                             html.Iframe(
                                                 className='spain-map-iframe',
@@ -412,6 +420,8 @@ app.layout = html.Div(
                                     html.Div(
                                         className="commerce-graphs",
                                         children=[
+                                            html.P(imports_description),
+                                            html.P(exports_description),
                                             dcc.Graph(
                                                 'commerce-time-graph',
                                             ),
@@ -431,9 +441,10 @@ app.layout = html.Div(
                                                 height='350',
                                                 srcDoc=open('maps/eu-exports.html', 'r').read()
                                             ),
-                                            # html.Hr(style={'border-top': '3px dotted rosybrown'}),
                                             html.H6('🍅 Por Producto 🍈',
                                                     style={'padding-top': '25px', 'textAlign': 'center'}),
+                                            html.P(product_imports_description),
+                                            html.P(product_exports_description),
                                             dcc.Graph(
                                                 'commerce-graph',
                                             ),
@@ -483,15 +494,19 @@ def update_product_graphs(year, products):
     y_label2 = 'Valor (miles de €)'
     y_label3 = 'Consumo per capita'
     y_label4 = 'Gasto per capita'
+    title1 = 'Volumen de kg recolectados (en miles de kg)'
+    title2 = 'Valor de la recolección (en miles de €): Volumen de kg recolectados ✖ Precio medio del kg'
+    title3 = 'Consumo per capita: Cantidad de kg consumida por persona'
+    title4 = 'Gasto per capita (en €): Cantidad de kg consumida por persona ✖ Precio medio del kg'
     data1 = du.get_products_data(y_label1, x_label, year, products)
     data2 = du.get_products_data(y_label2, x_label, year, products)
     data3 = du.get_products_data(y_label3, x_label, year, products)
     data4 = du.get_products_data(y_label4, x_label, year, products)
     return [
-        gu.make_bar_chart([data1], x_label, [y_label1]),
-        gu.make_bar_chart([data2], x_label, [y_label2]),
-        gu.make_bar_chart([data3], x_label, [y_label3]),
-        gu.make_bar_chart([data4], x_label, [y_label4]),
+        gu.make_bar_chart([data1], x_label, [y_label1], [title1]),
+        gu.make_bar_chart([data2], x_label, [y_label2], [title2]),
+        gu.make_bar_chart([data3], x_label, [y_label3], [title3]),
+        gu.make_bar_chart([data4], x_label, [y_label4], [title4]),
     ]
 
 
@@ -544,8 +559,8 @@ def update_commerce_graphs(year, countries, indicator, measure):
     y_label2 = 'Exportaciones'
     x_label = 'Fecha'
     name = 'Value'
-    title1 = 'Evolución del comercio exterior'
-    title2 = 'Comercio exterior por producto'
+    title1 = 'Evolución del comercio exterior de España con la UE: Importaciones y Exportaciones por valor monetario (precio del total de kg) o por cantidad (volumen de producto en 100kg)'
+    title2 = 'Comercio exterior por producto: Importaciones y Exportaciones de España con el resto de la UE'
     data1 = du.get_commerce_data('DATE', name, 'IMPORT', year, countries, indicator, measure)
     data2 = du.get_commerce_data('DATE', name, 'EXPORT', year, countries, indicator, measure)
     data3 = du.get_commerce_data('PRODUCT', name, 'IMPORT', year, countries, indicator, measure)
