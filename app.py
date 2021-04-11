@@ -125,22 +125,12 @@ app.layout = html.Div(
                                                         html.Div(
                                                             className='product-graphs',
                                                             children=[
-                                                                html.H6('Volumen por CCAA'),
-                                                                html.Iframe(
-                                                                    className='spain-map-iframe',
-                                                                    id='products-volume-spain-map-iframe',
-                                                                    width='33%',
-                                                                    height='300',
-                                                                    srcDoc=open('maps/spain-products-volume.html',
-                                                                                'r').read()
-                                                                ),
                                                                 html.Div(
                                                                     className='description',
                                                                     children=[
                                                                         html.P(
                                                                             volume_description
                                                                         )],
-                                                                    style={'width': '67%'}
                                                                 ),
                                                                 dcc.Graph(
                                                                     'products-volume-graph',
@@ -157,22 +147,12 @@ app.layout = html.Div(
                                                         html.Div(
                                                             className='product-graphs',
                                                             children=[
-                                                                html.H6('Valor por CCAA'),
-                                                                html.Iframe(
-                                                                    className='spain-map-iframe',
-                                                                    id='products-value-spain-map-iframe',
-                                                                    width='33%',
-                                                                    height='300',
-                                                                    srcDoc=open('maps/spain-products-value.html',
-                                                                                'r').read()
-                                                                ),
                                                                 html.Div(
                                                                     className='description',
                                                                     children=[
                                                                         html.P(
                                                                             value_description
                                                                         )],
-                                                                    style={'width': '67%'}
                                                                 ),
                                                                 dcc.Graph(
                                                                     'products-value-graph',
@@ -189,22 +169,12 @@ app.layout = html.Div(
                                                         html.Div(
                                                             className='product-graphs',
                                                             children=[
-                                                                html.H6('Consumo per capita por CCAA'),
-                                                                html.Iframe(
-                                                                    className='spain-map-iframe',
-                                                                    id='products-consumed-spain-map-iframe',
-                                                                    width='33%',
-                                                                    height='300',
-                                                                    srcDoc=open('maps/spain-products-consumed.html',
-                                                                                'r').read()
-                                                                ),
                                                                 html.Div(
                                                                     className='description',
                                                                     children=[
                                                                         html.P(
                                                                             consumed_description
                                                                         )],
-                                                                    style={'width': '67%'}
                                                                 ),
                                                                 dcc.Graph(
                                                                     'products-consumed-graph',
@@ -221,22 +191,12 @@ app.layout = html.Div(
                                                         html.Div(
                                                             className='product-graphs',
                                                             children=[
-                                                                html.H6('Gasto per capita por CCAA'),
-                                                                html.Iframe(
-                                                                    className='spain-map-iframe',
-                                                                    id='products-expense-spain-map-iframe',
-                                                                    width='33%',
-                                                                    height='300',
-                                                                    srcDoc=open('maps/spain-products-expense.html',
-                                                                                'r').read()
-                                                                ),
                                                                 html.Div(
                                                                     className='description',
                                                                     children=[
                                                                         html.P(
                                                                             expense_description
                                                                         )],
-                                                                    style={'width': '67%'}
                                                                 ),
                                                                 dcc.Graph(
                                                                     'products-expense-graph',
@@ -379,7 +339,7 @@ app.layout = html.Div(
                                     html.Div(
                                         className='demand-graphs',
                                         children=[
-                                            html.H6('Consumo per capita por CCAA'),
+                                            html.H6('Gasto per capita por CCAA'),
                                             html.Iframe(
                                                 className='spain-map-iframe',
                                                 id='demand-spain-map-iframe',
@@ -456,7 +416,7 @@ app.layout = html.Div(
                                     #     'eu-map-graph',
                                     # ),
                                     html.Hr(style={'border-top': '3px dotted rosybrown'}),
-                                    html.H4('🍅 Por Producto 🍈', style={'padding-top': '25px', 'textAlign': 'center'}),
+                                    html.H6('🍅 Por Producto 🍈', style={'padding-top': '25px', 'textAlign': 'center'}),
                                     dcc.Graph(
                                         'commerce-graph',
                                     ),
@@ -506,13 +466,9 @@ def update_product_graphs(year, products):
     y_label3 = 'Consumo per capita'
     y_label4 = 'Gasto per capita'
     data1 = du.get_products_data(y_label1, x_label, year, products)
-    du.generate_spain_products_map(y_label1, 'spain-products-volume', year, products)
     data2 = du.get_products_data(y_label2, x_label, year, products)
-    du.generate_spain_products_map(y_label2, 'spain-products-value', year, products)
     data3 = du.get_products_data(y_label3, x_label, year, products)
-    du.generate_spain_products_map(y_label3, 'spain-products-consumed', year, products)
     data4 = du.get_products_data(y_label4, x_label, year, products)
-    du.generate_spain_products_map(y_label4, 'spain-products-expense', year, products)
     return [
         gu.make_bar_chart([data1], x_label, [y_label1]),
         gu.make_bar_chart([data2], x_label, [y_label2]),
@@ -550,7 +506,7 @@ def update_demand_graphs(year, ccaas, family, measure):
     title = 'Evolución del gasto y del consumo per capita'
     data3 = du.get_generic_product_data(y_label1, x_label3, year, ccaas, family, measure)
     data4 = du.get_generic_product_data(y_label2, x_label3, year, ccaas, family, measure)
-    du.generate_spain_map(y_label1, 'spain-demand', year, ccaas, family)
+    du.generate_spain_map(y_label2, 'spain-demand', year, ccaas, family)
     return [
         gu.make_line_chart([data3, data4], [x_label3, x_label3], [y_label1, y_label2], [measure, measure], title)
     ]
