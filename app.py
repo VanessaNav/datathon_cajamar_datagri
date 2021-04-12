@@ -63,10 +63,10 @@ server = app.server
 [products_filter, years_filter, ccaas_filter, families_filter] = du.get_product_filters()
 [countries_filter, indicators_filter] = du.get_commerce_filters()
 measures_filter = ['Media', 'Tasa de variación']
-volume_description = 'La preocupación por la salud incrementó los buenos hábitos alimenticios y el consumo de la vitamina C.'
-value_description = 'Los productos que mayor valor aportaron a la agricultura de España (en relación a la recolección de 2020) fueron el tomate y la patata, con unos valores de 14.9 y 13.9 miles de € (aprox), respectivamente. Con respecto al año anterior, el valor la recolección total del tomate ha aumentado un 55%.'
-consumed_description = 'El consumo de kg de patatas y naranjas de los españoles en 2020 ha aumentado un 23% y un 51%, respectivamente.'
-expense_description = 'El gasto de patatas y naranjas de las familias en 2020 ha aumentado un 27% y un 74%, respectivamente.'
+volume_description = 'La patata, la naraja y el tomate protagonizaron las mejores recolectas de 2020.'
+value_description = 'Los productos que mayor valor aportaron a la agricultura de España (en relación a la recolección de 2020) fueron el tomate y la patata, con unos valores de 14.9 y 13.9 miles de € (aprox), respectivamente.'
+consumed_description = 'Aumenta el consumo porque la gente quiere comer mas sano.'
+expense_description = 'El gasto de las familias españolas en patatas y naranjas ha aumentado con el paso de la Covid-19.'
 offer_description = 'El precio medio del total de frutas y hortalizas en abril de 2020 ha aumentado un 13% con respecto a abril del 2019.'
 demand_description = 'El consumo per capita del total de frutas y hortalizas en abril de 2020 ha aumentado un 46% con respecto abril del 2019.'
 imports_description = 'Las importaciones a España en mayo de 2020 han disminuido un 7% con respecto a mayo de 2019.'
@@ -143,6 +143,10 @@ app.layout = html.Div(
                                                                                 ),
                                                                                 html.Br(),
                                                                                 html.Span(
+                                                                                    className='year',
+                                                                                    children='En 2020'
+                                                                                ),
+                                                                                html.Span(
                                                                                     className='success',
                                                                                     children='⬆20%'
                                                                                 ),
@@ -156,6 +160,10 @@ app.layout = html.Div(
                                                                                 ),
                                                                                 html.Br(),
                                                                                 html.Span(
+                                                                                    className='year',
+                                                                                    children='En 2020'
+                                                                                ),
+                                                                                html.Span(
                                                                                     className='success',
                                                                                     children='⬆62%'
                                                                                 ),
@@ -168,6 +176,10 @@ app.layout = html.Div(
                                                                                     children='🍅 8.52k'
                                                                                 ),
                                                                                 html.Br(),
+                                                                                html.Span(
+                                                                                    className='year',
+                                                                                    children='En 2020'
+                                                                                ),
                                                                                 html.Span(
                                                                                     className='success',
                                                                                     children='⬆50%'
@@ -197,12 +209,50 @@ app.layout = html.Div(
                                                             className='product-graphs',
                                                             children=[
                                                                 html.Div(
-                                                                    className='description',
+                                                                    className='percentages',
                                                                     children=[
-                                                                        html.P(
-                                                                            value_description
-                                                                        )],
-                                                                ),
+                                                                        html.Div(
+                                                                            className='percentages-item',
+                                                                            children=[
+                                                                                html.Span(
+                                                                                    className="percentage",
+                                                                                    children='🍅 14.92k'
+                                                                                ),
+                                                                                html.Br(),
+                                                                                html.Span(
+                                                                                    className='year',
+                                                                                    children='En 2020'
+                                                                                ),
+                                                                                html.Span(
+                                                                                    className='success',
+                                                                                    children='⬆55%'
+                                                                                ),
+                                                                            ]),
+                                                                        html.Div(
+                                                                            className='percentages-item',
+                                                                            children=[
+                                                                                html.Span(
+                                                                                    className="percentage",
+                                                                                    children='🥔 13.9k'
+                                                                                ),
+                                                                                html.Br(),
+                                                                                html.Span(
+                                                                                    className='year',
+                                                                                    children='En 2020'
+                                                                                ),
+                                                                                html.Span(
+                                                                                    className='success',
+                                                                                    children='⬆24%'
+                                                                                ),
+                                                                            ]),
+                                                                        html.Div(
+                                                                            className='description',
+                                                                            children=[
+                                                                                html.P(
+                                                                                    value_description
+                                                                                )],
+                                                                        ),
+                                                                    ]),
                                                                 dcc.Graph(
                                                                     'products-value-graph',
                                                                 ),
@@ -219,12 +269,50 @@ app.layout = html.Div(
                                                             className='product-graphs',
                                                             children=[
                                                                 html.Div(
-                                                                    className='description',
+                                                                    className='percentages',
                                                                     children=[
-                                                                        html.P(
-                                                                            consumed_description
-                                                                        )],
-                                                                ),
+                                                                        html.Div(
+                                                                            className='percentages-item',
+                                                                            children=[
+                                                                                html.Span(
+                                                                                    className="percentage",
+                                                                                    children='🥔 2.77kg'
+                                                                                ),
+                                                                                html.Br(),
+                                                                                html.Span(
+                                                                                    className='year',
+                                                                                    children='En 2020'
+                                                                                ),
+                                                                                html.Span(
+                                                                                    className='success',
+                                                                                    children='⬆23%'
+                                                                                ),
+                                                                            ]),
+                                                                        html.Div(
+                                                                            className='percentages-item',
+                                                                            children=[
+                                                                                html.Span(
+                                                                                    className="percentage",
+                                                                                    children='🍊 12.11kg'
+                                                                                ),
+                                                                                html.Br(),
+                                                                                html.Span(
+                                                                                    className='year',
+                                                                                    children='En 2020'
+                                                                                ),
+                                                                                html.Span(
+                                                                                    className='success',
+                                                                                    children='⬆51%'
+                                                                                ),
+                                                                            ]),
+                                                                        html.Div(
+                                                                            className='description',
+                                                                            children=[
+                                                                                html.P(
+                                                                                    consumed_description
+                                                                                )],
+                                                                        ),
+                                                                    ]),
                                                                 dcc.Graph(
                                                                     'products-consumed-graph',
                                                                 ),
@@ -241,12 +329,50 @@ app.layout = html.Div(
                                                             className='product-graphs',
                                                             children=[
                                                                 html.Div(
-                                                                    className='description',
+                                                                    className='percentages',
                                                                     children=[
-                                                                        html.P(
-                                                                            expense_description
-                                                                        )],
-                                                                ),
+                                                                        html.Div(
+                                                                            className='percentages-item',
+                                                                            children=[
+                                                                                html.Span(
+                                                                                    className="percentage",
+                                                                                    children='🥔 2.72€'
+                                                                                ),
+                                                                                html.Br(),
+                                                                                html.Span(
+                                                                                    className='year',
+                                                                                    children='En 2020'
+                                                                                ),
+                                                                                html.Span(
+                                                                                    className='success',
+                                                                                    children='⬆27%'
+                                                                                ),
+                                                                            ]),
+                                                                        html.Div(
+                                                                            className='percentages-item',
+                                                                            children=[
+                                                                                html.Span(
+                                                                                    className="percentage",
+                                                                                    children='🍊 2.35€'
+                                                                                ),
+                                                                                html.Br(),
+                                                                                html.Span(
+                                                                                    className='year',
+                                                                                    children='En 2020'
+                                                                                ),
+                                                                                html.Span(
+                                                                                    className='success',
+                                                                                    children='⬆74%'
+                                                                                ),
+                                                                            ]),
+                                                                        html.Div(
+                                                                            className='description',
+                                                                            children=[
+                                                                                html.P(
+                                                                                    expense_description
+                                                                                )],
+                                                                        ),
+                                                                    ]),
                                                                 dcc.Graph(
                                                                     'products-expense-graph',
                                                                 ),

@@ -249,6 +249,10 @@ body .content .tab:hover{
     font-size: 20px;
     font-weight: bold;
 }
+.percentages .percentages-item .year{
+    font-size: 11px;
+    vertical-align: middle;
+}
 .percentages .percentages-item .success{
     font-size: 14px;
     font-weight: bold;
