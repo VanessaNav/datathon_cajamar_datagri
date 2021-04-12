@@ -63,7 +63,7 @@ server = app.server
 [products_filter, years_filter, ccaas_filter, families_filter] = du.get_product_filters()
 [countries_filter, indicators_filter] = du.get_commerce_filters()
 measures_filter = ['Media', 'Tasa de variación']
-volume_description = 'En 2020 los productos con mayor volumen de kg recolectados fueron la patata, la naraja y el tomate, con valores de 14.2, 11.2 y 8.5 miles de kg (aprox), respectivamente. Con respecto a 2019, el volumen de patatas recolectadas ha aumentado un 20%.'
+volume_description = 'La preocupación por la salud incrementó los buenos hábitos alimenticios y el consumo de la vitamina C.'
 value_description = 'Los productos que mayor valor aportaron a la agricultura de España (en relación a la recolección de 2020) fueron el tomate y la patata, con unos valores de 14.9 y 13.9 miles de € (aprox), respectivamente. Con respecto al año anterior, el valor la recolección total del tomate ha aumentado un 55%.'
 consumed_description = 'El consumo de kg de patatas y naranjas de los españoles en 2020 ha aumentado un 23% y un 51%, respectivamente.'
 expense_description = 'El gasto de patatas y naranjas de las familias en 2020 ha aumentado un 27% y un 74%, respectivamente.'
@@ -73,7 +73,7 @@ imports_description = 'Las importaciones a España en mayo de 2020 han disminuid
 exports_description = 'Las exportaciones de España en mayo de 2020 han disminuido un 12% con respecto a mayo de 2019.'
 product_imports_description = 'En el año 2020 los productos más importados en España son el pimiento y el tomate.'
 product_exports_description = 'En el año 2020 los productos más exportados de España son la patata y la manzana.'
-
+commerce_description = 'En 2020, el país donde importamos mayor volumen de frutas y hortalizas fue Finlandia. Así mismo, el país al que más exportamos nuestros productos agrícolas fue Croacia.'
 app.layout = html.Div(
     className='dash-container',
     children=[
@@ -132,12 +132,55 @@ app.layout = html.Div(
                                                             className='product-graphs',
                                                             children=[
                                                                 html.Div(
-                                                                    className='description',
+                                                                    className='percentages',
                                                                     children=[
-                                                                        html.P(
-                                                                            volume_description
-                                                                        )],
-                                                                ),
+                                                                        html.Div(
+                                                                            className='percentages-item',
+                                                                            children=[
+                                                                                html.Span(
+                                                                                    className="percentage",
+                                                                                    children='🥔 14.15k'
+                                                                                ),
+                                                                                html.Br(),
+                                                                                html.Span(
+                                                                                    className='success',
+                                                                                    children='⬆20%'
+                                                                                ),
+                                                                            ]),
+                                                                        html.Div(
+                                                                            className='percentages-item',
+                                                                            children=[
+                                                                                html.Span(
+                                                                                    className="percentage",
+                                                                                    children='🍊 11.21k'
+                                                                                ),
+                                                                                html.Br(),
+                                                                                html.Span(
+                                                                                    className='success',
+                                                                                    children='⬆62%'
+                                                                                ),
+                                                                            ]),
+                                                                        html.Div(
+                                                                            className='percentages-item',
+                                                                            children=[
+                                                                                html.Span(
+                                                                                    className="percentage",
+                                                                                    children='🍅 8.52k'
+                                                                                ),
+                                                                                html.Br(),
+                                                                                html.Span(
+                                                                                    className='success',
+                                                                                    children='⬆50%'
+                                                                                ),
+                                                                            ]),
+                                                                        html.Div(
+                                                                            className='description',
+                                                                            children=[
+                                                                                html.P(
+                                                                                    volume_description
+                                                                                )],
+                                                                        ),
+                                                                    ]),
                                                                 dcc.Graph(
                                                                     'products-volume-graph',
                                                                 ),
@@ -272,7 +315,13 @@ app.layout = html.Div(
                                     html.Div(
                                         className='offer-graphs',
                                         children=[
-                                            html.P(offer_description),
+                                            html.Div(
+                                                className='description',
+                                                children=[
+                                                    html.P(
+                                                        offer_description
+                                                    )],
+                                            ),
                                             html.Div(
                                                 className='map-graph',
                                                 children=[
@@ -350,7 +399,13 @@ app.layout = html.Div(
                                     html.Div(
                                         className='demand-graphs',
                                         children=[
-                                            html.P(demand_description),
+                                            html.Div(
+                                                className='description',
+                                                children=[
+                                                    html.P(
+                                                        demand_description
+                                                    )],
+                                            ),
                                             html.Div(
                                                 className='map-graph',
                                                 children=[
@@ -436,8 +491,16 @@ app.layout = html.Div(
                                                         html.Div(
                                                             className="commerce-graphs",
                                                             children=[
-                                                                html.P(imports_description),
-                                                                html.P(exports_description),
+                                                                html.Div(
+                                                                    className='description',
+                                                                    children=[
+                                                                        html.P(
+                                                                            imports_description
+                                                                        ),
+                                                                        html.P(
+                                                                            exports_description
+                                                                        )],
+                                                                ),
                                                                 dcc.Graph(
                                                                     'commerce-time-graph',
                                                                 ),
@@ -453,6 +516,13 @@ app.layout = html.Div(
                                                         html.Div(
                                                             className="commerce-graphs",
                                                             children=[
+                                                                html.Div(
+                                                                    className='description',
+                                                                    children=[
+                                                                        html.P(
+                                                                            commerce_description
+                                                                        )],
+                                                                ),
                                                                 html.Div(
                                                                     className='map-graph',
                                                                     children=[
@@ -507,8 +577,16 @@ app.layout = html.Div(
                                                         html.Div(
                                                             className="commerce-graphs",
                                                             children=[
-                                                                html.P(product_imports_description),
-                                                                html.P(product_exports_description),
+                                                                html.Div(
+                                                                    className='description',
+                                                                    children=[
+                                                                        html.P(
+                                                                            product_imports_description
+                                                                        ),
+                                                                        html.P(
+                                                                            product_exports_description
+                                                                        )],
+                                                                ),
                                                                 dcc.Graph(
                                                                     'commerce-graph',
                                                                 ),

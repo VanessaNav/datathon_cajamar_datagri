@@ -234,12 +234,39 @@ body .content .tab:hover{
     vertical-align: middle;
     width: 60%;
 }
-/*.description{
-    width: 50%;
+.percentages{
+    clear:both;
+}
+.percentages .percentages-item{
     display: inline-block;
-    vertical-align: top;
-    padding-left: 10px;
-}*/
+    border: 2px solid RosyBrown;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    background-color: SeaShell;
+}
+.percentages .percentages-item .percentage{
+    font-size: 20px;
+    font-weight: bold;
+}
+.percentages .percentages-item .success{
+    font-size: 14px;
+    font-weight: bold;
+    color: #71B340 !important;
+    float: right;
+}
+.percentages .percentages-item .fail{
+    font-size: 14px;
+    font-weight: bold;
+    color: #F25C54 !important;
+    float: right;
+}
+.description{
+    font-size: 16px;
+    color: #666;
+    margin-left: 10px;
+    margin-right: 10px;
+}
 
 /* LOGOS */
 .content .logo{
