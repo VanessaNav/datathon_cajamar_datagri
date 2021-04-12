@@ -1,5 +1,5 @@
 body {
-    font-family: 'open sans', cursive;
+    font-family: 'Fira Sans', sans-serif;
     background-color: RosyBrown;
     color: white;
 }
@@ -163,12 +163,14 @@ body .content .tab:hover{
 .checklist-filter div{
     overflow: hidden;
     overflow-y: auto;
+    margin-bottom: 10px;
     max-height:calc(100vh - 365px);
     /*height:calc(100vh - 365px)*/
 }
 .checklist-filter-products div{
     overflow: hidden;
     overflow-y: auto;
+    margin-bottom: 10px;
     max-height:calc(100vh - 365px);
     /*height:calc(100vh - 365px)*/
 }

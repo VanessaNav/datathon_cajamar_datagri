@@ -33,7 +33,7 @@ app = dash.Dash(
             'crossorigin': 'anonymous'
         },
         {
-            "href": "https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap",
+            "href": "https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;700&display=swap",
             "rel": "stylesheet",
         },
         {
@@ -91,7 +91,7 @@ app.layout = html.Div(
                 html.Img(className='logo2', src='assets/Sister-Hack_small.png'),
                 dcc.Tabs([
                     dcc.Tab(
-                        label='Productos 🥝',
+                        label='Productos 🍊',
                         children=[
                             html.Div(
                                 className='filters',
@@ -214,7 +214,7 @@ app.layout = html.Div(
                                 ]),
                         ]),
                     dcc.Tab(
-                        label='Oferta de Productos 🥕',
+                        label='Oferta de Productos',
                         children=[
                             html.Div(
                                 className='filters',
@@ -292,7 +292,7 @@ app.layout = html.Div(
                                 ]),
                         ]),
                     dcc.Tab(
-                        label='Demanda de Productos 🍇',
+                        label='Demanda de Productos',
                         children=[
                             html.Div(
                                 className='filters',
