@@ -40,7 +40,7 @@ def get_products_data(column, group_col, year, products):
         data = df1[conditions].groupby(group_col)[column].mean()
     else:
         data = df1.groupby(group_col)[column].mean()
-    return data
+    return data.sort_values(ascending=False)
 
 
 def filter_products_data(year, products):
