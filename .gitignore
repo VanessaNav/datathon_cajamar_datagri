@@ -1,3 +1,4 @@
 .idea
 .ipynb_checkpoints
+.map_tests.ipynb
 utils/__pycache__
