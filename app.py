@@ -825,9 +825,10 @@ def update_demand_graphs(year, products, family, measure):
 def update_commerce_graphs(year, df4_products, indicator, measure1, measure2):
     y_label1 = 'Importaciones'
     y_label2 = 'Exportaciones'
-    x_label = 'Fecha'
+    x_label1 = 'Fecha'
+    x_label2 = 'Productos'
     name = 'Value'
-    title1 = 'Evolución del comercio exterior de España con la UE: Importaciones y Exportaciones por valor monetario (precio del total de kg) o por cantidad (volumen de producto en 100kg)'
+    title1 = 'Evolución del comercio exterior de España con la UE por valor monetario (precio del total de kg) o por cantidad (volumen de producto en 100kg)'
     title2 = 'Comercio exterior por producto: Importaciones y Exportaciones de España con el resto de la UE'
     data1 = du.get_commerce_data('DATE', name, 'IMPORT', year, df4_products, indicator, measure1)
     data2 = du.get_commerce_data('DATE', name, 'EXPORT', year, df4_products, indicator, measure1)
@@ -836,8 +837,8 @@ def update_commerce_graphs(year, df4_products, indicator, measure1, measure2):
     du.generate_eu_map(name, 'eu-imports', 'IMPORT', year, indicator)
     du.generate_eu_map(name, 'eu-exports', 'EXPORT', year, indicator)
     return [
-        gu.make_line_chart([data1, data2], [x_label, x_label], [y_label1, y_label2], [name, name], title1, True),
-        gu.make_scatter_chart([data3, data4], [y_label1, y_label2], [name, name], title2, True)
+        gu.make_line_chart([data1, data2], [x_label1, x_label1], [y_label1, y_label2], [name, name], title1, True),
+        gu.make_scatter_chart([data3, data4], [y_label1, y_label2], [x_label2, x_label2], [name, name], title2, True)
     ]
 
 

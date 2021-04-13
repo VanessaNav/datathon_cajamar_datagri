@@ -44,7 +44,10 @@ def make_line_chart(data, x_labels, y_labels, names, title, add_vlines=False):
         fig.update_xaxes(title=x_labels[d - 1], row=1, col=1)
         fig.update_yaxes(title=names[d - 1], row=1, col=1)
 
-    fig.update_layout(title=title)
+    fig.update_layout(title={
+        'text': title,
+        'font_size': 12
+    })
     if add_vlines:
         years = [i[:4] for i in data[0].index]
         for year in set(years):
@@ -53,7 +56,7 @@ def make_line_chart(data, x_labels, y_labels, names, title, add_vlines=False):
     return fig
 
 
-def make_scatter_chart(data, y_labels, names, title, slice_indexes=False):
+def make_scatter_chart(data, y_labels, x_labels, names, title, slice_indexes=False):
     fig = make_subplots(rows=1, cols=1, shared_xaxes=True)
 
     for d in range(1, len(data) + 1):
@@ -71,7 +74,9 @@ def make_scatter_chart(data, y_labels, names, title, slice_indexes=False):
         fig.update_yaxes(title=names[d - 1], row=1, col=1)
         if slice_indexes:
             x_ticks = data[d - 1].index.str.slice(stop=30)
-            fig.update_xaxes(tickmode='array', tickvals=data[d - 1].index, ticktext=x_ticks, row=1, col=1)
+            fig.update_xaxes(title=x_labels[d - 1], showticklabels=False,
+                             tickmode='array', tickvals=data[d - 1].index, ticktext=x_ticks,
+                             row=1, col=1)
 
-    fig.update_layout(height=600, title=title, font_size=10)
+    fig.update_layout(height=600, title=title)
     return fig
