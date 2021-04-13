@@ -581,12 +581,8 @@ app.layout = html.Div(
                                                 className='map-graph',
                                                 children=[
                                                     html.H6('Precio medio del kg por CCAA'),
-                                                    html.Iframe(
-                                                        className='spain-map-iframe',
-                                                        id='offer-spain-map-iframe',
-                                                        width='100%',
-                                                        height='350',
-                                                        srcDoc=open('maps/spain-offer.html', 'r').read()
+                                                    dcc.Graph(
+                                                        'prices-map-graph',
                                                     ),
                                                 ]),
                                             dcc.Graph(
@@ -718,12 +714,8 @@ app.layout = html.Div(
                                                 className='map-graph',
                                                 children=[
                                                     html.H6('% Penetración por CCAA'),
-                                                    html.Iframe(
-                                                        className='spain-map-iframe',
-                                                        id='demand-spain-map-iframe',
-                                                        width='100%',
-                                                        height='350',
-                                                        srcDoc=open('maps/spain-demand.html', 'r').read()
+                                                    dcc.Graph(
+                                                        'demand-map-graph',
                                                     ),
                                                 ]),
                                             dcc.Graph(
@@ -892,26 +884,16 @@ app.layout = html.Div(
                                                                     className='map-graph',
                                                                     children=[
                                                                         html.H6('Importaciones por país (UE)'),
-                                                                        html.Iframe(
-                                                                            className='eu-map-iframe',
-                                                                            id='imports-eu-map-iframe',
-                                                                            width='100%',
-                                                                            height='350',
-                                                                            srcDoc=open('maps/eu-imports.html',
-                                                                                        'r').read()
+                                                                        dcc.Graph(
+                                                                            'imports-map-graph',
                                                                         ),
                                                                     ]),
                                                                 html.Div(
                                                                     className='map-graph',
                                                                     children=[
                                                                         html.H6('Exportaciones por país (UE)'),
-                                                                        html.Iframe(
-                                                                            className='eu-map-iframe',
-                                                                            id='exports-eu-map-iframe',
-                                                                            width='100%',
-                                                                            height='350',
-                                                                            srcDoc=open('maps/eu-exports.html',
-                                                                                        'r').read()
+                                                                        dcc.Graph(
+                                                                            'exports-map-graph',
                                                                         ),
                                                                     ]),
                                                             ]),
@@ -1030,7 +1012,7 @@ def update_product_graphs(year, products):
 
 
 @app.callback(
-    [Output('prices-graph', 'figure')],
+    [Output('prices-graph', 'figure'), Output('prices-map-graph', 'figure')],
     [Input('year-select', 'value'), Input('product-select2', 'value'), Input('family-select', 'value'),
      Input('measure-select', 'value')]
 )
@@ -1040,14 +1022,15 @@ def update_offer_graphs(year, products, family, measure):
     x_label = 'Fecha'
     title = 'Volatilidad de los precios 📈: Evolución del precio medio por kg'
     data1 = du.get_generic_product_data(y_label1, x_label, year, products, family, measure)
-    du.generate_spain_map(y_label1, 'spain-offer', year, products, family)
+    map_data = du.get_spain_map_data(year, products, family)
     return [
         gu.make_line_chart([data1], [x_label], [y_label1], [name1], title, True),
+        gu.generate_spain_map(map_data, y_label1),
     ]
 
 
 @app.callback(
-    [Output('demand-time-graph', 'figure')],
+    [Output('demand-time-graph', 'figure'), Output('demand-map-graph', 'figure')],
     [Input('year-select2', 'value'), Input('product-select3', 'value'), Input('family-select2', 'value'),
      Input('measure-select2', 'value')]
 )
@@ -1059,14 +1042,16 @@ def update_demand_graphs(year, products, family, measure):
     title = 'Evolución del gasto y del consumo per capita'
     data3 = du.get_generic_product_data(y_label1, x_label, year, products, family, measure)
     data4 = du.get_generic_product_data(y_label2, x_label, year, products, family, measure)
-    du.generate_spain_map(y_label3, 'spain-demand', year, products, family)
+    map_data = du.get_spain_map_data(year, products, family)
     return [
-        gu.make_line_chart([data3, data4], [x_label, x_label], [y_label1, y_label2], [measure, measure], title, True)
+        gu.make_line_chart([data3, data4], [x_label, x_label], [y_label1, y_label2], [measure, measure], title, True),
+        gu.generate_spain_map(map_data, y_label3),
     ]
 
 
 @app.callback(
-    [Output('commerce-time-graph', 'figure'), Output('commerce-graph', 'figure')],
+    [Output('commerce-time-graph', 'figure'), Output('imports-map-graph', 'figure'),
+     Output('exports-map-graph', 'figure'), Output('commerce-graph', 'figure')],
     [Input('year-select3', 'value'), Input('product-select4', 'value'), Input('indicators-select', 'value'),
      Input('measure-select3', 'value'), Input('measure-select4', 'value')]
 )
@@ -1082,11 +1067,13 @@ def update_commerce_graphs(year, df4_products, indicator, measure1, measure2):
     data2 = du.get_commerce_data('DATE', name, 'EXPORT', year, df4_products, indicator, measure1)
     data3 = du.get_commerce_data('PRODUCT', name, 'IMPORT', year, df4_products, indicator, measure2)
     data4 = du.get_commerce_data('PRODUCT', name, 'EXPORT', year, df4_products, indicator, measure2)
-    du.generate_eu_map(name, 'eu-imports', 'IMPORT', year, indicator)
-    du.generate_eu_map(name, 'eu-exports', 'EXPORT', year, indicator)
+    map_data1 = du.get_eu_map_data('IMPORT', year, df4_products, indicator)
+    map_data2 = du.get_eu_map_data('EXPORT', year, df4_products, indicator)
     return [
         gu.make_line_chart([data1, data2], [x_label1, x_label1], [y_label1, y_label2], [name, name], title1, True),
-        gu.make_scatter_chart([data3, data4], [y_label1, y_label2], [x_label2, x_label2], [name, name], title2, True)
+        gu.generate_eu_map(map_data1, name),
+        gu.generate_eu_map(map_data2, name),
+        gu.make_scatter_chart([data3, data4], [y_label1, y_label2], [x_label2, x_label2], [name, name], title2, True),
     ]
 
 

@@ -1,5 +1,4 @@
 import pandas as pd
-import folium
 
 # Fuentes de datos externas
 # https://github.com/codeforamerica/click_that_hood/blob/master/public/data/spain-communities.geojson
@@ -11,13 +10,6 @@ df2 = pd.read_csv('data/Dataset2.txt', sep='|')
 df3 = pd.read_csv('data/Dataset3.txt', sep='|')
 df4 = pd.read_csv('data/Dataset4.txt', sep='|')
 df5 = pd.read_csv('data/Dataset5.txt', sep='|')
-
-# Prepare maps
-spain_coordinates = [40.416775, -3.703790]
-eu_coordinates = [48.499998, 23.3833318]
-# file name - file is located in the working directory
-communities_geo = r'data/spain-communities.geojson'  # geojson file
-eu_geo = r'data/europe-filtered.geojson'  # geojson file
 
 
 def get_product_filters():
@@ -123,50 +115,16 @@ def filter_commerce_data(flow, year, products, indicator):
     return conditions
 
 
-def filter_eu_products_data(flow, year, indicator):
-    if year == 'Todos':
-        conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator)
-    else:
-        conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator) & (df4['Y'] == year)
-    return conditions
-
-
-def generate_spain_map(column, map_name, year, products, family):
+def get_spain_map_data(year, products, family):
     conditions = filter_generic_product_data(year, products, family)
     if conditions is not None:
         data = df1[conditions]
     else:
         data = df1
-    # create a plain world map
-    communities_map = folium.Map(location=spain_coordinates, zoom_start=5, tiles='cartodbpositron')
-    # generate choropleth map
-    folium.Choropleth(
-        geo_data=communities_geo,
-        data=data,
-        columns=['CCAA', column],
-        key_on='feature.properties.name',
-        fill_color="BuPu",
-        fill_opacity=0.7,
-        line_opacity=0.5,
-        legend_name=column,
-        smooth_factor=0).add_to(communities_map)
-    communities_map.save('maps/' + map_name + '.html')
+    return data
 
 
-def generate_eu_map(column, map_name, flow, year, indicator):
-    conditions = filter_eu_products_data(flow, year, indicator)
-    data = df4[conditions].dropna(subset=[column])
-    # create a plain world map
-    eu_map = folium.Map(location=eu_coordinates, zoom_start=3, tiles='cartodbpositron')
-    # generate choropleth map
-    folium.Choropleth(
-        geo_data=eu_geo,
-        data=data,
-        columns=['REPORTER', column],
-        key_on='feature.properties.name',
-        fill_color="BuPu",
-        fill_opacity=0.7,
-        line_opacity=0.5,
-        legend_name=indicator,
-        smooth_factor=0).add_to(eu_map)
-    eu_map.save('maps/' + map_name + '.html')
+def get_eu_map_data(flow, year, products, indicator):
+    conditions = filter_commerce_data(flow, year, products, indicator)
+    data = df4[conditions]
+    return data

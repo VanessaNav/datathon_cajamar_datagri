@@ -226,7 +226,6 @@ body .content .tab:hover{
 .map-graph{
     display: inline-block;
     vertical-align: middle;
-    width: 35%;
     margin-left: 10px;
 }
 .map-graph iframe{
@@ -235,7 +234,6 @@ body .content .tab:hover{
 #prices-graph{
     display: inline-block;
     vertical-align: middle;
-    width: 60%;
 }
 #demand-time-graph{
     display: inline-block;
