@@ -547,16 +547,18 @@ app.layout = html.Div(
                                                         children=[
                                                             html.Span(
                                                                 className='percentage',
-                                                                children=[
-                                                                    html.I(className='fa fa-arrow-up'),
-                                                                    ' 13%'
-                                                                ]
+                                                                children='Abril'
                                                             ),
                                                             html.Br(),
                                                             html.Span(
+                                                                className='year',
+                                                                children='En 2020'
+                                                            ),
+                                                            html.Span(
                                                                 className='success',
                                                                 children=[
-                                                                    'Abril 2020'
+                                                                    html.I(className='fa fa-arrow-up'),
+                                                                    '13%'
                                                                 ]
                                                             ),
                                                         ]),
@@ -654,15 +656,19 @@ app.layout = html.Div(
                                                             html.Span(
                                                                 className='percentage',
                                                                 children=[
-                                                                    html.I(className='fa fa-arrow-up'),
-                                                                    ' 46%'
+                                                                    'Abril'
                                                                 ]
                                                             ),
                                                             html.Br(),
                                                             html.Span(
+                                                                className='year',
+                                                                children='En 2020'
+                                                            ),
+                                                            html.Span(
                                                                 className='success',
                                                                 children=[
-                                                                    'Abril 2020'
+                                                                    html.I(className='fa fa-arrow-up'),
+                                                                    '46%'
                                                                 ]
                                                             ),
                                                         ]),
@@ -671,16 +677,18 @@ app.layout = html.Div(
                                                         children=[
                                                             html.Span(
                                                                 className='percentage',
-                                                                children=[
-                                                                    html.I(className='fa fa-arrow-up'),
-                                                                    ' 80%'
-                                                                ]
+                                                                children='Julio'
                                                             ),
                                                             html.Br(),
                                                             html.Span(
+                                                                className='year',
+                                                                children='En 2020'
+                                                            ),
+                                                            html.Span(
                                                                 className='success',
                                                                 children=[
-                                                                    'Julio 2020'
+                                                                    html.I(className='fa fa-arrow-up'),
+                                                                    '80%'
                                                                 ]
                                                             ),
                                                         ]),
@@ -798,9 +806,7 @@ app.layout = html.Div(
                                                                                 ),
                                                                                 html.Span(
                                                                                     className='year',
-                                                                                    children=[
-                                                                                        'En 2020'
-                                                                                    ]
+                                                                                    children='En 2020'
                                                                                 ),
                                                                             ]),
                                                                         html.Div(
@@ -821,9 +827,7 @@ app.layout = html.Div(
                                                                                 ),
                                                                                 html.Span(
                                                                                     className='year',
-                                                                                    children=[
-                                                                                        'En 2020'
-                                                                                    ]
+                                                                                    children='En 2020'
                                                                                 ),
                                                                             ]),
                                                                         html.Div(
