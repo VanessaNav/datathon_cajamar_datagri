@@ -36,7 +36,7 @@ def make_line_chart(data, x_labels, y_labels, names, title, add_vlines=False):
             text_position = text_positions[1]
         fig.add_trace(
             go.Scatter(x=data[d - 1].index, y=data[d - 1].values, mode='lines+markers+text', name=y_labels[d - 1],
-                       text=texts, textposition=text_position,
+                       text=texts, textposition=text_position, textfont_size=8,
                        line={'color': colors[d - 1], 'width': 5},
                        marker={'color': line_colors[d - 1]}),
             row=1, col=1
