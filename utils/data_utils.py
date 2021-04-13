@@ -22,10 +22,11 @@ eu_geo = r'data/europe-filtered.geojson'  # geojson file
 
 def get_product_filters():
     products_filter = df1['Producto'].unique().tolist()
+    df4_products_filter = df4['PRODUCT'].unique().tolist()
     years_filter = ['Todos'] + df1['Año'].unique().tolist()
     ccaas_filter = df1['CCAA'].unique()
     families_filter = ['F&H', 'Frutas', 'Hortalizas']
-    return [products_filter, years_filter, ccaas_filter, families_filter]
+    return [products_filter, df4_products_filter, years_filter, ccaas_filter, families_filter]
 
 
 def get_commerce_filters():
@@ -55,8 +56,8 @@ def filter_products_data(year, products):
     return conditions
 
 
-def get_generic_product_data(column, group_col, year, ccaas, family, measure):
-    conditions = filter_generic_product_data(year, ccaas, family)
+def get_generic_product_data(column, group_col, year, products, family, measure):
+    conditions = filter_generic_product_data(year, products, family)
     if conditions is not None:
         if group_col == 'Fecha' and measure == 'Tasa de variación':
             data = pd.Series.pct_change(df1[conditions].groupby(group_col)[column].mean())
@@ -70,28 +71,28 @@ def get_generic_product_data(column, group_col, year, ccaas, family, measure):
     return data
 
 
-def filter_generic_product_data(year, ccaas, family):
-    if (len(ccaas) == 0) and (family == 'F&H') and (year == 'Todos'):
+def filter_generic_product_data(year, products, family):
+    if (len(products) == 0) and (family == 'F&H') and (year == 'Todos'):
         return None
     else:
-        if (len(ccaas) > 0) and (family == 'F&H') and (year == 'Todos'):  # 1: CCAA
-            conditions = df1['CCAA'].isin(ccaas)
-        elif (len(ccaas) == 0) and (family != 'F&H') and (year == 'Todos'):  # 2: Familia
-            products = df3[df3['familia'].str.contains(family, na=False, case=False)]['product'].unique()
+        if (len(products) > 0) and (family == 'F&H') and (year == 'Todos'):  # 1: Producto
             conditions = df1['Producto'].isin(products)
-        elif (len(ccaas) > 0) and (family != 'F&H') and (year == 'Todos'):  # 3: CCAA y Familia
-            products = df3[df3['familia'].str.contains(family, na=False, case=False)]['product'].unique()
-            conditions = (df1['CCAA'].isin(ccaas)) & (df1['Producto'].isin(products))
-        elif (len(ccaas) == 0) and (family == 'F&H') and (year != 'Todos'):  # 4: Año
+        elif (len(products) == 0) and (family != 'F&H') and (year == 'Todos'):  # 2: Familia
+            family_products = df3[df3['familia'].str.contains(family, na=False, case=False)]['product'].unique()
+            conditions = df1['Producto'].isin(family_products)
+        elif (len(products) > 0) and (family != 'F&H') and (year == 'Todos'):  # 3: Producto y Familia
+            family_products = df3[df3['familia'].str.contains(family, na=False, case=False)]['product'].unique()
+            conditions = (df1['Producto'].isin(products)) & (df1['Producto'].isin(family_products))
+        elif (len(products) == 0) and (family == 'F&H') and (year != 'Todos'):  # 4: Año
             conditions = (df1['Año'] == year)
-        elif (len(ccaas) > 0) and (family == 'F&H') and (year != 'Todos'):  # 5: CCAA y Año
-            conditions = (df1['CCAA'].isin(ccaas)) & (df1['Año'] == year)
-        elif (len(ccaas) == 0) and (family != 'F&H') and (year != 'Todos'):  # 6: Familia y Año
+        elif (len(products) > 0) and (family == 'F&H') and (year != 'Todos'):  # 5: Producto y Año
+            conditions = (df1['Producto'].isin(products)) & (df1['Año'] == year)
+        elif (len(products) == 0) and (family != 'F&H') and (year != 'Todos'):  # 6: Familia y Año
             products = df3[df3['familia'].str.contains(family, na=False, case=False)]['product'].unique()
             conditions = (df1['Producto'].isin(products)) & (df1['Año'] == year)
-        else:  # 7: CCAA, Familia y Año
+        else:  # 7: Producto, Familia y Año
             products = df3[df3['familia'].str.contains(family, na=False, case=False)]['product'].unique()
-            conditions = (df1['CCAA'].isin(ccaas)) & (df1['Producto'].isin(products)) & (df1['Año'] == year)
+            conditions = (df1['Producto'].isin(products)) & (df1['Producto'].isin(products)) & (df1['Año'] == year)
 
     return conditions
 
@@ -109,15 +110,15 @@ def get_commerce_data(group_col, column, flow, year, countries, indicator, measu
     return data
 
 
-def filter_commerce_data(flow, year, countries, indicator):
-    if (len(countries) == 0) & (year == 'Todos'):  # 0: sin año ni paises
+def filter_commerce_data(flow, year, products, indicator):
+    if (len(products) == 0) & (year == 'Todos'):  # 0: sin año ni productos
         conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator)
-    elif (len(countries) > 0) & (year == 'Todos'):  # 1: paises
-        conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator) & (df4['REPORTER'].isin(countries))
-    elif (len(countries) == 0) & (year != 'Todos'):  # 2: año
+    elif (len(products) > 0) & (year == 'Todos'):  # 1: productos
+        conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator) & (df4['PRODUCT'].isin(products))
+    elif (len(products) == 0) & (year != 'Todos'):  # 2: año
         conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator) & (df4['Y'] == year)
-    else:  # 4: año y paises
-        conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator) & (df4['REPORTER'].isin(countries)) & \
+    else:  # 4: año y productos
+        conditions = (df4['FLOW'] == flow) & (df4['INDICATORS'] == indicator) & (df4['PRODUCT'].isin(products)) & \
                      (df4['Y'] == year)
     return conditions
 
@@ -130,8 +131,8 @@ def filter_eu_products_data(flow, year, indicator):
     return conditions
 
 
-def generate_spain_map(column, map_name, year, ccaas, family):
-    conditions = filter_generic_product_data(year, ccaas, family)
+def generate_spain_map(column, map_name, year, products, family):
+    conditions = filter_generic_product_data(year, products, family)
     if conditions is not None:
         data = df1[conditions]
     else:

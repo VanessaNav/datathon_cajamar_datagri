@@ -60,11 +60,11 @@ app = dash.Dash(
 server = app.server
 
 # Filtros
-[products_filter, years_filter, ccaas_filter, families_filter] = du.get_product_filters()
+[products_filter, df4_products_filter, years_filter, ccaas_filter, families_filter] = du.get_product_filters()
 [countries_filter, indicators_filter] = du.get_commerce_filters()
 measures_filter = ['Media', 'Tasa de variación']
 volume_description = 'La patata, la naraja y el tomate protagonizaron las mejores recolectas de 2020.'
-value_description = 'Los productos que mayor valor aportaron a la agricultura de España (en relación a la recolección de 2020) fueron el tomate y la patata, con unos valores de 14.9 y 13.9 miles de € (aprox), respectivamente.'
+value_description = 'Los productos que mayor valor aportaron a la agricultura de España (en relación a la recolección de 2020) fueron el tomate y la patata.'
 consumed_description = 'Aumenta el consumo porque la gente quiere comer mas sano.'
 expense_description = 'El gasto de las familias españolas en patatas y naranjas ha aumentado con el paso de la Covid-19.'
 offer_description = 'El precio medio del total de frutas y hortalizas en abril de 2020 ha aumentado un 13% con respecto a abril del 2019.'
@@ -410,12 +410,12 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                     html.Div(
-                                        className='checklist-filter',
+                                        className='checklist-filter-products',
                                         children=[
-                                            html.Label('CCAA: '),
+                                            html.Label('Productos: '),
                                             dcc.Checklist(
-                                                id='ccaa-select',
-                                                options=[{'label': i, 'value': i} for i in ccaas_filter],
+                                                id='product-select2',
+                                                options=[{'label': i, 'value': i} for i in products_filter],
                                                 value=[],
                                             ),
                                         ]),
@@ -494,12 +494,12 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                     html.Div(
-                                        className='checklist-filter',
+                                        className='checklist-filter-products',
                                         children=[
-                                            html.Label('CCAA: '),
+                                            html.Label('Productos: '),
                                             dcc.Checklist(
-                                                id='ccaa-select2',
-                                                options=[{'label': i, 'value': i} for i in ccaas_filter],
+                                                id='product-select3',
+                                                options=[{'label': i, 'value': i} for i in products_filter],
                                                 value=[],
                                             ),
                                         ]),
@@ -578,12 +578,12 @@ app.layout = html.Div(
                                             ),
                                         ]),
                                     html.Div(
-                                        className="checklist-filter",
+                                        className='checklist-filter-products',
                                         children=[
-                                            html.Label('País: '),
+                                            html.Label('Productos: '),
                                             dcc.Checklist(
-                                                id='country-select',
-                                                options=[{'label': i, 'value': i} for i in countries_filter],
+                                                id='product-select4',
+                                                options=[{'label': i, 'value': i} for i in df4_products_filter],
                                                 value=[],
                                             ),
                                         ]),
@@ -783,19 +783,16 @@ def update_product_graphs(year, products):
 
 @app.callback(
     [Output('prices-graph', 'figure')],
-    [Input('year-select', 'value'), Input('ccaa-select', 'value'), Input('family-select', 'value'),
+    [Input('year-select', 'value'), Input('product-select2', 'value'), Input('family-select', 'value'),
      Input('measure-select', 'value')]
 )
-def update_offer_graphs(year, ccaas, family, measure):
+def update_offer_graphs(year, products, family, measure):
     y_label1 = 'Precio medio kg'
-    y_label2 = 'Volumen (miles de kg)'
     name1 = 'Precio medio kg (' + measure + ')'
-    name2 = 'Volumen (miles de kg) (' + measure + ')'
     x_label = 'Fecha'
     title = 'Volatilidad de los precios 📈: Evolución del precio medio por kg'
-    data1 = du.get_generic_product_data(y_label1, x_label, year, ccaas, family, measure)
-    data2 = du.get_generic_product_data(y_label2, x_label, year, ccaas, family, measure)
-    du.generate_spain_map(y_label1, 'spain-offer', year, ccaas, family)
+    data1 = du.get_generic_product_data(y_label1, x_label, year, products, family, measure)
+    du.generate_spain_map(y_label1, 'spain-offer', year, products, family)
     return [
         gu.make_line_chart([data1], [x_label], [y_label1], [name1], title, True),
     ]
@@ -803,18 +800,18 @@ def update_offer_graphs(year, ccaas, family, measure):
 
 @app.callback(
     [Output('demand-time-graph', 'figure')],
-    [Input('year-select2', 'value'), Input('ccaa-select2', 'value'), Input('family-select2', 'value'),
+    [Input('year-select2', 'value'), Input('product-select3', 'value'), Input('family-select2', 'value'),
      Input('measure-select2', 'value')]
 )
-def update_demand_graphs(year, ccaas, family, measure):
+def update_demand_graphs(year, products, family, measure):
     y_label1 = 'Consumo per capita'
     y_label2 = 'Gasto per capita'
     y_label3 = 'Penetración (%)'
     x_label = 'Fecha'
     title = 'Evolución del gasto y del consumo per capita'
-    data3 = du.get_generic_product_data(y_label1, x_label, year, ccaas, family, measure)
-    data4 = du.get_generic_product_data(y_label2, x_label, year, ccaas, family, measure)
-    du.generate_spain_map(y_label3, 'spain-demand', year, ccaas, family)
+    data3 = du.get_generic_product_data(y_label1, x_label, year, products, family, measure)
+    data4 = du.get_generic_product_data(y_label2, x_label, year, products, family, measure)
+    du.generate_spain_map(y_label3, 'spain-demand', year, products, family)
     return [
         gu.make_line_chart([data3, data4], [x_label, x_label], [y_label1, y_label2], [measure, measure], title, True)
     ]
@@ -822,20 +819,20 @@ def update_demand_graphs(year, ccaas, family, measure):
 
 @app.callback(
     [Output('commerce-time-graph', 'figure'), Output('commerce-graph', 'figure')],
-    [Input('year-select3', 'value'), Input('country-select', 'value'), Input('indicators-select', 'value'),
+    [Input('year-select3', 'value'), Input('product-select4', 'value'), Input('indicators-select', 'value'),
      Input('measure-select3', 'value'), Input('measure-select4', 'value')]
 )
-def update_commerce_graphs(year, countries, indicator, measure1, measure2):
+def update_commerce_graphs(year, df4_products, indicator, measure1, measure2):
     y_label1 = 'Importaciones'
     y_label2 = 'Exportaciones'
     x_label = 'Fecha'
     name = 'Value'
     title1 = 'Evolución del comercio exterior de España con la UE: Importaciones y Exportaciones por valor monetario (precio del total de kg) o por cantidad (volumen de producto en 100kg)'
     title2 = 'Comercio exterior por producto: Importaciones y Exportaciones de España con el resto de la UE'
-    data1 = du.get_commerce_data('DATE', name, 'IMPORT', year, countries, indicator, measure1)
-    data2 = du.get_commerce_data('DATE', name, 'EXPORT', year, countries, indicator, measure1)
-    data3 = du.get_commerce_data('PRODUCT', name, 'IMPORT', year, countries, indicator, measure2)
-    data4 = du.get_commerce_data('PRODUCT', name, 'EXPORT', year, countries, indicator, measure2)
+    data1 = du.get_commerce_data('DATE', name, 'IMPORT', year, df4_products, indicator, measure1)
+    data2 = du.get_commerce_data('DATE', name, 'EXPORT', year, df4_products, indicator, measure1)
+    data3 = du.get_commerce_data('PRODUCT', name, 'IMPORT', year, df4_products, indicator, measure2)
+    data4 = du.get_commerce_data('PRODUCT', name, 'EXPORT', year, df4_products, indicator, measure2)
     du.generate_eu_map(name, 'eu-imports', 'IMPORT', year, indicator)
     du.generate_eu_map(name, 'eu-exports', 'EXPORT', year, indicator)
     return [
