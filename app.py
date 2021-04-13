@@ -293,7 +293,7 @@ app.layout = html.Div(
                                                                             children=[
                                                                                 html.Span(
                                                                                     className="percentage",
-                                                                                    children='🍊 12.11kg'
+                                                                                    children='🍊 2.11kg'
                                                                                 ),
                                                                                 html.Br(),
                                                                                 html.Span(
