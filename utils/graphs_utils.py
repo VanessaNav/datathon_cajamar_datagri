@@ -73,5 +73,5 @@ def make_scatter_chart(data, y_labels, names, title, slice_indexes=False):
             x_ticks = data[d - 1].index.str.slice(stop=30)
             fig.update_xaxes(tickmode='array', tickvals=data[d - 1].index, ticktext=x_ticks, row=1, col=1)
 
-    fig.update_layout(height=600, title=title)
+    fig.update_layout(height=600, title=title, font_size=10)
     return fig
