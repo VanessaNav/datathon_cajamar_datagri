@@ -1,16 +1,10 @@
+import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import numpy as np
 
 colors = ['#2B4162', 'RosyBrown', '#0B6E4F']
 line_colors = ['Black', 'Brown', 'Green']
-
-# Prepare maps
-spain_coordinates = [40.416775, -3.703790]
-eu_coordinates = [48.499998, 23.3833318]
-# file name - file is located in the working directory
-communities_geo = r'data/spain-communities.geojson'  # geojson file
-eu_geo = r'data/europe-filtered.geojson'  # geojson file
 
 
 def make_bar_chart(data, x_label, y_labels, titles):
@@ -85,40 +79,4 @@ def make_scatter_chart(data, y_labels, x_labels, names, title, slice_indexes=Fal
                              row=1, col=1)
 
     fig.update_layout(height=600, title=title)
-    return fig
-
-
-def generate_spain_map(data, column):
-    fig = go.Figure(go.Choroplethmapbox(
-        geojson=communities_geo,
-        z=data[column],
-        locations=data['CCAA'],
-        zmin=data[column].min(),
-        zmax=data[column].max(),
-        colorscale="amp",
-        featureidkey='properties.name',
-    ))
-    fig.update_layout(mapbox_style="carto-positron",
-                      mapbox_zoom=3,
-                      mapbox_center={"lat": spain_coordinates[0], "lon": spain_coordinates[1]})
-    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-
-    return fig
-
-
-def generate_eu_map(data, column):
-    fig = go.Figure(go.Choroplethmapbox(
-        geojson=eu_geo,
-        z=data[column],
-        locations=data['REPORTER'],
-        zmin=data[column].min(),
-        zmax=data[column].max(),
-        colorscale="amp",
-        featureidkey='properties.name',
-    ))
-    fig.update_layout(mapbox_style="carto-positron",
-                      mapbox_zoom=3,
-                      mapbox_center={"lat": eu_coordinates[0], "lon": eu_coordinates[1]})
-    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
-
     return fig
