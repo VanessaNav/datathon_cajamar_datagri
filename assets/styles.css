@@ -265,13 +265,13 @@ body .content .tab:hover{
     vertical-align: middle;
 }
 .percentages .percentages-item .success{
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     color: #71B340 !important;
     float: right;
 }
 .percentages .percentages-item .fail{
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     color: #F25C54 !important;
     float: right;
