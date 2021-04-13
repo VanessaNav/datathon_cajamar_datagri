@@ -67,12 +67,11 @@ volume_description = 'La patata, la naraja y el tomate protagonizaron las mejore
 value_description = 'Los productos que mayor valor aportaron a la agricultura de España (en relación a la recolección de 2020) fueron el tomate, la patata y el plátano.'
 consumed_description = 'Aumenta el consumo per capita porque la gente quiere comer mas sano.'
 expense_description = 'El gasto de las familias españolas en patatas, naranjas y plátanos ha aumentado con el paso de la Covid-19.'
-offer_description = 'El precio medio del total de frutas y hortalizas en abril de 2020 ha aumentado un 13% con respecto a abril del 2019.'
+offer_description = 'El precio medio del total de frutas y hortalizas en abril de 2020 ha aumentado con respecto a abril del 2019.'
 demand_description = 'En los meses de mayor incidencia de la Covid-19, el consumo de los hogares del total de frutas y hortalizas aumentó considerablemente con respecto a 2019.'
-imports_description = 'Las importaciones a España en mayo de 2020 han disminuido un 7% con respecto a mayo de 2019.'
-exports_description = 'Las exportaciones de España en mayo de 2020 han disminuido un 12% con respecto a mayo de 2019.'
-product_imports_description = 'En el año 2020 los productos más importados en España son el pimiento y el tomate.'
-product_exports_description = 'En el año 2020 los productos más exportados de España son la patata y la manzana.'
+commerce_time_description = 'Tanto las importaciones como las exportaciones de España en mayo de 2020 han disminuido con respecto a mayo de 2019, debido al cierre de fronteras que se produjo durante el periodo de pandemia.'
+product_imports_description = 'En el año 2020 los productos más importados en España son el pimiento  y el tomate 🍅.'
+product_exports_description = 'En el año 2020 los productos más exportados de España son la patata 🥔 y la manzana 🍏.'
 commerce_description = 'En 2020, el país donde importamos mayor volumen de frutas y hortalizas fue Finlandia. Así mismo, el país al que más exportamos nuestros productos agrícolas fue Croacia.'
 app.layout = html.Div(
     className='dash-container',
@@ -149,7 +148,8 @@ app.layout = html.Div(
                                                                                 html.Span(
                                                                                     className='success',
                                                                                     children=[
-                                                                                        html.I(className='fa fa-arrow-up'),
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-up'),
                                                                                         '20%'
                                                                                     ]
                                                                                 ),
@@ -169,7 +169,8 @@ app.layout = html.Div(
                                                                                 html.Span(
                                                                                     className='success',
                                                                                     children=[
-                                                                                        html.I(className='fa fa-arrow-up'),
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-up'),
                                                                                         '62%'
                                                                                     ]
                                                                                 ),
@@ -189,7 +190,8 @@ app.layout = html.Div(
                                                                                 html.Span(
                                                                                     className='success',
                                                                                     children=[
-                                                                                        html.I(className='fa fa-arrow-up'),
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-up'),
                                                                                         '50%'
                                                                                     ]
                                                                                 ),
@@ -235,7 +237,8 @@ app.layout = html.Div(
                                                                                 html.Span(
                                                                                     className='success',
                                                                                     children=[
-                                                                                        html.I(className='fa fa-arrow-up'),
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-up'),
                                                                                         '55%'
                                                                                     ]
                                                                                 ),
@@ -255,7 +258,8 @@ app.layout = html.Div(
                                                                                 html.Span(
                                                                                     className='success',
                                                                                     children=[
-                                                                                        html.I(className='fa fa-arrow-up'),
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-up'),
                                                                                         '24%'
                                                                                     ]
                                                                                 ),
@@ -275,7 +279,8 @@ app.layout = html.Div(
                                                                                 html.Span(
                                                                                     className='success',
                                                                                     children=[
-                                                                                        html.I(className='fa fa-arrow-up'),
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-up'),
                                                                                         '59%'
                                                                                     ]
                                                                                 ),
@@ -321,7 +326,8 @@ app.layout = html.Div(
                                                                                 html.Span(
                                                                                     className='success',
                                                                                     children=[
-                                                                                        html.I(className='fa fa-arrow-up'),
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-up'),
                                                                                         '23%'
                                                                                     ]
                                                                                 ),
@@ -341,7 +347,8 @@ app.layout = html.Div(
                                                                                 html.Span(
                                                                                     className='success',
                                                                                     children=[
-                                                                                        html.I(className='fa fa-arrow-up'),
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-up'),
                                                                                         '51%'
                                                                                     ]
                                                                                 ),
@@ -361,7 +368,8 @@ app.layout = html.Div(
                                                                                 html.Span(
                                                                                     className='success',
                                                                                     children=[
-                                                                                        html.I(className='fa fa-arrow-up'),
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-up'),
                                                                                         '31%'
                                                                                     ]
                                                                                 ),
@@ -407,7 +415,8 @@ app.layout = html.Div(
                                                                                 html.Span(
                                                                                     className='success',
                                                                                     children=[
-                                                                                        html.I(className='fa fa-arrow-up'),
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-up'),
                                                                                         '27%'
                                                                                     ]
                                                                                 ),
@@ -427,7 +436,8 @@ app.layout = html.Div(
                                                                                 html.Span(
                                                                                     className='success',
                                                                                     children=[
-                                                                                        html.I(className='fa fa-arrow-up'),
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-up'),
                                                                                         '74%'
                                                                                     ]
                                                                                 ),
@@ -447,7 +457,8 @@ app.layout = html.Div(
                                                                                 html.Span(
                                                                                     className='success',
                                                                                     children=[
-                                                                                        html.I(className='fa fa-arrow-up'),
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-up'),
                                                                                         '30%'
                                                                                     ]
                                                                                 ),
@@ -529,12 +540,34 @@ app.layout = html.Div(
                                         className='offer-graphs',
                                         children=[
                                             html.Div(
-                                                className='description',
+                                                className='percentages',
                                                 children=[
-                                                    html.P(
-                                                        offer_description
-                                                    )],
-                                            ),
+                                                    html.Div(
+                                                        className='percentages-item',
+                                                        children=[
+                                                            html.Span(
+                                                                className='percentage',
+                                                                children=[
+                                                                    html.I(className='fa fa-arrow-up'),
+                                                                    ' 13%'
+                                                                ]
+                                                            ),
+                                                            html.Br(),
+                                                            html.Span(
+                                                                className='success',
+                                                                children=[
+                                                                    'Abril 2020'
+                                                                ]
+                                                            ),
+                                                        ]),
+                                                    html.Div(
+                                                        className='description',
+                                                        children=[
+                                                            html.P(
+                                                                offer_description
+                                                            )],
+                                                    ),
+                                                ]),
                                             html.Div(
                                                 className='map-graph',
                                                 children=[
@@ -613,12 +646,52 @@ app.layout = html.Div(
                                         className='demand-graphs',
                                         children=[
                                             html.Div(
-                                                className='description',
+                                                className='percentages',
                                                 children=[
-                                                    html.P(
-                                                        demand_description
-                                                    )],
-                                            ),
+                                                    html.Div(
+                                                        className='percentages-item',
+                                                        children=[
+                                                            html.Span(
+                                                                className='percentage',
+                                                                children=[
+                                                                    html.I(className='fa fa-arrow-up'),
+                                                                    ' 46%'
+                                                                ]
+                                                            ),
+                                                            html.Br(),
+                                                            html.Span(
+                                                                className='success',
+                                                                children=[
+                                                                    'Abril 2020'
+                                                                ]
+                                                            ),
+                                                        ]),
+                                                    html.Div(
+                                                        className='percentages-item',
+                                                        children=[
+                                                            html.Span(
+                                                                className='percentage',
+                                                                children=[
+                                                                    html.I(className='fa fa-arrow-up'),
+                                                                    ' 80%'
+                                                                ]
+                                                            ),
+                                                            html.Br(),
+                                                            html.Span(
+                                                                className='success',
+                                                                children=[
+                                                                    'Julio 2020'
+                                                                ]
+                                                            ),
+                                                        ]),
+                                                    html.Div(
+                                                        className='description',
+                                                        children=[
+                                                            html.P(
+                                                                demand_description
+                                                            )],
+                                                    ),
+                                                ]),
                                             html.Div(
                                                 className='map-graph',
                                                 children=[
@@ -705,15 +778,62 @@ app.layout = html.Div(
                                                             className="commerce-graphs",
                                                             children=[
                                                                 html.Div(
-                                                                    className='description',
+                                                                    className='percentages',
                                                                     children=[
-                                                                        html.P(
-                                                                            imports_description
+                                                                        html.Div(
+                                                                            className='percentages-item',
+                                                                            children=[
+                                                                                html.Span(
+                                                                                    className='percentage',
+                                                                                    children='IMPORT'
+                                                                                ),
+                                                                                html.Br(),
+                                                                                html.Span(
+                                                                                    className='fail',
+                                                                                    children=[
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-down'),
+                                                                                        '7%'
+                                                                                    ]
+                                                                                ),
+                                                                                html.Span(
+                                                                                    className='year',
+                                                                                    children=[
+                                                                                        'En 2020'
+                                                                                    ]
+                                                                                ),
+                                                                            ]),
+                                                                        html.Div(
+                                                                            className='percentages-item',
+                                                                            children=[
+                                                                                html.Span(
+                                                                                    className='percentage',
+                                                                                    children='EXPORT'
+                                                                                ),
+                                                                                html.Br(),
+                                                                                html.Span(
+                                                                                    className='fail',
+                                                                                    children=[
+                                                                                        html.I(
+                                                                                            className='fa fa-arrow-down'),
+                                                                                        '12%'
+                                                                                    ]
+                                                                                ),
+                                                                                html.Span(
+                                                                                    className='year',
+                                                                                    children=[
+                                                                                        'En 2020'
+                                                                                    ]
+                                                                                ),
+                                                                            ]),
+                                                                        html.Div(
+                                                                            className='description',
+                                                                            children=[
+                                                                                html.P(
+                                                                                    commerce_time_description
+                                                                                )],
                                                                         ),
-                                                                        html.P(
-                                                                            exports_description
-                                                                        )],
-                                                                ),
+                                                                    ]),
                                                                 dcc.Graph(
                                                                     'commerce-time-graph',
                                                                 ),
@@ -730,12 +850,17 @@ app.layout = html.Div(
                                                             className="commerce-graphs",
                                                             children=[
                                                                 html.Div(
-                                                                    className='description',
+                                                                    className='percentages',
                                                                     children=[
-                                                                        html.P(
-                                                                            commerce_description
-                                                                        )],
-                                                                ),
+                                                                        html.Div(
+                                                                            className='description',
+                                                                            children=[
+                                                                                html.P(
+                                                                                    commerce_description,
+                                                                                    style={'marginBottom': '15px'}
+                                                                                )],
+                                                                        ),
+                                                                    ]),
                                                                 html.Div(
                                                                     className='map-graph',
                                                                     children=[
