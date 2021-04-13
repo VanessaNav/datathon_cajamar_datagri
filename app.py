@@ -90,7 +90,7 @@ app.layout = html.Div(
                 html.Img(className='logo2', src='assets/Sister-Hack_small.png'),
                 dcc.Tabs([
                     dcc.Tab(
-                        label='Productos 🍊',
+                        label='Productos',
                         children=[
                             html.Div(
                                 className='filters',
@@ -534,6 +534,13 @@ app.layout = html.Div(
                                                         value=measures_filter[0],
                                                         style={'display': 'inline-block'}
                                                     ),
+                                                    html.I(className='fa fa-info-circle', id='measure-info'),
+                                                    dbc.Tooltip(
+                                                        children=[
+                                                            html.Img(src='assets/TVformula.png', width=190)
+                                                        ],
+                                                        target='measure-info',
+                                                    ),
                                                 ]),
                                         ]),
                                     html.Div(
@@ -547,7 +554,7 @@ app.layout = html.Div(
                                                         children=[
                                                             html.Span(
                                                                 className='percentage',
-                                                                children='Abril'
+                                                                children='📅 Abril'
                                                             ),
                                                             html.Br(),
                                                             html.Span(
@@ -642,6 +649,13 @@ app.layout = html.Div(
                                                         value=measures_filter[0],
                                                         style={'display': 'inline-block'}
                                                     ),
+                                                    html.I(className='fa fa-info-circle', id='measure-info2'),
+                                                    dbc.Tooltip(
+                                                        children=[
+                                                            html.Img(src='assets/TVformula.png', width=190)
+                                                        ],
+                                                        target='measure-info2',
+                                                    ),
                                                 ]),
                                         ]),
                                     html.Div(
@@ -656,7 +670,7 @@ app.layout = html.Div(
                                                             html.Span(
                                                                 className='percentage',
                                                                 children=[
-                                                                    'Abril'
+                                                                    '📅 Abril'
                                                                 ]
                                                             ),
                                                             html.Br(),
@@ -677,7 +691,7 @@ app.layout = html.Div(
                                                         children=[
                                                             html.Span(
                                                                 className='percentage',
-                                                                children='Julio'
+                                                                children='📅 Julio'
                                                             ),
                                                             html.Br(),
                                                             html.Span(
@@ -719,7 +733,7 @@ app.layout = html.Div(
                                 ]),
                         ]),
                     dcc.Tab(
-                        label='Comercio Exterior (UE) 🌍',
+                        label='Comercio Exterior (UE)',
                         children=[
                             html.Div(
                                 className='filters',
@@ -777,6 +791,15 @@ app.layout = html.Div(
                                                                     value=measures_filter[0],
                                                                     style={'display': 'inline-block'}
                                                                 ),
+                                                                html.I(className='fa fa-info-circle',
+                                                                       id='measure-info3'),
+                                                                dbc.Tooltip(
+                                                                    children=[
+                                                                        html.Img(src='assets/TVformula.png',
+                                                                                 width=190)
+                                                                    ],
+                                                                    target='measure-info3',
+                                                                ),
                                                             ]),
                                                     ]),
                                                 html.Div(
@@ -793,7 +816,7 @@ app.layout = html.Div(
                                                                             children=[
                                                                                 html.Span(
                                                                                     className='percentage',
-                                                                                    children='IMPORT'
+                                                                                    children='🌍 IMP.'
                                                                                 ),
                                                                                 html.Br(),
                                                                                 html.Span(
@@ -814,7 +837,7 @@ app.layout = html.Div(
                                                                             children=[
                                                                                 html.Span(
                                                                                     className='percentage',
-                                                                                    children='EXPORT'
+                                                                                    children='🌍 EXP.'
                                                                                 ),
                                                                                 html.Br(),
                                                                                 html.Span(
@@ -910,6 +933,15 @@ app.layout = html.Div(
                                                                              measures_filter],
                                                                     value=measures_filter[0],
                                                                     style={'display': 'inline-block'}
+                                                                ),
+                                                                html.I(className='fa fa-info-circle',
+                                                                       id='measure-info4'),
+                                                                dbc.Tooltip(
+                                                                    children=[
+                                                                        html.Img(src='assets/TVformula.png',
+                                                                                 width=190)
+                                                                    ],
+                                                                    target='measure-info4',
                                                                 ),
                                                             ]),
                                                     ]),
